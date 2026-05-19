@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Falso Live — Guía Técnica, Operativa y Estratégica | Alexander Cast</title>
+    <meta name="author" content="Alexander Cast">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Cómo estructurar un falso live que vende 24/7 sin que estés presente. Guía técnica, operativa y estratégica. Gratis.">
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- font -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/icon/icomoon/style.css">
+    <!-- css -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles-v3.css">
+    <link rel="shortcut icon" href="assets/images/logo/favicon.svg">
+
+    <style>
+        /* Ajustes mínimos para la página dedicada */
+
+        /* Hero a pantalla completa igual que la home */
+        .section-hero-lm {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-end;
+            padding-bottom: 80px;
+            overflow: hidden;
+        }
+
+        .section-hero-lm .bg-video {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .section-hero-lm .bg-video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .section-hero-lm .video-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(8,8,8,0.45) 0%, rgba(8,8,8,0.88) 100%);
+        }
+
+        .section-hero-lm .content-wrap {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        /* Badge con punto animado — igual estilo que mini-title */
+        .lm-badge-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(201,168,76,0.35);
+            padding: 5px 14px 5px 10px;
+            margin-bottom: 28px;
+        }
+
+        .lm-badge-pill .br-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--primary);
+            animation: blink-dot 2s infinite;
+            flex-shrink: 0;
+        }
+
+        @keyframes blink-dot {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.25; }
+        }
+
+        /* Checklist de beneficios */
+        .lm-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lm-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 15px;
+            color: rgba(255,255,255,0.72);
+            line-height: 1.5;
+        }
+
+        .lm-list li .icon {
+            color: var(--primary);
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* Thank-you state oculto por defecto */
+        .lm-thankyou { display: none; }
+        .lm-thankyou.active { display: block; }
+
+        /* Download button grande */
+        .lm-download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: #080808;
+            padding: 18px 32px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: opacity .2s;
+        }
+
+        .lm-download-link:hover { opacity: 0.85; color: #080808; }
+
+        /* Separador decorativo igual que en secciones */
+        .section-lm-form {
+            position: relative;
+        }
+
+        /* Nota de privacidad debajo del form */
+        .lm-privacy {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 0.03em;
+        }
+
+        /* Stat strip */
+        .lm-stats {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .lm-stat-num {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--primary);
+            line-height: 1;
+            display: block;
+        }
+
+        .lm-stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            letter-spacing: 0.08em;
+            margin-top: 3px;
+            display: block;
+        }
+
+        @media (max-width: 575px) {
+            .lm-stats { gap: 24px; }
+        }
+    </style>
+</head>
+
+<body class="counter-scroll">
+    <canvas class="cursor-trail d-none d-xl-block" id="trail"></canvas>
+
+    <!-- Scroll Top -->
+    <button id="goTop">
+        <span class="border-progress"></span>
+        <span class="ic-wrap">
+            <span class="icon icon-arrow-caret-right"></span>
+        </span>
+    </button>
+
+    <!-- Preload — idéntico a la home -->
+    <div class="preloader overflow-hidden">
+        <div class="site-name"><span>Estrateg<span class="text-primary">IA</span></span></div>
+        <div class="preloader-gutters">
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+            <div class="bar"><div class="inner-bar"></div></div>
+        </div>
+    </div>
+
+    <main id="wrapper">
+        <!-- Header — igual que la home -->
+        <header class="tf-header">
+            <div class="header-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 col-md-1">
+                            <a href="index.html" class="logo-site">
+                                <i class="icon icon-davies-logo"></i>
+                            </a>
+                        </div>
+                        <div class="col-7 d-none d-md-block">
+                            <div class="box-navigation">
+                                <ul class="nav-menu-main">
+                                    <li class="menu-item">
+                                        <a href="index.html#workScroll" class="item-link link text-caption">
+                                            <span>01 /</span>PROYECTOS
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="index.html#serviceScroll" class="item-link link text-caption">
+                                            <span>02 /</span>SERVICIOS
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="index.html#aboutScroll" class="item-link link text-caption">
+                                            <span>03 /</span>SOBRE MÍ
+                                        </a>
+                                    </li>
+                                    <li class="menu-item">
+                                        <a href="index.html#contactScroll" class="item-link link text-caption">
+                                            <span>04 /</span>CONTACTO
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-3 col-md-2 d-none d-sm-block">
+                            <div class="header-contact">
+                                <p class="text-caption">BOG <span class="clock"></span></p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-3 col-md-2 d-flex justify-content-end align-items-start">
+                            <button type="button" class="btn-mobile-menu open-mb-menu text-caption text-white link">
+                                <i class="icon icon-menu"></i>
+                                MENU
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero — mismo fondo de video que la home, copy del lead magnet -->
+        <div class="section-hero-lm">
+            <div class="bg-video">
+                <video muted autoplay loop playsinline>
+                    <source src="assets/images/video/corridor.webm" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+
+            <div class="content-wrap">
+                <div class="container">
+                    <div class="row align-items-end">
+                        <!-- Copy izquierda -->
+                        <div class="col-md-7">
+                            <div class="col-left">
+                                <ul class="tf-list vertical text-caption fw-medium">
+                                    <li><a href="#" class="link effectFade fadeUp">GUÍA GRATUITA · 2026</a></li>
+                                    <li><a href="#" class="link effectFade fadeUp">LIVE SHOPPING</a></li>
+                                    <li><a href="#" class="link effectFade fadeUp">LATAM</a></li>
+                                </ul>
+                                <div class="davies-large">
+                                    <div class="effectFade fadeRotateX">
+                                        Falso<br>
+                                        <span class="text-primary">Live</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Desc derecha -->
+                        <div class="col-md-4 offset-md-1">
+                            <div class="col-right">
+                                <div class="top text-caption fw-medium d-flex justify-content-between align-items-center effectFade">
+                                    <p class="title text-has-dot">
+                                        <span class="br-dot"></span>
+                                        PDF GRATUITO
+                                    </p>
+                                    <span>© 2026</span>
+                                </div>
+                                <div class="bot">
+                                    <p class="desc text-white-64 effectFade fadeRight view-visible">
+                                        Cómo montar un live que vende 24/7 sin que estés presente. Técnico, operativo y estratégico.
+                                    </p>
+                                    <div class="effectFade fadeRight view-visible">
+                                        <a href="#formScroll" class="tf-btn">
+                                            DESCARGAR GRATIS
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Hero -->
+
+        <!-- Sección form — estructura igual a section-cta de la home -->
+        <section class="section-cta flat-spacing section-lm-form" id="formScroll">
+            <div class="bg-img">
+                <img loading="lazy" width="1440" height="1081" src="assets/images/item/bg-3.png" alt="">
+            </div>
+
+            <!-- Header decorativo igual que en la home -->
+            <div class="s-header d-block">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2 offset-lg-2 col-lg-2">
+                            <div class="col-left">
+                                <a href="index.html" class="logo-custom">
+                                    <div class="logo-site-sv">
+                                        <svg width="34" height="41" viewBox="0 0 34 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M9.21094 0.400391C15.9908 0.392629 21.8983 0.597548 27.1426 5.65918C35.1922 13.4293 35.2468 26.7035 27.5312 34.7549C22.0053 40.1145 16.6295 40.3989 9.48535 40.4004L0.75 40.3945L0.751953 0.407227L9.21094 0.400391ZM21.5244 6.83496C16.6613 3.86011 10.4273 4.54391 4.91113 4.55664L17.2607 22.3262C19.5017 25.5466 21.7744 28.9254 24.0615 32.0889C24.847 31.468 25.7087 30.3488 26.2646 29.5088C28.7144 25.5207 29.444 20.7119 28.2871 16.1777C27.305 12.2252 25.0035 8.9637 21.5244 6.83496Z" fill="#C9A84C"/>
+                                        </svg>
+                                    </div>
+                                    <span class="line-vertical left"></span>
+                                    <span class="line-vertical right"></span>
+                                    <span class="line-horizontal top"></span>
+                                    <span class="line-horizontal bottom"></span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-10 col-lg-6">
+                            <h2 class="text-display-2 letter-space--3 text-end effectFade fadeUp">
+                                El sistema<br>
+                                completo
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Beneficios + formulario -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+
+                        <!-- Chip de beneficios -->
+                        <div class="effectFade fadeUp" style="margin-bottom: 36px;">
+                            <p class="mini-title text-caption text-white-64 letter-space--1 mb-3">QUÉ INCLUYE LA GUÍA</p>
+                            <ul class="lm-list">
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Técnico:</strong>&nbsp;cómo funciona el falso live en TikTok e Instagram — qué herramientas necesitás y cómo configurarlas
+                                </li>
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Producción:</strong>&nbsp;cómo grabar el video para que se vea como un live real — encuadre, iluminación, script y duración óptima
+                                </li>
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Operativo:</strong>&nbsp;setup de streaming, configuración del loop 24/7 y bot de respuestas automáticas a comentarios
+                                </li>
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Estratégico:</strong>&nbsp;cómo mandar tráfico (orgánico + pauta) al live, estructura de oferta y precio para maximizar conversión
+                                </li>
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Escalado:</strong>&nbsp;cómo correr múltiples falsos lives simultáneos y qué métricas monitorear para optimizar
+                                </li>
+                                <li>
+                                    <span class="icon icon-arrow-caret-right"></span>
+                                    <strong style="color:#fff;">Errores comunes:</strong>&nbsp;los 5 errores que hacen que el falso live no convierta — y cómo evitarlos desde el día uno
+                                </li>
+                            </ul>
+
+                            <!-- Stats strip -->
+                            <div class="lm-stats">
+                                <div>
+                                    <span class="lm-stat-num">24/7</span>
+                                    <span class="lm-stat-label">VENDIENDO SOLO</span>
+                                </div>
+                                <div>
+                                    <span class="lm-stat-num">$0</span>
+                                    <span class="lm-stat-label">COSTO DE LA GUÍA</span>
+                                </div>
+                                <div>
+                                    <span class="lm-stat-num">Colombia</span>
+                                    <span class="lm-stat-label">PROBADO EN CAMPO</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Banner lead magnet — igual que en la home -->
+                        <div class="effectFade fadeUp" style="border: 1px solid var(--primary); padding: 20px 24px; margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
+                            <p class="text-body-1 mb-0">
+                                Completa el formulario y recibe gratis:
+                                <strong>Falso Live — Guía Técnica, Operativa y Estratégica</strong>
+                            </p>
+                            <span class="text-primary text-caption fw-medium letter-space--1">PDF GRATUITO</span>
+                        </div>
+
+                        <!-- Formulario — clases idénticas a la home -->
+                        <div id="lm-form-wrap">
+                            <!--
+                                Para activar el envío real:
+                                1. Crea cuenta gratis en formspree.io con founder@kreoon.com
+                                2. Reemplaza REEMPLAZA_ESTE_ID con el ID que te dan
+                            -->
+                            <form
+                                class="form-cta"
+                                id="lm-form"
+                                action="https://formspree.io/f/REEMPLAZA_ESTE_ID"
+                                method="POST">
+
+                                <input type="hidden" name="_subject" value="Descarga: Falso Live — Guía Técnica, Operativa y Estratégica">
+                                <input type="hidden" name="_next" value="lead-magnet.html?gracias=1">
+
+                                <div class="form-content">
+                                    <div class="tf-grid-layout sm-col-2">
+                                        <fieldset class="tf-field">
+                                            <input class="tf-input" type="text" name="name" placeholder required>
+                                            <label class="tf-lable">Nombre <span class="text-primary">*</span></label>
+                                        </fieldset>
+                                        <fieldset class="tf-field">
+                                            <input class="tf-input" type="email" name="email" placeholder required>
+                                            <label class="tf-lable">Email <span class="text-primary">*</span></label>
+                                        </fieldset>
+                                    </div>
+                                </div>
+
+                                <div class="form-action">
+                                    <button type="submit" class="tf-btn" id="lm-submit">
+                                        <span class="text-caption">QUIERO MI GUÍA GRATIS →</span>
+                                    </button>
+                                    <p class="text-body-1">
+                                        o escríbeme — <a href="mailto:founder@kreoon.com" class="text-primary">FOUNDER@KREOON.COM</a>
+                                    </p>
+                                </div>
+
+                                <p class="lm-privacy">
+                                    <i class="icon icon-lock" style="font-size: 13px;"></i>
+                                    Tu email está seguro. Sin spam, sin trampa.
+                                </p>
+                            </form>
+                        </div>
+
+                        <!-- Estado gracias (se activa con ?gracias=1) -->
+                        <div class="lm-thankyou" id="lm-thankyou" style="text-align: center; padding: 48px 0;">
+                            <p class="mini-title text-caption text-primary letter-space--1 mb-3">✓ ENVIADO</p>
+                            <h3 class="text-display-2 letter-space--3 mb-4">¡Ya va<br>en camino!</h3>
+                            <p class="text-body-1 text-white-64 mb-4">
+                                Revisa tu bandeja de entrada. Si no llega en 5 minutos,
+                                mira en spam o descargá directo aquí.
+                            </p>
+                            <a href="falso-live-guia.pdf" download class="lm-download-link">
+                                <i class="icon icon-arrow-caret-right"></i>
+                                DESCARGAR PDF AHORA
+                            </a>
+                            <div style="margin-top: 36px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);">
+                                <p class="text-caption text-white-64">
+                                    Sígueme en
+                                    <a href="https://www.instagram.com/alexemprendee/" target="_blank" class="text-primary" style="text-decoration: none;">@alexemprendee</a>
+                                    para más contenido de este estilo.
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer — idéntico a la home -->
+        <footer class="tf-footer">
+            <div class="container">
+                <div class="br-line"></div>
+            </div>
+            <div class="footer-inner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="title text-has-dot text-caption fw-medium mb-md-0">
+                                <span class="br-dot"></span>
+                                OPERANDO DESDE BOGOTÁ, PARA EL MUNDO
+                            </p>
+                        </div>
+                        <div class="col-6 col-sm-2 col-md-1">
+                            <p class="footer-heading text-caption fw-medium text-white-64">SITEMAP</p>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <ul class="footer-menu-list mb-sm-0">
+                                <li><a href="index.html#aboutScroll" class="link letter-space--2 h5">About</a></li>
+                                <li><a href="index.html#workScroll" class="link letter-space--2 h5">Works</a></li>
+                                <li><a href="index.html#serviceScroll" class="link letter-space--2 h5">Services</a></li>
+                                <li><a href="index.html#contactScroll" class="link letter-space--2 h5">Contact</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-6 col-sm-2 col-md-1">
+                            <p class="footer-heading text-caption fw-medium text-white-64">SOCIALS</p>
+                        </div>
+                        <div class="col-6 col-sm-4 col-md-3">
+                            <ul class="footer-menu-list mb-0">
+                                <li><a href="https://www.instagram.com/alexemprendee/" target="_blank" class="link letter-space--2 h5">Instagram</a></li>
+                                <li><a href="https://github.com/AlexanderKast" target="_blank" class="link letter-space--2 h5">GitHub</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="img-agency">
+                        <img class="effectFade fadeZoom" loading="lazy" width="1293" height="269" src="assets/images/logo/agency.png" alt="">
+                    </div>
+                    <div class="bottom">
+                        <p class="text-nocopy text-caption fw-medium letter-space--1">
+                            © ALEXANDERCAST · ESTRATEG<span class="text-primary">IA</span>
+                        </p>
+                        <a href="#" class="action-go-top tf-link-icon link text-caption fw-medium letter-space--1">
+                            BACK TO TOP
+                            <i class="icon icon-arrow-long-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Mobile Menu — igual que la home -->
+    <div class="offcanvas-menu">
+        <div class="offcanvas-content">
+            <div class="container h-100">
+                <div class="offcanvas-content_wrapin">
+                    <div class="canvas_head">
+                        <a href="index.html" class="logo-site">
+                            <i class="icon icon-davies-logo"></i>
+                        </a>
+                        <div class="btn-mobile-menu close-mb-menu text-caption link">
+                            <i class="icon icon-close"></i>
+                            CLOSE
+                        </div>
+                    </div>
+                    <div class="canvas_center">
+                        <ul class="nav-ul-mb">
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="index.html" class="mb-menu-link text-display-1">
+                                        <span class="text">Inicio</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="index.html#workScroll" class="mb-menu-link text-display-1">
+                                        <span class="text">Proyectos</span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="item close-mb-menu">
+                                    <a href="index.html#contactScroll" class="mb-menu-link text-display-1">
+                                        <span class="text">Contacto</span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="canvas_foot">
+                        <div class="left">
+                            <a href="mailto:founder@kreoon.com" class="link text-caption">FOUNDER@KREOON.COM</a>
+                            <p class="text-caption">BOG <span class="clock"></span></p>
+                        </div>
+                        <div class="right">
+                            <a href="https://www.instagram.com/alexemprendee/" target="_blank" class="tf-link-icon text-caption link">
+                                <i class="icon icon-arrow-top-right"></i>
+                                INSTAGRAM
+                            </a>
+                            <a href="https://github.com/AlexanderKast" target="_blank" class="tf-link-icon text-caption link">
+                                <i class="icon icon-arrow-top-right"></i>
+                                GITHUB
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Javascript — igual que la home -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/ScrollSmooth.js"></script>
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/SplitText.min.js"></script>
+    <script src="assets/js/ScrollTrigger.min.js"></script>
+    <script src="assets/js/ScrollToPlugin.min.js"></script>
+    <script src="assets/js/gsapAnimation.js"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script>
+        // Detectar ?gracias=1 para mostrar el estado de confirmación
+        (function () {
+            if (new URLSearchParams(window.location.search).get('gracias') === '1') {
+                document.getElementById('lm-form-wrap').style.display = 'none';
+                document.getElementById('lm-thankyou').classList.add('active');
+            }
+
+            // Feedback visual al enviar
+            var form = document.getElementById('lm-form');
+            var btn  = document.getElementById('lm-submit');
+            if (form && btn) {
+                form.addEventListener('submit', function () {
+                    btn.querySelector('span').textContent = 'ENVIANDO…';
+                    btn.disabled = true;
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
