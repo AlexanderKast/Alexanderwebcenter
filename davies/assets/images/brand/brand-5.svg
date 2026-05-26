@@ -1,0 +1,6 @@
+<svg width="130" height="40" viewBox="0 0 130 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="8" y="10" width="22" height="20" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
+  <line x1="8" y1="20" x2="30" y2="20" stroke="white" stroke-width="1.5"/>
+  <line x1="19" y1="10" x2="19" y2="30" stroke="white" stroke-width="1.5"/>
+  <text x="38" y="25" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="white" letter-spacing="-0.3">Perplexity</text>
+</svg>

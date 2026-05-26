@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="136" height="68" viewBox="0 0 136 68">
+  <rect width="136" height="68" rx="8" fill="#0d1117"/>
+  <g transform="translate(18,14)">
+    <path d="M16 2 C16 10 22 16 16 16 C10 16 16 22 16 30 C16 22 10 16 16 16 C22 16 16 10 16 2Z" fill="#4285F4"/>
+    <path d="M2 16 C10 16 16 10 16 16 C16 22 10 16 2 16Z" fill="#4285F4" opacity="0.5"/>
+    <path d="M30 16 C22 16 16 22 16 16 C16 10 22 16 30 16Z" fill="#4285F4" opacity="0.5"/>
+  </g>
+  <text x="56" y="32" font-family="Arial,sans-serif" font-size="11" font-weight="bold" fill="#4285F4">Gemini</text>
+  <text x="56" y="46" font-family="Arial,sans-serif" font-size="9" fill="rgba(255,255,255,0.5)">Google</text>
+</svg>

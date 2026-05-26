@@ -1,0 +1,66 @@
+export type BrandType = 'personal' | 'producto' | 'servicio';
+
+export interface BrandIntakeData {
+  tipo: BrandType;
+  submittedAt: string;
+  nombreMarca: string;
+  expertiseDiferenciador: string;
+  anosExperiencia: number;
+  ubicacionGeografica: string;
+  idiomas: string[];
+  industriaNicho: string;
+  perfilDemografico: string;
+  problemaPrincipal: string;
+  resultadoDeseado: string;
+  nivelSofisticacion: number;
+  objecionesPrincipales: string[];
+  competenciaDirecta: string[];
+  ventajaCompetitiva: string;
+  queOfrece: string;
+  promesaRealista: string;
+  precioInversion: string;
+  formatoEntrega: string;
+  garantia?: string;
+  noPromete: string;
+  estiloComuncacional: string;
+  expresionesNaturales: string[];
+  prohibiciones: string[];
+  nivelFormalidad: number;
+  usoHumor: string;
+  regionalismos?: string;
+  temasSensibles?: string;
+  pilares: Array<{ nombre: string; porcentaje: number }>;
+  creenciasFundamentales: string[];
+  queRechaza: string[];
+  limitesEticos: string[];
+  propositoMarca: string;
+  historiaOrigen?: string;
+  historiaBatallas?: string;
+  historiaLogros?: string;
+  mensajeCentral: string;
+  comoPierciben?: string;
+  costoNoActuar: string;
+  errorPrincipal: string;
+  aQuienNoAyudo: string;
+  resultadosClientes?: string;
+  figurasReferencia?: {
+    heroInfluencer: string;
+    competidoresDirectos: string[];
+    creadoresIndustria: string[];
+  };
+  objetivoPrincipal: 'awareness' | 'leads' | 'ventas' | 'comunidad';
+  kpiCritico: string;
+  frecuenciaContenido: string;
+  plataformas: string[];
+  recursosDisponibles: {
+    tiempoPorSemana: number;
+    presupuesto?: string;
+    equipo?: string;
+  };
+  timeline: string;
+  productosSecundarios?: string[];
+  colaboraciones?: string[];
+  temporadasEventos?: string[];
+  restricciones?: string[];
+  integracionesNecesarias?: string[];
+}

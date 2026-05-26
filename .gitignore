@@ -1,0 +1,87 @@
+# ============================================================
+# Alexander Cast — Portal Personal Unificado
+# ============================================================
+
+# ── SECRETOS Y CREDENCIALES ──────────────────────────────────
+.env
+.env.local
+.env.production
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ── GOOGLE CREDENTIALS ───────────────────────────────────────
+service-account.json
+credentials.json
+token.json
+*-service-account.json
+
+# ── NEXT.JS ──────────────────────────────────────────────────
+.next/
+out/
+build/
+dist/
+
+# ── NODE ─────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── PYTHON ───────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+
+# ── CONTENT FORGE OUTPUTS ────────────────────────────────────
+scripts/content-forge/output/
+scripts/content-forge/.env.local
+
+# ── LOGS ─────────────────────────────────────────────────────
+*.log
+logs/
+meta_api.log
+
+# ── MEMORIA / DATOS GENERADOS ────────────────────────────────
+memory/memory.db
+memory/conversations/
+memory/learnings/
+
+# ── OUTPUTS DE AGENTES ───────────────────────────────────────
+outputs/*.json
+
+# ── OS ───────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ── IDE ──────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ── TEMPORALES ───────────────────────────────────────────────
+*.tmp
+*.bak
+*.cache
+
+# ── TYPESCRIPT BUILD ─────────────────────────────────────────
+*.tsbuildinfo
+
+# ── VERCEL ───────────────────────────────────────────────────
+.vercel
+
+# ── PNPM ─────────────────────────────────────────────────────
+pnpm-lock.yaml

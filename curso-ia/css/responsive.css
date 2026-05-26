@@ -1,0 +1,332 @@
+/* ============================================
+   IA Aplicada — Responsive & Custom Overrides
+   Alexander Cast · curso-ia
+   ============================================ */
+
+/* ---------- VARIABLES ---------- */
+:root {
+  --ia-primary: #00b4d8;
+  --ia-primary-dark: #0077b6;
+  --ia-bg: #03040a;
+}
+
+/* ---------- GLOBAL ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- HEADER — ocultar cuando está vacío ---------- */
+.tf-header .container .row > div:empty {
+  display: none;
+}
+
+/* Header tiene margin negativo que desajusta el hero en móvil */
+@media (max-width: 767px) {
+  .tf-header {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: -60px;
+  }
+}
+
+/* ---------- HERO ---------- */
+.section-hero-v1 {
+  min-height: 100svh;
+}
+
+/* Eliminar el margin-bottom gigante del col-right .top en móvil */
+@media (max-width: 991px) {
+  .section-hero-v1 .col-right .top {
+    margin-bottom: 32px !important;
+  }
+  .section-hero-v1 .col-left {
+    margin-bottom: 24px;
+  }
+  .section-hero-v1 .col-right .desc {
+    margin-bottom: 24px;
+  }
+  /* La PUV como texto legible */
+  .section-hero-v1 .col-right .desc {
+    font-size: 14px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 575px) {
+  .section-hero-v1 {
+    min-height: unset;
+    padding-bottom: 80px;
+  }
+  .section-hero-v1 .col-right .top {
+    margin-bottom: 20px !important;
+  }
+  /* CTA botón ancho completo en móvil */
+  .section-hero-v1 .tf-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ---------- PAIN CARDS (¿Te suena familiar?) ---------- */
+@media (max-width: 575px) {
+  .pain-card {
+    padding: 20px 20px;
+  }
+  .pain-text {
+    font-size: 14px !important;
+  }
+}
+
+/* ---------- MÓDULOS (swiper) ---------- */
+@media (max-width: 575px) {
+  .section-feature .s-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .section-feature .s-header .tf-btn {
+    align-self: flex-start;
+  }
+}
+
+/* ---------- SERVICIOS / Lo que vas a dominar ---------- */
+@media (max-width: 767px) {
+  .section-service-2 .wg-service-v01 {
+    margin-bottom: 32px;
+  }
+}
+
+/* ---------- PROCESO / Cómo funciona ---------- */
+@media (max-width: 767px) {
+  .section-process .process-item {
+    margin-bottom: 40px;
+  }
+}
+
+/* ---------- ABOUT-ME / Quiénes somos ---------- */
+@media (max-width: 991px) {
+  .section-about-me .davies-video {
+    max-height: 400px;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 40px;
+  }
+  .section-about-me .davies-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .section-about-me .badget {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+@media (max-width: 575px) {
+  .section-about-me .davies-video {
+    max-height: 300px;
+  }
+}
+
+/* ---------- AWARD / Métricas ---------- */
+@media (max-width: 767px) {
+  .section-award .col-md-5 {
+    margin-bottom: 32px;
+  }
+}
+
+/* ---------- ODOMETER COUNTERS ---------- */
+@media (max-width: 575px) {
+  .indicator-wrap {
+    flex-direction: column;
+    gap: 32px !important;
+    align-items: flex-start;
+  }
+  .wg-indicator {
+    min-width: unset;
+  }
+}
+
+/* ---------- PRICING ---------- */
+@media (max-width: 767px) {
+  .pricing-tab_btn {
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .tf-grid-layout.md-col-2.lg-col-3 {
+    grid-template-columns: 1fr !important;
+    gap: 24px;
+  }
+  .wg-plan {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .tf-grid-layout.md-col-2.lg-col-3 {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ---------- FAQ ---------- */
+@media (max-width: 767px) {
+  .section-faq .s-header {
+    margin-bottom: 32px;
+  }
+  /* Más espacio entre items del FAQ */
+  .faq-item {
+    margin-bottom: 8px;
+  }
+}
+
+/* ---------- FORM / CTA ---------- */
+/* Ocultar el logo Davies que quedó en el CTA */
+.section-cta .logo-custom {
+  display: none !important;
+}
+/* Limpiar el col-left vacío */
+.section-cta .col-left:has(.logo-custom) {
+  display: none !important;
+}
+
+@media (max-width: 767px) {
+  .section-cta .s-header .row {
+    flex-direction: column;
+  }
+  .section-cta .col-10 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 0 12px;
+  }
+  .section-cta .col-2 {
+    display: none;
+  }
+  /* Form fields full-width */
+  .section-cta .tf-field,
+  .section-cta input,
+  .section-cta .nice-select {
+    width: 100%;
+  }
+  .section-cta .tf-btn[type="submit"] {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ---------- FOOTER ---------- */
+@media (max-width: 767px) {
+  .tf-footer .footer-inner .row {
+    row-gap: 24px;
+  }
+  .tf-footer .col-md-4 {
+    text-align: center;
+  }
+  .tf-footer .col-md-4 .title {
+    justify-content: center;
+  }
+}
+
+/* ---------- BOTÓN FLOTANTE MÓVIL (sticky CTA) ---------- */
+.mobile-sticky-cta {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #0077b6 0%, #00b4d8 100%);
+  padding: 14px 20px;
+  text-align: center;
+  box-shadow: 0 -4px 24px rgba(0, 180, 216, 0.35);
+}
+
+.mobile-sticky-cta a {
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  text-transform: uppercase;
+  display: block;
+}
+
+.mobile-sticky-cta .cta-sub {
+  font-size: 11px;
+  font-weight: 400;
+  opacity: 0.85;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 2px;
+}
+
+/* Mostrar solo en móvil */
+@media (max-width: 767px) {
+  .mobile-sticky-cta {
+    display: block;
+  }
+  /* Espacio para que el footer no quede tapado */
+  body {
+    padding-bottom: 68px;
+  }
+}
+
+/* ---------- NICE-SELECT RESPONSIVE ---------- */
+@media (max-width: 575px) {
+  .nice-select {
+    width: 100% !important;
+  }
+  .nice-select .list {
+    width: 100% !important;
+  }
+}
+
+/* ---------- TIPOGRAFÍA RESPONSIVE ---------- */
+@media (max-width: 575px) {
+  .text-display-2 {
+    font-size: clamp(26px, 7vw, 40px) !important;
+  }
+  .h5, h5 {
+    font-size: clamp(16px, 4.5vw, 20px) !important;
+  }
+}
+
+/* ---------- SECCIONES — padding móvil más compacto ---------- */
+@media (max-width: 767px) {
+  .flat-spacing {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+  .flat-spacing[style*="padding-top:72px"] {
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+}
+
+/* ---------- SWIPER — 1 slide en móvil para módulos ---------- */
+@media (max-width: 575px) {
+  .swiper-feature .swiper-slide {
+    width: 90vw !important;
+    max-width: 380px;
+  }
+}
+
+/* ---------- BRAND LOGOS scroll ---------- */
+@media (max-width: 575px) {
+  .tf-marquee .item-marquee {
+    padding: 0 12px;
+  }
+}
+
+/* ---------- OVERFLOW PROTECTION ---------- */
+html, body {
+  overflow-x: hidden;
+}

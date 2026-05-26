@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="goldA" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F2CB51"/>
+      <stop offset="50%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#B8860B"/>
+    </linearGradient>
+    <linearGradient id="goldC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EAC040"/>
+      <stop offset="100%" stop-color="#C49010"/>
+    </linearGradient>
+    <linearGradient id="silverC" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECECEC"/>
+      <stop offset="100%" stop-color="#B8B8B8"/>
+    </linearGradient>
+  </defs>
+
+  <!-- A: solid gold triangle (pyramid shape) -->
+  <polygon points="72,140 40,140 72,48" fill="url(#goldA)"/>
+  <polygon points="72,140 104,140 72,48" fill="url(#goldA)"/>
+
+  <!-- C: black outline arc -->
+  <path d="M 148,44 A 52,52 0 1,0 148,156" stroke="#1A1A1A" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- C: silver fill (top half) -->
+  <path d="M 148,44 A 52,52 0 0,0 96,100" stroke="url(#silverC)" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- C: gold fill (bottom half) -->
+  <path d="M 96,100 A 52,52 0 0,0 148,156" stroke="url(#goldC)" stroke-width="18" stroke-linecap="round"/>
+</svg>

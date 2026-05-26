@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="136" height="68" viewBox="0 0 136 68">
+  <rect width="136" height="68" rx="8" fill="#1a1a1a"/>
+  <!-- OpenAI logo - stylized flower/bloom -->
+  <g transform="translate(20, 10)">
+    <g transform="translate(24, 24)">
+      <!-- 6-petal flower shape approximating OpenAI logo -->
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(0)"/>
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(60)"/>
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(120)"/>
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(180)"/>
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(240)"/>
+      <ellipse cx="0" cy="-11" rx="5" ry="9" fill="white" transform="rotate(300)"/>
+      <circle cx="0" cy="0" r="7" fill="#1a1a1a"/>
+    </g>
+  </g>
+  <!-- GPT-4o text -->
+  <text x="95" y="35" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="-0.5">GPT-4o</text>
+  <text x="95" y="52" font-family="'Helvetica Neue', Arial, sans-serif" font-size="8" font-weight="400" fill="#aaaaaa" text-anchor="middle" letter-spacing="2">OPENAI</text>
+</svg>

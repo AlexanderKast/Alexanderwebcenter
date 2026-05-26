@@ -1,0 +1,273 @@
+# ALEXANDER CAST CONTENT SYSTEM - ORCHESTRATION RULES
+
+## System Purpose
+This is a multi-agent content creation system for Alexander Cast's personal brand. It creates content aligned with his voice (paisa, tranquilo, reflexivo), values (fe fundamento, integridad), and 4 pillars (Mentalidad/Fe, IA Aplicada, Live Shopping, Estrategia Digital).
+
+---
+
+## File Structure
+
+```
+/alexander-cast-system/
+├── core/
+│   ├── identity.md
+│   ├── philosophy.md
+│   ├── voice-dna.md
+│   └── positioning.md
+├── agents/
+│   ├── orchestrator.md
+│   ├── strategist.md
+│   ├── copywriter.md
+│   ├── alexander-adapter.md
+│   ├── analyst.md
+│   ├── visual-director.md
+│   └── live-shopping-educator.md
+├── skills/
+│   ├── content-analyzer.md
+│   ├── alexander-voice-adapter.md
+│   ├── referent-researcher.md
+│   ├── viral-hooks.md
+│   ├── storytelling.md
+│   ├── trend-adaptation.md
+│   ├── kreoon-showcase.md
+│   ├── faith-business-integration.md
+│   └── pillar-distributor.md
+├── knowledge/
+│   ├── applied-frameworks.md
+│   ├── competitors/
+│   ├── pricing/
+│   ├── templates/
+│   └── brand-assets/
+├── scripts/
+│   ├── apify-scraper.py
+│   ├── obsidian-sync.sh
+│   ├── memory-backup.sh
+│   └── deploy-to-obsidian.sh
+├── outputs/
+│   ├── posts/
+│   ├── strategies/
+│   └── reports/
+├── .clinerules (this file)
+├── CLAUDE.md
+└── README.md
+```
+
+---
+
+## Agent Routing
+
+### 1. orchestrator.md
+TRIGGER: User request without specific agent mentioned
+ROLE: Analyze request → Route to correct agent(s) → Coordinate multi-agent workflows
+READS: All core/, determines which agents/skills needed
+
+### 2. strategist.md
+TRIGGER: "Plan content", "calendario", "estrategia mensual"
+ROLE: Content planning, pillar distribution, calendar creation
+REQUIRES: core/ + skills/pillar-distributor.md
+OUTPUTS: Weekly/monthly content calendars
+
+### 3. copywriter.md
+TRIGGER: "Escribe post", "create caption", "draft copy"
+ROLE: Write raw copy using frameworks (AIDA, PAS, Storytelling)
+REQUIRES: core/ + skills/viral-hooks.md, skills/storytelling.md
+OUTPUTS: Raw copy (NOT final, needs alexander-adapter)
+
+### 4. alexander-adapter.md
+TRIGGER: ALWAYS after copywriter.md
+ROLE: Transform generic copy into Alexander's authentic voice
+REQUIRES: core/voice-dna.md + skills/alexander-voice-adapter.md
+OUTPUTS: Final copy in Alexander's voice
+
+### 5. analyst.md
+TRIGGER: "Analiza performance", "métricas", "qué funcionó"
+ROLE: Analyze content performance, identify patterns, recommend adjustments
+REQUIRES: Historical data (if available)
+OUTPUTS: Performance reports, insights, recommendations
+
+### 6. visual-director.md
+TRIGGER: "Diseño visual", "paleta de colores", "concepto gráfico"
+ROLE: Visual concepts, design direction, brand aesthetics
+REQUIRES: core/ + knowledge/brand-assets/
+OUTPUTS: Visual concepts, moodboards, design specs
+
+### 7. live-shopping-educator.md
+TRIGGER: Content about Pilar 3 (Live Shopping)
+ROLE: Educational content about live commerce, technical explanations
+REQUIRES: core/ + knowledge specific to live shopping
+OUTPUTS: Educational frameworks, objection handling, terminology
+
+---
+
+## Skill Usage
+
+### When to Load Skills
+
+**ALWAYS load before first use:**
+- Read the relevant skill file
+- Apply instructions from skill
+- Proceed with task
+
+**Skill combinations (common patterns):**
+
+Pattern 1: WRITE POST
+1. skills/viral-hooks.md (create hook options)
+2. skills/storytelling.md (if narrative post)
+3. agents/copywriter.md (write raw copy)
+4. skills/alexander-voice-adapter.md (adapt to voice)
+5. agents/alexander-adapter.md (finalize)
+
+Pattern 2: PLAN CALENDAR
+1. skills/pillar-distributor.md (balance pillars)
+2. skills/referent-researcher.md (check competition)
+3. skills/trend-adaptation.md (identify trends)
+4. agents/strategist.md (create calendar)
+
+Pattern 3: ANALYZE PERFORMANCE
+1. skills/content-analyzer.md (reverse engineer successful posts)
+2. agents/analyst.md (metrics + insights)
+3. agents/strategist.md (adjust strategy)
+
+Pattern 4: FAITH CONTENT
+1. skills/faith-business-integration.md (integration frameworks)
+2. skills/storytelling.md (narrative structure)
+3. agents/copywriter.md (draft)
+4. agents/alexander-adapter.md (voice adaptation)
+
+Pattern 5: KREOON SHOWCASE
+1. skills/kreoon-showcase.md (educational frameworks)
+2. agents/copywriter.md (write)
+3. agents/alexander-adapter.md (ensure 80% education, 20% product)
+
+Pattern 6: DEEP FRAMEWORK
+1. knowledge/applied-frameworks.md (consult relevant section)
+2. Relevant agent/skill for execution
+
+---
+
+## Decision Tree (Simplified)
+
+```
+USER REQUEST
+|
+v
+Is it content creation?
+|
+├─ YES → orchestrator.md analyzes
+|         |
+|         ├─ Single post? → copywriter → alexander-adapter
+|         ├─ Campaign/Calendar? → strategist → copywriter → alexander-adapter
+|         └─ Analysis? → analyst
+|
+└─ NO → Is it strategy/planning?
+          |
+          ├─ YES → strategist.md
+          └─ NO → Is it visual?
+                    |
+                    ├─ YES → visual-director.md
+                    └─ NO → orchestrator.md (default)
+```
+
+---
+
+## Core Principles (ALWAYS ENFORCE)
+
+### 1. Voice Authenticity
+- NEVER output copy without running through alexander-adapter
+- Paisa expressions natural, not forced
+- Tranquilo, reflexivo, directo
+- NO vulgar expressions (gonorrea, sisas, etc.)
+
+### 2. Pillar Balance
+- Track distribution monthly
+- No more than 3 consecutive posts same pillar
+- Use pillar-distributor skill for planning
+
+### 3. Faith Integration
+- 20-30% explicit, 70-80% implicit
+- Never preachy, always authentic
+- Use faith-business-integration skill
+
+### 4. Value First
+- 80% education, 20% promotion
+- Always provide free alternative when showcasing Kreoon
+- Honesty > hype
+
+### 5. Ethical Boundaries
+- NO: alcohol, drugs, casino, sexual content, misleading claims
+- YES: integrity, transparency, service
+
+---
+
+## Memory & Context
+
+### Persistent Memory
+- Memory files: memory/ directory
+- Stores: content performance, user preferences, project state
+
+### Obsidian Sync
+- GitHub: https://github.com/AlexanderKast/obsidian-brain.git
+- PAT: stored in .env (never commit to files)
+- Script: scripts/obsidian-sync.sh
+- Trigger: Important projects/conversations
+
+---
+
+## Output Formats
+
+### Standard Post
+```
+[HOOK]
+Primera línea impactante
+
+[CONTENIDO]
+Cuerpo del post
+
+[CTA]
+Call to action suave
+
+NOTAS:
+- [Visual concept]
+- [Posting time recommendation]
+- [Expected pillar %]
+```
+
+### Weekly Calendar
+```
+SEMANA: [Fecha]
+━━━━━━━━━━━━━━━━━━━━━━━━━
+LUNES: [Pilar X] - [Tema]
+MARTES: [Pilar Y] - [Tema]
+...
+BALANCE:
+Pilar 1: X posts
+Pilar 2: Y posts
+Pilar 3: Z posts
+Pilar 4: W posts
+```
+
+---
+
+## Error Handling
+
+### If voice feels off:
+→ Re-run through alexander-adapter with explicit instruction
+
+### If pillar imbalance detected:
+→ Load pillar-distributor.md, adjust calendar
+
+### If content too salesy:
+→ Revisit kreoon-showcase.md (80/20 rule)
+
+### If faith content alienating:
+→ Revisit faith-business-integration.md (balance explicit/implicit)
+
+### If framework depth needed:
+→ Consult knowledge/applied-frameworks.md, relevant section
+
+---
+
+## Version
+System Version: 1.0
+Last Updated: May 2026
+Maintained by: Alexander Cast (with Claude assistance)
