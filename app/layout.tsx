@@ -1,19 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Toaster } from "@/components/ui/sonner";
-import { SiteHeader } from "@/components/nav/site-header";
-import { Footer as SiteFooter } from "@/components/sections/footer";
-import { JsonLd } from "@/components/shared/json-ld";
-import { ScrollProgress } from "@/components/effects/scroll-progress";
-import { Preloader } from "@/components/shared/preloader";
-import { ScrollToTop } from "@/components/shared/scroll-to-top";
-import { StickyCta } from "@/components/shared/sticky-cta";
-import { ExitIntentModal } from "@/components/shared/exit-intent-modal";
-import { FloatingSocialProof } from "@/components/shared/floating-social-proof";
-import { buildPersonSchema, buildWebsiteSchema } from "@/lib/seo";
-import { site } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,7 +16,7 @@ const playfair = Playfair_Display({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#030303",
+  themeColor: "#000000",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -38,85 +24,29 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL("https://alexandercast.com"),
   title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s — ${site.name}`,
+    default: "Alexander Cast — Estrategia Digital & IA",
+    template: "%s — Alexander Cast",
   },
-  description: site.description,
-  applicationName: site.name,
-  authors: [{ name: site.name, url: site.url }],
-  creator: site.name,
-  publisher: site.name,
-  keywords: [
-    "Alexander Cast",
-    "estratega digital",
-    "consultoria IA Medellin",
-    "marca personal",
-    "emprendedores LATAM",
-    "captacion de clientes",
-    "KREOON",
-    "UGC Colombia",
-    "Infiny Group",
-  ],
-  alternates: { canonical: "/" },
-  openGraph: {
-    type: "website",
-    locale: "es_CO",
-    url: site.url,
-    siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
-    description: site.description,
-    images: [
-      {
-        url: "/opengraph-image",
-        width: 1200,
-        height: 630,
-        alt: `${site.name} — ${site.tagline}`,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: `${site.name} — ${site.tagline}`,
-    description: site.descriptionCorta,
-    images: ["/opengraph-image"],
-    creator: site.social.x.handle,
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
-  },
-  icons: { icon: "/favicon.ico" },
+  description:
+    "Estratega digital, de contenido e IA. Fundador de KREOON e Infiny Group. Medellín, Colombia.",
+  robots: { index: true, follow: true },
 };
 
+/**
+ * Root layout minimalista — solo provee el shell HTML/CSS base.
+ * El header, footer y CSS específico de cada sección lo provee
+ * el layout anidado: (public)/layout.tsx para el sitio público,
+ * admin/layout.tsx para el panel de administración.
+ */
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="es" className={`${inter.variable} ${playfair.variable} dark`}>
-      <body className="min-h-screen bg-background font-sans text-foreground antialiased">
-        <JsonLd schema={buildPersonSchema()} />
-        <JsonLd schema={buildWebsiteSchema()} />
-        <Preloader />
-        <ScrollProgress />
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
-        <ScrollToTop />
-        <StickyCta />
-        <FloatingSocialProof />
-        <ExitIntentModal />
-        <Toaster richColors position="top-center" theme="dark" />
-        <Analytics />
-        <SpeedInsights />
+      <body className="min-h-screen antialiased">
+        {children}
       </body>
     </html>
   );

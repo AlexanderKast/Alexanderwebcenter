@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="136" height="68" viewBox="0 0 136 68">
+  <rect width="136" height="68" rx="8" fill="#1a1a1a"/>
+  <!-- Anthropic/Claude logo mark - stylized diamond shape -->
+  <g transform="translate(20, 14)">
+    <!-- Diamond/crystal shape representing Claude's logo -->
+    <polygon points="20,2 34,10 34,26 20,34 6,26 6,10" fill="#D97757" opacity="0.9"/>
+    <polygon points="20,8 28,13 28,23 20,28 12,23 12,13" fill="#1a1a1a"/>
+    <polygon points="20,12 25,15 25,21 20,24 15,21 15,15" fill="#D97757" opacity="0.5"/>
+  </g>
+  <!-- "Claude" wordmark -->
+  <text x="68" y="38" font-family="'Helvetica Neue', Arial, sans-serif" font-size="16" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="1">Claude</text>
+  <text x="68" y="54" font-family="'Helvetica Neue', Arial, sans-serif" font-size="9" font-weight="400" fill="#D97757" text-anchor="middle" letter-spacing="2">ANTHROPIC</text>
+</svg>

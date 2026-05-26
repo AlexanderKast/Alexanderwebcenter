@@ -1,0 +1,5 @@
+<svg width="110" height="40" viewBox="0 0 110 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 10 L28 26 L20 22 L12 26 Z" fill="white" opacity="0.9"/>
+  <path d="M20 14 L26 26 L20 23 L14 26 Z" fill="white" opacity="0.5"/>
+  <text x="36" y="25" font-family="Arial,sans-serif" font-size="15" font-weight="700" fill="white" letter-spacing="-0.3">Claude</text>
+</svg>

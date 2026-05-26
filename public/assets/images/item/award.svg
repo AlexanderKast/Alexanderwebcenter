@@ -1,0 +1,19 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="40" cy="40" r="40" fill="#EDEDED"/>
+  <!-- Central diamond/star shape -->
+  <polygon points="40,14 47,33 66,40 47,47 40,66 33,47 14,40 33,33" fill="none" stroke="black" stroke-width="1.2"/>
+  <!-- Inner dot -->
+  <circle cx="40" cy="40" r="3" fill="black"/>
+  <!-- Circular text path (clockwise top) -->
+  <defs>
+    <path id="topArc" d="M 10,40 A 30,30 0 1,1 70,40"/>
+    <path id="bottomArc" d="M 10,40 A 30,30 0 0,0 70,40"/>
+  </defs>
+  <text font-family="sans-serif" font-size="7" fill="black" letter-spacing="2">
+    <textPath href="#topArc" startOffset="5%">KREOON · FUNDADOR ·</textPath>
+  </text>
+  <text font-family="sans-serif" font-size="7" fill="black" letter-spacing="2">
+    <textPath href="#bottomArc" startOffset="5%">ESTRATEGIA · DIGITAL ·</textPath>
+  </text>
+</svg>
