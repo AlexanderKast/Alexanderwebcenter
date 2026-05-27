@@ -4,8 +4,8 @@ import { useEffect, useRef } from "react";
 
 /**
  * Video de fondo fijo para toda la página.
- * El tiempo del video se controla con la posición horizontal del mouse:
- * izquierda = inicio del video, derecha = final.
+ * El tiempo del video se controla con el scroll de la página:
+ * top = inicio del video, bottom = final.
  * Usa requestAnimationFrame + lerp para un scrubbing suave.
  */
 export function HomeVideoBackground() {
@@ -21,17 +21,13 @@ export function HomeVideoBackground() {
     /* — cuando el metadata esté listo, marcamos ready — */
     const onMeta = () => { readyRef.current = true; };
 
-    /* — mouse move: mapea X del viewport al tiempo del video — */
-    const onMove = (e: MouseEvent) => {
+    /* — scroll: mapea scrollY al tiempo del video — */
+    const onScroll = () => {
       if (!readyRef.current || !video.duration) return;
-      targetRef.current = (e.clientX / window.innerWidth) * video.duration;
-    };
-
-    /* — touch (mobile): usa la posición X del primer dedo — */
-    const onTouch = (e: TouchEvent) => {
-      if (!readyRef.current || !video.duration) return;
-      const t = e.touches[0];
-      targetRef.current = (t.clientX / window.innerWidth) * video.duration;
+      const maxScroll =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+      targetRef.current = progress * video.duration;
     };
 
     /* — loop de animación: lerp suave hacia el target — */
@@ -46,14 +42,12 @@ export function HomeVideoBackground() {
     };
 
     video.addEventListener("loadedmetadata", onMeta);
-    window.addEventListener("mousemove",     onMove,  { passive: true });
-    window.addEventListener("touchmove",     onTouch, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
       video.removeEventListener("loadedmetadata", onMeta);
-      window.removeEventListener("mousemove",     onMove);
-      window.removeEventListener("touchmove",     onTouch);
+      window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafRef.current);
     };
   }, []);
