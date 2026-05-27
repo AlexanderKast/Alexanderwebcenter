@@ -16,7 +16,8 @@ const SOCIAL_LINKS = [
 export function HomeFooter() {
   return (
     <footer style={{
-      background: "#000",
+      background: "rgba(0,0,0,0.85)",
+      backdropFilter: "blur(8px)",
       borderTop: "1px solid var(--gold-dim)",
     }}>
       <div style={{

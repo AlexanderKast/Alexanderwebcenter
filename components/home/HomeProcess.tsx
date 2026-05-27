@@ -19,7 +19,8 @@ const STEPS = [
 export function HomeProcess() {
   return (
     <section style={{
-      background: "var(--surface)",
+      background: "rgba(10,10,10,0.75)",
+      backdropFilter: "blur(3px)",
       borderTop: "1px solid var(--gold-dim)",
     }}>
       <div style={{
