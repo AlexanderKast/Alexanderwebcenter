@@ -3,41 +3,53 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Video de fondo fijo para toda la página.
- * El tiempo del video se controla con el scroll de la página:
- * top = inicio del video, bottom = final.
- * Usa requestAnimationFrame + lerp para un scrubbing suave.
+ * Video de fondo fijo — scrubbing por scroll con suavizado real.
+ *
+ * Técnica:
+ *  1. Lerp del scrollY en píxeles (no del tiempo) → evita imprecisión de FP
+ *  2. Guarda `video.seeking` → NO lanza un seek si el anterior aún no terminó
+ *  3. Threshold de 40 ms → evita micro-seeks que colapsan el decoder
+ *  4. will-change: transform en el wrapper → compositor layer dedicado
  */
 export function HomeVideoBackground() {
   const videoRef  = useRef<HTMLVideoElement>(null);
-  const targetRef = useRef(0);          // tiempo objetivo (segundos)
+  const smoothY   = useRef(0);   // scrollY interpolado (px)
+  const targetY   = useRef(0);   // scrollY real, actualizado en cada evento scroll
   const rafRef    = useRef<number>(0);
-  const readyRef  = useRef(false);      // duration disponible
+  const readyRef  = useRef(false);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    /* — cuando el metadata esté listo, marcamos ready — */
+    /* ── metadata lista ── */
     const onMeta = () => { readyRef.current = true; };
 
-    /* — scroll: mapea scrollY al tiempo del video — */
-    const onScroll = () => {
-      if (!readyRef.current || !video.duration) return;
-      const maxScroll =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-      targetRef.current = progress * video.duration;
-    };
+    /* ── captura scrollY crudo sin cálculos extras ── */
+    const onScroll = () => { targetY.current = window.scrollY; };
 
-    /* — loop de animación: lerp suave hacia el target — */
+    /* ── loop principal ── */
     const tick = () => {
-      if (readyRef.current && video.duration) {
-        const diff = targetRef.current - video.currentTime;
-        if (Math.abs(diff) > 0.016) {           // ~1 frame a 60fps
-          video.currentTime += diff * 0.07;      // factor de suavizado
+      /* 1. Suavizar scrollY con lerp exponencial (factor 0.11) */
+      smoothY.current += (targetY.current - smoothY.current) * 0.11;
+
+      if (readyRef.current && video.duration > 0) {
+        /* 2. Convertir scrollY suavizado a tiempo del video */
+        const maxScroll = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight,
+        );
+        const progress  = Math.min(smoothY.current / maxScroll, 1);
+        const wantTime  = progress * video.duration;
+
+        /* 3. Solo hacer seek si:
+              a) no hay un seek en curso (video.seeking === false)
+              b) la diferencia supera 40 ms de video (1.2 frames a 30 fps)   */
+        if (!video.seeking && Math.abs(wantTime - video.currentTime) > 0.04) {
+          video.currentTime = wantTime;
         }
       }
+
       rafRef.current = requestAnimationFrame(tick);
     };
 
@@ -56,9 +68,10 @@ export function HomeVideoBackground() {
     <div style={{
       position: "fixed",
       inset: 0,
-      zIndex: -1,                 /* detrás de todo el contenido */
+      zIndex: -1,
       pointerEvents: "none",
       overflow: "hidden",
+      willChange: "transform",   /* compositor layer dedicado en GPU */
     }}>
       <video
         ref={videoRef}
