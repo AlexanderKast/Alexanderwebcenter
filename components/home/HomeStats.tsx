@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useReveal } from "@/hooks/useReveal";
 
 function useCounter(target: number, active: boolean) {
   const [val, setVal] = useState(0);
@@ -26,44 +27,46 @@ const STATS = [
 ];
 
 export function HomeStats() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(false);
+  const { ref, visible } = useReveal<HTMLDivElement>(0.2);
 
-  useEffect(() => {
-    const obs = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setActive(true); obs.disconnect(); } },
-      { threshold: 0.3 }
-    );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-
-  const c0 = useCounter(6, active);
-  const c1 = useCounter(4, active);
-  const c2 = useCounter(100, active);
-
+  const c0 = useCounter(6,   visible);
+  const c1 = useCounter(4,   visible);
+  const c2 = useCounter(100, visible);
   const counters = [c0, c1, c2];
 
   return (
-    <div ref={ref} style={{
-      background: "rgba(10,10,10,0.72)",
-      borderTop: "1px solid var(--gold-dim)",
-      borderBottom: "1px solid var(--gold-dim)",
-      backdropFilter: "blur(4px)",
-    }}>
-      <div style={{
-        maxWidth: 1400, margin: "0 auto",
-        padding: "0 clamp(20px,4vw,60px)",
-        display: "grid",
-        gridTemplateColumns: "repeat(4,1fr)",
-      }} className="stats-grid">
+    <div
+      ref={ref}
+      style={{
+        background: "rgba(10,10,10,0.72)",
+        borderTop: "1px solid var(--gold-dim)",
+        borderBottom: "1px solid var(--gold-dim)",
+        backdropFilter: "blur(4px)",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: 1400, margin: "0 auto",
+          padding: "0 clamp(20px,4vw,60px)",
+          display: "grid",
+          gridTemplateColumns: "repeat(4,1fr)",
+        }}
+        className="stats-grid"
+      >
         {STATS.map((s, i) => (
-          <div key={i} style={{
-            padding: "clamp(36px,5vw,56px) clamp(20px,3vw,40px)",
-            borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
-            display: "flex", flexDirection: "column", gap: 12,
-          }}>
-            {/* Big number */}
+          <div
+            key={i}
+            style={{
+              padding: "clamp(36px,5vw,56px) clamp(20px,3vw,40px)",
+              borderRight: i < 3 ? "1px solid rgba(255,255,255,0.06)" : "none",
+              display: "flex", flexDirection: "column", gap: 12,
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(24px)",
+              transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 110}ms,
+                           transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 110}ms`,
+            }}
+          >
+            {/* Número */}
             <div style={{
               fontFamily: "var(--font-bebas)",
               fontSize: "clamp(52px,6vw,80px)",
@@ -72,7 +75,7 @@ export function HomeStats() {
               color: s.special ? "var(--gold)" : "#fff",
             }}>
               {s.special
-                ? <><span style={{ color: "var(--gold)" }}>AI</span></>
+                ? <span style={{ color: "var(--gold)" }}>AI</span>
                 : <>{counters[i]}{s.suffix}</>
               }
             </div>
@@ -88,12 +91,13 @@ export function HomeStats() {
               {s.label}
             </div>
 
-            {/* Gold line */}
+            {/* Línea dorada animada */}
             <div style={{
-              width: 32, height: 2,
-              background: "var(--gold)",
+              height: 2, background: "var(--gold)",
               marginTop: 4,
-            }}/>
+              width: visible ? 32 : 0,
+              transition: `width 0.6s cubic-bezier(0.16,1,0.3,1) ${200 + i * 110}ms`,
+            }} />
           </div>
         ))}
       </div>

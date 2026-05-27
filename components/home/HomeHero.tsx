@@ -7,6 +7,14 @@ const TAGS = [
   "MEDELLÍN, COLOMBIA 🇨🇴",
 ];
 
+/* Líneas del título con delay de entrada */
+const TITLE_LINES = [
+  { text: "ESTRATEGIA", gold: false, delay: 300 },
+  { text: "CONTENIDO",  gold: false, delay: 420 },
+  { text: "E INTELIGENCIA", gold: false, delay: 540 },
+  { text: "ARTIFICIAL", gold: true,  delay: 660 },
+];
+
 export function HomeHero() {
   return (
     <section id="inicio" style={{
@@ -15,73 +23,83 @@ export function HomeHero() {
       display: "flex",
       alignItems: "center",
       overflow: "hidden",
-      background: "transparent",         /* el video global se ve detrás */
+      background: "transparent",
     }}>
-      {/* Gradient overlay — oscurece el video global para legibilidad */}
+
+      {/* Gradient overlay — oscurece el video global */}
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
-        background: "linear-gradient(135deg,rgba(0,0,0,0.80) 0%,rgba(0,0,0,0.40) 50%,rgba(0,0,0,0.65) 100%)",
+        background:
+          "linear-gradient(135deg,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.42) 50%,rgba(0,0,0,0.68) 100%)",
       }} />
 
-      {/* Gold bottom line */}
+      {/* Línea dorada inferior */}
       <div style={{
         position: "absolute", bottom: 0, left: 0, right: 0,
         height: 1, background: "var(--gold-dim)", zIndex: 2,
       }} />
 
-      {/* Content */}
-      <div style={{
-        position: "relative", zIndex: 2,
-        maxWidth: 1400, margin: "0 auto", width: "100%",
-        padding: "clamp(100px,14vw,160px) clamp(20px,4vw,60px) clamp(60px,8vw,100px)",
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr",
-        gap: "clamp(40px,6vw,100px)",
-        alignItems: "center",
-      }} className="hero-grid">
+      {/* Contenido */}
+      <div
+        style={{
+          position: "relative", zIndex: 2,
+          maxWidth: 1400, margin: "0 auto", width: "100%",
+          padding: "clamp(100px,14vw,160px) clamp(20px,4vw,60px) clamp(60px,8vw,100px)",
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          gap: "clamp(40px,6vw,100px)",
+          alignItems: "center",
+        }}
+        className="hero-grid"
+      >
 
-        {/* Left */}
+        {/* ── Izquierda ── */}
         <div>
           {/* Tags */}
-          <ul style={{
-            listStyle: "none",
-            display: "flex", flexDirection: "column", gap: 6,
-            marginBottom: 36,
-          }}>
-            {TAGS.map(tag => (
-              <li key={tag} style={{
-                fontFamily: "var(--font-dm)",
-                fontSize: 11, letterSpacing: "2.5px",
-                color: "var(--muted)",
-                display: "flex", alignItems: "center", gap: 10,
-              }}>
+          <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 6, marginBottom: 36 }}>
+            {TAGS.map((tag, i) => (
+              <li
+                key={tag}
+                style={{
+                  fontFamily: "var(--font-dm)",
+                  fontSize: 11, letterSpacing: "2.5px",
+                  color: "var(--muted)",
+                  display: "flex", alignItems: "center", gap: 10,
+                  animation: `hero-slide-left 0.7s cubic-bezier(0.16,1,0.3,1) ${80 + i * 80}ms both`,
+                }}
+              >
                 <span style={{
                   display: "inline-block",
                   width: 20, height: 1,
-                  background: "var(--gold)",
-                  flexShrink: 0,
-                }}/>
+                  background: "var(--gold)", flexShrink: 0,
+                }} />
                 {tag}
               </li>
             ))}
           </ul>
 
-          {/* Main title */}
+          {/* Título — curtain reveal por línea */}
           <h1 style={{
             fontFamily: "var(--font-bebas)",
             fontSize: "clamp(72px,10vw,130px)",
             lineHeight: 0.92,
             letterSpacing: "-2px",
-            color: "#fff",
             marginBottom: 40,
           }}>
-            ESTRATEGIA<br/>
-            CONTENIDO<br/>
-            E INTELIGENCIA<br/>
-            <span style={{ color: "var(--gold)" }}>ARTIFICIAL</span>
+            {TITLE_LINES.map(({ text, gold, delay }) => (
+              <div key={text} style={{ overflow: "hidden", display: "block" }}>
+                <div style={{
+                  color: gold ? "var(--gold)" : "#fff",
+                  display: "block",
+                  animation: `hero-curtain 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms both`,
+                }}>
+                  {text}
+                </div>
+              </div>
+            ))}
           </h1>
 
-          {/* Body text */}
+          {/* Descripción */}
           <p style={{
             fontFamily: "var(--font-dm)",
             fontSize: "clamp(15px,1.6vw,18px)",
@@ -89,6 +107,7 @@ export function HomeHero() {
             color: "var(--muted)",
             maxWidth: 480,
             marginBottom: 40,
+            animation: "hero-fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 750ms both",
           }}>
             Paisa de Medellín con 6+ años construyendo negocios digitales en LATAM.
             Ayudo a emprendedores y marcas a crecer con estrategia digital, contenido
@@ -96,38 +115,50 @@ export function HomeHero() {
           </p>
 
           {/* CTA */}
-          <a href="#contacto" style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            fontFamily: "var(--font-bebas)",
-            fontSize: 16, letterSpacing: "2.5px",
-            color: "#000", background: "var(--gold)",
-            padding: "18px 36px",
-            transition: "all .25s ease",
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.background = "#fff";
-            e.currentTarget.style.color = "#000";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.background = "var(--gold)";
-            e.currentTarget.style.color = "#000";
-          }}
-          >
-            AGENDA UNA SESIÓN ESTRATÉGICA
-            <span style={{ fontSize: 20 }}>→</span>
-          </a>
+          <div style={{
+            animation: "hero-fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 860ms both",
+          }}>
+            <a
+              href="#contacto"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 10,
+                fontFamily: "var(--font-bebas)",
+                fontSize: 16, letterSpacing: "2.5px",
+                color: "#000", background: "var(--gold)",
+                padding: "18px 36px",
+                transition: "all .25s ease",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "#fff";
+                e.currentTarget.style.color = "#000";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "var(--gold)";
+                e.currentTarget.style.color = "#000";
+              }}
+            >
+              AGENDA UNA SESIÓN ESTRATÉGICA
+              <span style={{ fontSize: 20 }}>→</span>
+            </a>
+          </div>
         </div>
 
-        {/* Right — badge card */}
-        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        {/* ── Derecha — tarjeta de stats ── */}
+        <div
+          style={{
+            display: "flex", justifyContent: "flex-end",
+            animation: "hero-slide-right 1s cubic-bezier(0.16,1,0.3,1) 400ms both",
+          }}
+        >
           <div style={{
-            background: "rgba(10,10,10,0.85)",
+            background: "rgba(10,10,10,0.82)",
             border: "1px solid var(--gold-dim)",
             padding: "clamp(32px,4vw,52px)",
             maxWidth: 380, width: "100%",
-            backdropFilter: "blur(10px)",
+            backdropFilter: "blur(12px)",
           }}>
-            {/* Availability */}
+
+            {/* Disponibilidad */}
             <div style={{
               display: "flex", alignItems: "center", gap: 8,
               marginBottom: 32,
@@ -139,11 +170,12 @@ export function HomeHero() {
                 width: 8, height: 8, borderRadius: "50%",
                 background: "#4ade80",
                 boxShadow: "0 0 6px #4ade80",
-              }}/>
+                animation: "dot-pulse 2.4s ease infinite",
+              }} />
               DISPONIBLE PARA PROYECTOS
             </div>
 
-            {/* Stats in card */}
+            {/* Stats */}
             {[
               { num: "6+",   label: "Años de experiencia" },
               { num: "4",    label: "Países de operación" },
@@ -165,8 +197,7 @@ export function HomeHero() {
                 <span style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, color: "var(--muted)",
-                  textAlign: "right", maxWidth: 180,
-                  letterSpacing: "0.5px",
+                  textAlign: "right", maxWidth: 180, letterSpacing: "0.5px",
                 }}>
                   {label}
                 </span>
@@ -192,6 +223,7 @@ export function HomeHero() {
         zIndex: 2,
         display: "flex", flexDirection: "column",
         alignItems: "center", gap: 6,
+        animation: "hero-fade-up 1s ease 1400ms both",
       }}>
         <div style={{
           fontFamily: "var(--font-dm)",
@@ -203,14 +235,40 @@ export function HomeHero() {
         <div style={{
           width: 1, height: 40,
           background: "linear-gradient(to bottom, var(--gold-dim), transparent)",
-          animation: "scrollPulse 2s ease infinite",
-        }}/>
+          animation: "scroll-pulse 2s ease infinite",
+        }} />
       </div>
 
       <style>{`
-        @keyframes scrollPulse {
-          0%,100%{opacity:.3;transform:scaleY(1)}
-          50%{opacity:1;transform:scaleY(1.15)}
+        /* Curtain: línea del título emerge de abajo */
+        @keyframes hero-curtain {
+          from { transform: translateY(105%); opacity: 0; }
+          to   { transform: translateY(0);    opacity: 1; }
+        }
+        /* Tags: entran desde la izquierda */
+        @keyframes hero-slide-left {
+          from { opacity: 0; transform: translateX(-28px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        /* Tarjeta: entra desde la derecha */
+        @keyframes hero-slide-right {
+          from { opacity: 0; transform: translateX(40px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+        /* Descripción y CTA: fade up */
+        @keyframes hero-fade-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        /* Punto verde pulsante */
+        @keyframes dot-pulse {
+          0%, 100% { box-shadow: 0 0 4px #4ade80; }
+          50%       { box-shadow: 0 0 12px #4ade80; }
+        }
+        /* Scroll hint */
+        @keyframes scroll-pulse {
+          0%, 100% { opacity: 0.3; transform: scaleY(1); }
+          50%       { opacity: 1;   transform: scaleY(1.15); }
         }
         @media (max-width: 768px) {
           .hero-grid { grid-template-columns: 1fr !important; }

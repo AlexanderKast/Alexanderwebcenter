@@ -1,3 +1,7 @@
+"use client";
+
+import { useReveal } from "@/hooks/useReveal";
+
 const STEPS = [
   {
     n: "01",
@@ -17,12 +21,17 @@ const STEPS = [
 ];
 
 export function HomeProcess() {
+  const { ref: secRef, visible: secVisible } = useReveal<HTMLElement>(0.1);
+
   return (
-    <section style={{
-      background: "rgba(10,10,10,0.75)",
-      backdropFilter: "blur(3px)",
-      borderTop: "1px solid var(--gold-dim)",
-    }}>
+    <section
+      ref={secRef}
+      style={{
+        background: "rgba(10,10,10,0.75)",
+        backdropFilter: "blur(3px)",
+        borderTop: "1px solid var(--gold-dim)",
+      }}
+    >
       <div style={{
         maxWidth: 1400, margin: "0 auto",
         padding: "clamp(60px,8vw,100px) clamp(20px,4vw,60px)",
@@ -34,34 +43,51 @@ export function HomeProcess() {
             fontFamily: "var(--font-dm)",
             fontSize: 11, letterSpacing: "3px",
             color: "var(--gold)", marginBottom: 16,
+            opacity: secVisible ? 1 : 0,
+            transform: secVisible ? "translateY(0)" : "translateY(14px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
           }}>
             CÓMO TRABAJO
           </div>
-          <h2 style={{
-            fontFamily: "var(--font-bebas)",
-            fontSize: "clamp(52px,6vw,80px)",
-            letterSpacing: "-1px", color: "#fff",
-            lineHeight: 1,
-          }}>
-            EL PROCESO
-          </h2>
+          <div style={{ overflow: "hidden" }}>
+            <h2 style={{
+              fontFamily: "var(--font-bebas)",
+              fontSize: "clamp(52px,6vw,80px)",
+              letterSpacing: "-1px", color: "#fff", lineHeight: 1,
+              opacity: secVisible ? 1 : 0,
+              transform: secVisible ? "translateY(0)" : "translateY(100%)",
+              transition: "opacity 0.8s cubic-bezier(0.16,1,0.3,1) 80ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) 80ms",
+            }}>
+              EL PROCESO
+            </h2>
+          </div>
         </div>
 
         {/* Cards */}
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3,1fr)",
-          gap: "clamp(20px,3vw,40px)",
-        }} className="process-grid">
-          {STEPS.map((s) => (
-            <div key={s.n} style={{
-              position: "relative",
-              background: "var(--surface2)",
-              border: "1px solid rgba(255,255,255,0.06)",
-              padding: "clamp(32px,4vw,52px)",
-              overflow: "hidden",
-            }}>
-              {/* Background number */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3,1fr)",
+            gap: "clamp(20px,3vw,40px)",
+          }}
+          className="process-grid"
+        >
+          {STEPS.map((s, i) => (
+            <div
+              key={s.n}
+              style={{
+                position: "relative",
+                background: "rgba(17,17,17,0.9)",
+                border: "1px solid rgba(255,255,255,0.06)",
+                padding: "clamp(32px,4vw,52px)",
+                overflow: "hidden",
+                opacity: secVisible ? 1 : 0,
+                transform: secVisible ? "translateY(0)" : "translateY(36px)",
+                transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${160 + i * 120}ms,
+                             transform 0.7s cubic-bezier(0.16,1,0.3,1) ${160 + i * 120}ms`,
+              }}
+            >
+              {/* Número decorativo de fondo */}
               <div style={{
                 position: "absolute",
                 top: -20, right: 16,
@@ -75,36 +101,35 @@ export function HomeProcess() {
                 {s.n}
               </div>
 
-              {/* Gold top line */}
+              {/* Línea dorada top — se extiende con el reveal */}
               <div style={{
-                width: 40, height: 2,
+                width: secVisible ? 40 : 0,
+                height: 2,
                 background: "var(--gold)",
                 marginBottom: 28,
-              }}/>
+                transition: `width 0.5s cubic-bezier(0.16,1,0.3,1) ${300 + i * 120}ms`,
+              }} />
 
-              {/* Step number */}
+              {/* Step label */}
               <div style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 11, letterSpacing: "3px",
-                color: "var(--gold)",
-                marginBottom: 16,
+                color: "var(--gold)", marginBottom: 16,
               }}>
                 PASO {s.n}
               </div>
 
-              {/* Title */}
+              {/* Título */}
               <h3 style={{
                 fontFamily: "var(--font-bebas)",
                 fontSize: "clamp(28px,3vw,40px)",
                 letterSpacing: "-0.5px",
-                color: "#fff",
-                marginBottom: 20,
-                lineHeight: 1,
+                color: "#fff", marginBottom: 20, lineHeight: 1,
               }}>
                 {s.title}
               </h3>
 
-              {/* Body */}
+              {/* Cuerpo */}
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 15, lineHeight: 1.7,
