@@ -189,7 +189,7 @@ function PostTable({ posts, clientId, canEdit, onOpen }: {
           <div className="px-3 py-2.5 min-w-0">
             <span className="text-sm text-white/80 group-hover:text-white truncate block transition-colors">{p.nombre}</span>
             {p.tipo_contenido && p.tipo_contenido.length > 0 && (
-              <span className="text-[11px] text-[#D4AF37]/50 truncate block">{p.tipo_contenido.join(', ')}</span>
+              <span className="text-[11px] text-[#D4AF37]/50 truncate block">{(p.tipo_contenido ?? []).join(', ')}</span>
             )}
           </div>
           <div className="px-3 py-2" onClick={(e) => e.stopPropagation()}>

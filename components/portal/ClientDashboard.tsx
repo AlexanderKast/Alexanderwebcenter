@@ -214,7 +214,7 @@ export function ClientDashboard({
             fieldDefs={fieldDefs.filter((f) => f.entity_type === 'tool')} />
         )}
         {activeTab === 'tareas' && (
-          <TareasTab initialTasks={data.tasks} clientId={client.id} canEdit={canEdit} />
+          <TareasTab initialTasks={data.tasks ?? []} clientId={client.id} canEdit={canEdit} />
         )}
       </div>
     </div>

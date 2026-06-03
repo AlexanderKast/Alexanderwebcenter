@@ -7,9 +7,9 @@ export function useRealtimeTable<T extends { id: string }>(
   clientId: string,
   initialData: T[],
 ): T[] {
-  const [data, setData] = useState<T[]>(initialData);
+  const [data, setData] = useState<T[]>(initialData ?? []);
 
-  useEffect(() => { setData(initialData); }, [initialData]);
+  useEffect(() => { setData(initialData ?? []); }, [initialData]);
 
   useEffect(() => {
     const supabase = createBrowserClient(

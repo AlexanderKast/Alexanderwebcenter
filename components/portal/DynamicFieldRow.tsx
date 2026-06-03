@@ -228,9 +228,9 @@ export function DynamicFieldRow({ fieldDef, value, canEdit, onSave, onDeleteDef 
           />
         );
       case 'select':
-        return <SelectEditor value={strVal} options={fieldDef.options} canEdit={canEdit} onSave={onSave} />;
+        return <SelectEditor value={strVal} options={fieldDef.options ?? []} canEdit={canEdit} onSave={onSave} />;
       case 'multiselect':
-        return <MultiSelectEditor value={Array.isArray(value) ? (value as string[]) : []} options={fieldDef.options} canEdit={canEdit} onSave={onSave} />;
+        return <MultiSelectEditor value={Array.isArray(value) ? (value as string[]) : []} options={fieldDef.options ?? []} canEdit={canEdit} onSave={onSave} />;
       case 'checkbox':
         return <CheckboxEditor value={!!value} canEdit={canEdit} onSave={onSave} />;
     }
