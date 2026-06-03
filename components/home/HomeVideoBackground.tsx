@@ -10,11 +10,13 @@ import { useEffect, useRef } from "react";
  *  2. Guarda `video.seeking` → NO lanza un seek si el anterior aún no terminó
  *  3. Threshold de 40 ms → evita micro-seeks que colapsan el decoder
  *  4. will-change: transform en el wrapper → compositor layer dedicado
+ *  5. prefers-reduced-motion → pausa scrubbing, muestra primer frame estático
+ *  6. preload="metadata" → no descarga el video completo en móvil
  */
 export function HomeVideoBackground() {
   const videoRef  = useRef<HTMLVideoElement>(null);
-  const smoothY   = useRef(0);   // scrollY interpolado (px)
-  const targetY   = useRef(0);   // scrollY real, actualizado en cada evento scroll
+  const smoothY   = useRef(0);
+  const targetY   = useRef(0);
   const rafRef    = useRef<number>(0);
   const readyRef  = useRef(false);
 
@@ -22,29 +24,28 @@ export function HomeVideoBackground() {
     const video = videoRef.current;
     if (!video) return;
 
-    /* ── metadata lista ── */
-    const onMeta = () => { readyRef.current = true; };
+    /* ── Respetar prefers-reduced-motion: no scrubbear, dejar primer frame ── */
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) {
+      /* Carga el primer frame y se detiene — sin animación */
+      video.addEventListener("loadedmetadata", () => { video.currentTime = 0; }, { once: true });
+      return;
+    }
 
-    /* ── captura scrollY crudo sin cálculos extras ── */
+    const onMeta   = () => { readyRef.current = true; };
     const onScroll = () => { targetY.current = window.scrollY; };
 
-    /* ── loop principal ── */
     const tick = () => {
-      /* 1. Suavizar scrollY con lerp exponencial (factor 0.11) */
       smoothY.current += (targetY.current - smoothY.current) * 0.11;
 
       if (readyRef.current && video.duration > 0) {
-        /* 2. Convertir scrollY suavizado a tiempo del video */
         const maxScroll = Math.max(
           1,
           document.documentElement.scrollHeight - window.innerHeight,
         );
-        const progress  = Math.min(smoothY.current / maxScroll, 1);
-        const wantTime  = progress * video.duration;
+        const progress = Math.min(smoothY.current / maxScroll, 1);
+        const wantTime = progress * video.duration;
 
-        /* 3. Solo hacer seek si:
-              a) no hay un seek en curso (video.seeking === false)
-              b) la diferencia supera 40 ms de video (1.2 frames a 30 fps)   */
         if (!video.seeking && Math.abs(wantTime - video.currentTime) > 0.04) {
           video.currentTime = wantTime;
         }
@@ -71,13 +72,14 @@ export function HomeVideoBackground() {
       zIndex: -1,
       pointerEvents: "none",
       overflow: "hidden",
-      willChange: "transform",   /* compositor layer dedicado en GPU */
+      willChange: "transform",
     }}>
       <video
         ref={videoRef}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
+        aria-hidden="true"
         style={{
           width: "100%",
           height: "100%",

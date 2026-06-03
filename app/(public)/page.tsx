@@ -1,34 +1,29 @@
-import { HomePreloader }      from "@/components/home/HomePreloader";
-import { HomeCursor }         from "@/components/home/HomeCursor";
-import { HomeVideoBackground } from "@/components/home/HomeVideoBackground";
-import { HomeHeader }          from "@/components/home/HomeHeader";
-import { HomeHero }            from "@/components/home/HomeHero";
-import { HomeMarquee }         from "@/components/home/HomeMarquee";
-import { HomeStats }           from "@/components/home/HomeStats";
-import { HomeServices }        from "@/components/home/HomeServices";
-import { HomeProcess }         from "@/components/home/HomeProcess";
-import { HomeFooter }          from "@/components/home/HomeFooter";
+import { HomePreloader }  from "@/components/home/HomePreloader";
+import { HomeHero }       from "@/components/home/HomeHero";
+import { HomeMarquee }    from "@/components/home/HomeMarquee";
+import { HomeStats }      from "@/components/home/HomeStats";
+import { HomeSobreMi }    from "@/components/home/HomeSobreMi";
+import { HomeServices }   from "@/components/home/HomeServices";
+import { HomeProcess }    from "@/components/home/HomeProcess";
+import { HomeTestimonios } from "@/components/home/HomeTestimonios";
+import { HomeRecursos }   from "@/components/home/HomeRecursos";
+import { HomePodcast }    from "@/components/home/HomePodcast";
+import { HomeContacto }   from "@/components/home/HomeContacto";
 
 export default function HomePage() {
   return (
     <>
-      {/* Experiencia de carga premium */}
       <HomePreloader />
-
-      {/* Cursor personalizado (solo desktop) */}
-      <HomeCursor />
-
-      {/* Video de fondo fijo — z-index:-1, scrubbing por scroll */}
-      <HomeVideoBackground />
-
-      {/* Contenido */}
-      <HomeHeader />
       <HomeHero />
       <HomeMarquee />
       <HomeStats />
+      <HomeSobreMi />
       <HomeServices />
       <HomeProcess />
-      <HomeFooter />
+      <HomeTestimonios />
+      <HomeRecursos />
+      <HomePodcast />
+      <HomeContacto />
     </>
   );
 }

@@ -1,6 +1,10 @@
 import type { Metadata, Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics }    from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { HomeCursor }          from "@/components/home/HomeCursor";
+import { HomeVideoBackground } from "@/components/home/HomeVideoBackground";
+import { HomeHeader }          from "@/components/home/HomeHeader";
+import { HomeFooter }          from "@/components/home/HomeFooter";
 
 export const viewport: Viewport = {
   themeColor: "#000000",
@@ -41,7 +45,7 @@ export const metadata: Metadata = {
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {/* Google Fonts: Bebas Neue + DM Sans */}
+      {/* Google Fonts */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link
@@ -74,8 +78,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-
-        /* ── Grain texture — superposición fija de grano cinematográfico ── */
         body::after {
           content: '';
           position: fixed;
@@ -89,7 +91,14 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
         }
       `}</style>
 
+      {/* Chrome compartido en todas las páginas */}
+      <HomeCursor />
+      <HomeVideoBackground />
+      <HomeHeader />
+
       {children}
+
+      <HomeFooter />
 
       <Analytics />
       <SpeedInsights />

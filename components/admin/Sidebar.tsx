@@ -52,6 +52,12 @@ const sections: Section[] = [
     ],
   },
   {
+    label: "Portal de clientes",
+    items: [
+      { label: "Clientes", href: "/admin/clientes", icon: Building2 },
+    ],
+  },
+  {
     label: "Herramientas",
     items: [
       { label: "Content Forge", href: "/admin/content-forge", icon: Sparkles },

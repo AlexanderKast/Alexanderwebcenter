@@ -8,69 +8,50 @@ import { useEffect, useRef } from "react";
  * El anillo se expande cuando el cursor está sobre links/botones.
  */
 export function HomeCursor() {
-  const dotRef  = useRef<HTMLDivElement>(null);
-  const ringRef = useRef<HTMLDivElement>(null);
-  const pos     = useRef({ x: -200, y: -200 });
-  const ring    = useRef({ x: -200, y: -200 });
-  const hovered = useRef(false);
+  const dotRef    = useRef<HTMLDivElement>(null);
+  const ringRef   = useRef<HTMLDivElement>(null);
+  const mousePos  = useRef({ x: -200, y: -200 });
+  const ringPos   = useRef({ x: -200, y: -200 }); // posición interpolada del anillo
+  const hovered   = useRef(false);
 
   useEffect(() => {
-    // Solo en dispositivos con puntero fino (no touch)
     if (!window.matchMedia("(pointer: fine)").matches) return;
 
     document.body.style.cursor = "none";
 
-    /* —— seguimiento del mouse —— */
     const onMove = (e: MouseEvent) => {
-      pos.current = { x: e.clientX, y: e.clientY };
+      mousePos.current = { x: e.clientX, y: e.clientY };
     };
 
-    /* —— loop de animación —— */
+    /* —— loop de animación con null checks explícitos —— */
     let raf: number;
     const tick = () => {
-      // Dot: instantáneo
-      dotRef.current!.style.transform =
-        `translate(${pos.current.x - 3}px, ${pos.current.y - 3}px)`;
+      const dot  = dotRef.current;
+      const ring = ringRef.current;
+      if (!dot || !ring) { raf = requestAnimationFrame(tick); return; }
 
-      // Ring: lerp suave
-      ring.current.x += (pos.current.x - ring.current.x) * 0.1;
-      ring.current.y += (pos.current.y - ring.current.y) * 0.1;
+      dot.style.transform =
+        `translate(${mousePos.current.x - 3}px, ${mousePos.current.y - 3}px)`;
+
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.1;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.1;
+
       const size = hovered.current ? 56 : 36;
       const off  = size / 2;
-      ringRef.current!.style.width  = `${size}px`;
-      ringRef.current!.style.height = `${size}px`;
-      ringRef.current!.style.transform =
-        `translate(${ring.current.x - off}px, ${ring.current.y - off}px)`;
-      ringRef.current!.style.borderColor = hovered.current
-        ? "var(--gold)"
-        : "rgba(201,168,76,0.5)";
-      ringRef.current!.style.background = hovered.current
-        ? "rgba(201,168,76,0.08)"
-        : "transparent";
+      ring.style.width       = `${size}px`;
+      ring.style.height      = `${size}px`;
+      ring.style.transform   = `translate(${ringPos.current.x - off}px, ${ringPos.current.y - off}px)`;
+      ring.style.borderColor = hovered.current ? "var(--gold)" : "rgba(201,168,76,0.5)";
+      ring.style.background  = hovered.current ? "rgba(201,168,76,0.08)" : "transparent";
 
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 
-    /* —— hover sobre interactivos (delegación en document) —— */
-    const onOver = (e: MouseEvent) => {
-      const el = e.target as HTMLElement;
-      if (el.closest("a") || el.closest("button")) hovered.current = true;
-    };
-    const onOut = (e: MouseEvent) => {
-      const el = e.target as HTMLElement;
-      if (el.closest("a") || el.closest("button")) hovered.current = false;
-    };
-
-    /* —— ocultar cursor al salir del viewport —— */
-    const onLeave = () => {
-      dotRef.current!.style.opacity  = "0";
-      ringRef.current!.style.opacity = "0";
-    };
-    const onEnter = () => {
-      dotRef.current!.style.opacity  = "1";
-      ringRef.current!.style.opacity = "1";
-    };
+    const onOver  = (e: MouseEvent) => { if ((e.target as HTMLElement).closest("a,button")) hovered.current = true; };
+    const onOut   = (e: MouseEvent) => { if ((e.target as HTMLElement).closest("a,button")) hovered.current = false; };
+    const onLeave = () => { if (dotRef.current) dotRef.current.style.opacity = "0"; if (ringRef.current) ringRef.current.style.opacity = "0"; };
+    const onEnter = () => { if (dotRef.current) dotRef.current.style.opacity = "1"; if (ringRef.current) ringRef.current.style.opacity = "1"; };
 
     window.addEventListener("mousemove",   onMove,  { passive: true });
     document.addEventListener("mouseover",  onOver,  { passive: true });
@@ -91,9 +72,9 @@ export function HomeCursor() {
 
   return (
     <>
-      {/* Punto dorado (instantáneo) */}
       <div
         ref={dotRef}
+        aria-hidden="true"
         style={{
           position: "fixed", top: 0, left: 0,
           zIndex: 9998, pointerEvents: "none",
@@ -103,9 +84,9 @@ export function HomeCursor() {
           transition: "opacity 0.3s",
         }}
       />
-      {/* Anillo (lerp) */}
       <div
         ref={ringRef}
+        aria-hidden="true"
         style={{
           position: "fixed", top: 0, left: 0,
           zIndex: 9997, pointerEvents: "none",

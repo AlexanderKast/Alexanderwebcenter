@@ -1,54 +1,40 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Loader2, Mail, CheckCircle2, AlertCircle } from "lucide-react";
-import { createClient } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+import { Loader2, LogIn, AlertCircle } from "lucide-react";
+import { createBrowserClient } from "@supabase/ssr";
 import { Input } from "@/components/ui/input";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "loading" | "error";
 
 export function LoginForm() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setStatus("sending");
+    setStatus("loading");
     setError(null);
     try {
-      const supabase = createClient(
+      const supabase = createBrowserClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       );
-      const { error: authError } = await supabase.auth.signInWithOtp({
+      const { error: authError } = await supabase.auth.signInWithPassword({
         email: email.trim().toLowerCase(),
-        options: {
-          emailRedirectTo: `${window.location.origin}/admin`,
-        },
+        password,
       });
       if (authError) throw authError;
-      setStatus("sent");
+      router.push("/admin");
+      router.refresh();
     } catch (err) {
       setStatus("error");
-      setError(err instanceof Error ? err.message : "Error al enviar el enlace");
+      setError(err instanceof Error ? err.message : "Credenciales incorrectas");
     }
-  }
-
-  if (status === "sent") {
-    return (
-      <div className="rounded-2xl border-gold-metallic p-8 text-center">
-        <CheckCircle2 className="mx-auto size-10 text-[color:var(--gold-mid)]" aria-hidden />
-        <h2 className="mt-4 font-display text-xl font-semibold text-white">
-          Revisa tu correo
-        </h2>
-        <p className="mt-2 text-sm text-white/65">
-          Te enviamos un enlace mágico a{" "}
-          <span className="font-medium text-[color:var(--gold-light)]">{email}</span>.
-          Click y entras al admin.
-        </p>
-      </div>
-    );
   }
 
   return (
@@ -58,7 +44,7 @@ export function LoginForm() {
     >
       <div className="space-y-2">
         <label htmlFor="login-email" className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
-          Email del equipo
+          Email
         </label>
         <Input
           id="login-email"
@@ -72,17 +58,33 @@ export function LoginForm() {
         />
       </div>
 
+      <div className="space-y-2">
+        <label htmlFor="login-password" className="text-xs font-semibold uppercase tracking-[0.18em] text-white/60">
+          Contraseña
+        </label>
+        <Input
+          id="login-password"
+          type="password"
+          required
+          autoComplete="current-password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="h-12 border-[color:var(--line)] bg-[color:var(--surface-2)] text-base"
+        />
+      </div>
+
       <button
         type="submit"
-        disabled={status === "sending"}
+        disabled={status === "loading"}
         className="btn-gold-metallic w-full"
       >
-        {status === "sending" ? (
+        {status === "loading" ? (
           <Loader2 className="size-4 animate-spin" aria-hidden />
         ) : (
           <>
-            <Mail className="size-4" aria-hidden />
-            Enviar enlace mágico
+            <LogIn className="size-4" aria-hidden />
+            Entrar
           </>
         )}
       </button>

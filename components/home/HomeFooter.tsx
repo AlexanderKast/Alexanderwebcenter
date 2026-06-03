@@ -1,11 +1,11 @@
 "use client";
 
 const NAV_LINKS = [
-  { label: "SERVICIOS",  href: "#servicios" },
-  { label: "SOBRE MÍ",   href: "#sobre-mi" },
-  { label: "RECURSOS",   href: "#recursos" },
-  { label: "PODCAST",    href: "#podcast" },
-  { label: "CONTACTO",   href: "#contacto" },
+  { label: "SERVICIOS",  href: "/servicios" },
+  { label: "SOBRE MÍ",   href: "/sobre-mi" },
+  { label: "RECURSOS",   href: "/recursos" },
+  { label: "PODCAST",    href: "/podcast" },
+  { label: "CONTACTO",   href: "/contacto" },
 ];
 
 const SOCIAL_LINKS = [
@@ -117,7 +117,7 @@ export function HomeFooter() {
               </div>
             </div>
 
-            <a href="#contacto" style={{
+            <a href="/contacto" style={{
               display: "inline-flex", alignItems: "center", gap: 8,
               fontFamily: "var(--font-bebas)",
               fontSize: 13, letterSpacing: "2px",
