@@ -24,21 +24,26 @@ export function HomeVideoBackground() {
     const video = videoRef.current;
     if (!video) return;
 
-    /* ── Respetar prefers-reduced-motion: no scrubbear, dejar primer frame ── */
+    /* ── Respetar prefers-reduced-motion ── */
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reducedMotion) {
-      /* Carga el primer frame y se detiene — sin animación */
       video.addEventListener("loadedmetadata", () => { video.currentTime = 0; }, { once: true });
       return;
     }
 
-    const onMeta   = () => { readyRef.current = true; };
+    /* ── Marcar ready: manejar race condition si metadata ya cargó ── */
+    if (video.readyState >= 1) {
+      readyRef.current = true;
+    } else {
+      video.addEventListener("loadedmetadata", () => { readyRef.current = true; }, { once: true });
+    }
+
     const onScroll = () => { targetY.current = window.scrollY; };
 
     const tick = () => {
       smoothY.current += (targetY.current - smoothY.current) * 0.11;
 
-      if (readyRef.current && video.duration > 0) {
+      if (readyRef.current && video.duration > 0 && !video.seeking) {
         const maxScroll = Math.max(
           1,
           document.documentElement.scrollHeight - window.innerHeight,
@@ -46,7 +51,7 @@ export function HomeVideoBackground() {
         const progress = Math.min(smoothY.current / maxScroll, 1);
         const wantTime = progress * video.duration;
 
-        if (!video.seeking && Math.abs(wantTime - video.currentTime) > 0.04) {
+        if (Math.abs(wantTime - video.currentTime) > 0.04) {
           video.currentTime = wantTime;
         }
       }
@@ -54,12 +59,10 @@ export function HomeVideoBackground() {
       rafRef.current = requestAnimationFrame(tick);
     };
 
-    video.addEventListener("loadedmetadata", onMeta);
     window.addEventListener("scroll", onScroll, { passive: true });
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      video.removeEventListener("loadedmetadata", onMeta);
       window.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(rafRef.current);
     };
@@ -78,7 +81,7 @@ export function HomeVideoBackground() {
         ref={videoRef}
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         aria-hidden="true"
         style={{
           width: "100%",
