@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import {
   Megaphone, FolderKanban, Target, CalendarDays,
-  Share2, BookOpen, CreditCard, Wrench, Wifi,
+  Share2, BookOpen, CreditCard, Wrench, CheckSquare, Wifi,
 } from 'lucide-react';
 import { useRealtimeTable } from '@/hooks/useRealtimeTable';
 import type { PortalFieldDef } from '@/lib/portal/types';
@@ -15,6 +15,7 @@ import { SocialTab } from './tabs/SocialTab';
 import { CalendarioTab } from './tabs/CalendarioTab';
 import { CuentasPublicitariasTab } from './tabs/CuentasPublicitariasTab';
 import { HerramientasTab } from './tabs/HerramientasTab';
+import { TareasTab } from './tabs/TareasTab';
 import type { ClientDashboardData, TabId } from '@/lib/portal/types';
 
 const TABS: {
@@ -23,14 +24,15 @@ const TABS: {
   icon: React.ElementType;
   countKey: keyof Omit<ClientDashboardData, 'client'>;
 }[] = [
-  { id: 'campanas', label: 'Campañas', icon: Megaphone, countKey: 'campaigns' },
-  { id: 'proyectos', label: 'Proyectos', icon: FolderKanban, countKey: 'projects' },
-  { id: 'objetivos', label: 'Objetivos', icon: Target, countKey: 'objectives' },
-  { id: 'eventos', label: 'Eventos', icon: CalendarDays, countKey: 'events' },
-  { id: 'social', label: 'Redes', icon: Share2, countKey: 'social_posts' },
-  { id: 'editorial', label: 'Calendario', icon: BookOpen, countKey: 'editorial' },
-  { id: 'cuentas', label: 'Cuentas pub.', icon: CreditCard, countKey: 'ad_accounts' },
-  { id: 'herramientas', label: 'Herramientas', icon: Wrench, countKey: 'tools' },
+  { id: 'campanas',     label: 'Campañas',      icon: Megaphone,     countKey: 'campaigns' },
+  { id: 'proyectos',    label: 'Proyectos',      icon: FolderKanban,  countKey: 'projects' },
+  { id: 'objetivos',    label: 'Objetivos',      icon: Target,        countKey: 'objectives' },
+  { id: 'tareas',       label: 'Tareas',          icon: CheckSquare,   countKey: 'tasks' },
+  { id: 'eventos',      label: 'Eventos',         icon: CalendarDays,  countKey: 'events' },
+  { id: 'social',       label: 'Redes',           icon: Share2,        countKey: 'social_posts' },
+  { id: 'editorial',    label: 'Calendario',      icon: BookOpen,      countKey: 'editorial' },
+  { id: 'cuentas',      label: 'Cuentas pub.',    icon: CreditCard,    countKey: 'ad_accounts' },
+  { id: 'herramientas', label: 'Herramientas',    icon: Wrench,        countKey: 'tools' },
 ];
 
 function LiveIndicator() {
@@ -210,6 +212,9 @@ export function ClientDashboard({
         {activeTab === 'herramientas' && (
           <HerramientasTab tools={data.tools} clientId={client.id} canEdit={canEdit}
             fieldDefs={fieldDefs.filter((f) => f.entity_type === 'tool')} />
+        )}
+        {activeTab === 'tareas' && (
+          <TareasTab initialTasks={data.tasks} clientId={client.id} canEdit={canEdit} />
         )}
       </div>
     </div>

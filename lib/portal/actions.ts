@@ -14,6 +14,7 @@ import type {
   EditorialItem,
   AdAccount,
   Tool,
+  PortalTask,
   ClientDashboardData,
   PortalFieldDef,
   EntityType,
@@ -130,7 +131,7 @@ export async function getClientDashboardData(clientId: string): Promise<ClientDa
   ]);
   if (!adminRow.data && !memberRow.data) redirect('/portal/login');
 
-  const [client, campaigns, projects, objectives, events, social_posts, editorial, ad_accounts, tools, field_defs] =
+  const [client, campaigns, projects, objectives, events, social_posts, editorial, ad_accounts, tools, tasks, field_defs] =
     await Promise.all([
       sb().from('portal_clients').select('*').eq('id', clientId).single(),
       sb().from('portal_campaigns').select('*').eq('client_id', clientId).order('created_at', { ascending: false }),
@@ -141,6 +142,7 @@ export async function getClientDashboardData(clientId: string): Promise<ClientDa
       sb().from('portal_editorial').select('*').eq('client_id', clientId).order('fecha', { ascending: true }),
       sb().from('portal_ad_accounts').select('*').eq('client_id', clientId).order('nombre'),
       sb().from('portal_tools').select('*').eq('client_id', clientId).order('nombre'),
+      sb().from('portal_tasks').select('*').eq('client_id', clientId).order('created_at', { ascending: false }),
       sb().from('portal_field_defs').select('*').eq('client_id', clientId).order('position'),
     ]);
 
@@ -154,6 +156,7 @@ export async function getClientDashboardData(clientId: string): Promise<ClientDa
     editorial: (editorial.data ?? []) as EditorialItem[],
     ad_accounts: (ad_accounts.data ?? []) as AdAccount[],
     tools: (tools.data ?? []) as Tool[],
+    tasks: (tasks.data ?? []) as PortalTask[],
     field_defs: (field_defs.data ?? []) as PortalFieldDef[],
   };
 }
@@ -541,6 +544,51 @@ export async function getClientUsers(clientId: string) {
     .eq('client_id', clientId)
     .order('created_at');
   return data ?? [];
+}
+
+// ── Tasks ────────────────────────────────────────────────────
+
+export async function createTask(
+  clientId: string,
+  input: Partial<Omit<PortalTask, 'id' | 'client_id' | 'created_at' | 'updated_at'>>,
+): Promise<{ id: string } | { error: string }> {
+  await requireClientAccess(clientId);
+  const { data, error } = await sb()
+    .from('portal_tasks')
+    .insert({ ...input, client_id: clientId })
+    .select('id')
+    .single();
+  if (error) return { error: error.message };
+  revalidatePath(`/admin/clientes/${clientId}`);
+  return { id: data.id as string };
+}
+
+export async function updateTask(
+  id: string,
+  clientId: string,
+  input: Partial<PortalTask>,
+): Promise<{ error?: string }> {
+  await requireClientAccess(clientId);
+  const { error } = await sb()
+    .from('portal_tasks')
+    .update({ ...input, updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .eq('client_id', clientId);
+  if (error) return { error: error.message };
+  revalidatePath(`/admin/clientes/${clientId}`);
+  return {};
+}
+
+export async function deleteTask(id: string, clientId: string): Promise<{ error?: string }> {
+  await requireClientAccess(clientId);
+  const { error } = await sb()
+    .from('portal_tasks')
+    .delete()
+    .eq('id', id)
+    .eq('client_id', clientId);
+  if (error) return { error: error.message };
+  revalidatePath(`/admin/clientes/${clientId}`);
+  return {};
 }
 
 // ── Field Defs ───────────────────────────────────────────────

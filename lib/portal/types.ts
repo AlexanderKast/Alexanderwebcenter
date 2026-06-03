@@ -181,6 +181,25 @@ export type Tool = {
   updated_at: string;
 };
 
+export type PortalTask = {
+  id: string;
+  client_id: string;
+  titulo: string;
+  descripcion: string | null;
+  tipo_entregable: string | null;
+  asignado_a: string | null;
+  estado: 'Pendiente' | 'En progreso' | 'En revisión' | 'Aprobado' | 'Entregado';
+  prioridad: 'Alta' | 'Media' | 'Baja';
+  fecha_limite: string | null;
+  fecha_entrega: string | null;
+  link_entrega: string | null;
+  notas: string | null;
+  entity_type: string | null;
+  entity_id: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
 export type FieldType = 'text' | 'number' | 'date' | 'select' | 'multiselect' | 'url' | 'checkbox';
 
 export type EntityType =
@@ -206,7 +225,8 @@ export type TabId =
   | 'social'
   | 'editorial'
   | 'cuentas'
-  | 'herramientas';
+  | 'herramientas'
+  | 'tareas';
 
 export type ClientDashboardData = {
   client: PortalClient;
@@ -218,5 +238,6 @@ export type ClientDashboardData = {
   editorial: EditorialItem[];
   ad_accounts: AdAccount[];
   tools: Tool[];
+  tasks: PortalTask[];
   field_defs: PortalFieldDef[];
 };
