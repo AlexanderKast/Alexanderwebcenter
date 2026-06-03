@@ -109,12 +109,17 @@ function UrlDisplay({ value, canEdit, onSave }: { value: string; canEdit: boolea
       </span>
     ) : <span className="text-white/25 text-sm">—</span>;
   }
+  const isSafeUrl = /^https?:\/\//i.test(value);
   return (
     <div className="flex items-center gap-2">
-      <a href={value} target="_blank" rel="noopener noreferrer"
-        className="text-sm text-[#D4AF37]/80 hover:text-[#D4AF37] underline underline-offset-2 truncate max-w-[200px] transition-colors">
-        {value}
-      </a>
+      {isSafeUrl ? (
+        <a href={value} target="_blank" rel="noopener noreferrer"
+          className="text-sm text-[#D4AF37]/80 hover:text-[#D4AF37] underline underline-offset-2 truncate max-w-[200px] transition-colors">
+          {value}
+        </a>
+      ) : (
+        <span className="text-sm text-white/40 truncate max-w-[200px]">{value}</span>
+      )}
       <ExternalLink className="w-3 h-3 text-white/30 flex-shrink-0" />
       {canEdit && (
         <button onClick={() => { setDraft(value); setEditing(true); }}

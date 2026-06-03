@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics }    from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { HomeCursor }          from "@/components/home/HomeCursor";
 import { HomeVideoBackground } from "@/components/home/HomeVideoBackground";
 import { HomeHeader }          from "@/components/home/HomeHeader";
 import { HomeFooter }          from "@/components/home/HomeFooter";
@@ -92,7 +91,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       `}</style>
 
       {/* Chrome compartido en todas las páginas */}
-      <HomeCursor />
       <HomeVideoBackground />
       <HomeHeader />
 
