@@ -56,6 +56,11 @@ export const site = {
     comercial: "comercial@infinygroup.com",
     consultoria: "founder@kreoon.com",
   },
+  comunidad: {
+    whatsapp: "https://chat.whatsapp.com/F5QDgl4imsjBjW1KL2DhRE",
+    /** Número de WhatsApp Business (Jarvis) para el flujo de /skills/gracias. */
+    whatsappBusinessNumber: "573132947776",
+  },
   brand: {
     colorPrimario: "#030303",
     colorAcento: "#d4af37",

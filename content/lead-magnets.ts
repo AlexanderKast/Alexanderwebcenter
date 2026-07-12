@@ -16,6 +16,22 @@ export type LeadMagnet = {
   externalUrl?: string;
 };
 
+/**
+ * Pack "9 Skills PRO para tu IA" — landing propia en /skills.
+ * Se mantiene fuera del array `leadMagnets` porque su flujo de captura
+ * es por WhatsApp (no email) y su entrega es en /skills/gracias.
+ */
+export const skillsProPack: LeadMagnet = {
+  slug: "skills-pro",
+  titulo: "9 Skills PRO para tu IA",
+  subtitulo: "Manuales de operación con criterio senior para cualquier modelo",
+  descripcion:
+    "9 protocolos en Markdown + guía de instalación en PDF. Convierten a Claude, ChatGPT o Gemini en un colaborador que planifica, verifica y entrega con criterio senior. En español, listos en 5 minutos.",
+  formato: "PDF + 9 archivos .md",
+  coverImage: "/lead-magnets/skills-pro.webp",
+  pilar: "ia",
+};
+
 export const leadMagnets: LeadMagnet[] = [
   {
     slug: "el-sistema-dei",
