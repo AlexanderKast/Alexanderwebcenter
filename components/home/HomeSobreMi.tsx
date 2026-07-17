@@ -2,28 +2,30 @@
 
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { empresas } from "@/content/empresas";
+import { site } from "@/content/site";
 
-const MIS_NEGOCIOS = [
-  { name: "UGC COLOMBIA",            role: "CO-FOUNDER & CEO",    tag: "Agencia de contenido UGC activa" },
-  { name: "KREOON",                  role: "CO-FOUNDER",          tag: "SaaS IA para creadores" },
-  { name: "LIVECAKE",                role: "CO-FOUNDER",          tag: "Live Shopping agency" },
-  { name: "LOS REYES DEL CONTENIDO", role: "CO-FOUNDER",          tag: "Comunidad Skool para creadores" },
-  { name: "SANAVI NATURAL",          role: "FOUNDER",             tag: "Marca de productos naturales" },
-  { name: "SICOMMER INT",            role: "CO-FOUNDER (vendida)", tag: "Top proveedor dropshipping CO" },
-];
+const MIS_NEGOCIOS = empresas
+  .filter((e) => e.tipo === "actual" || e.tipo === "trayectoria")
+  .map((e) => ({
+    name: e.nombre.toUpperCase(),
+    role: e.estado === "vendida" ? `${e.rol.toUpperCase()} (VENDIDA)` : e.rol.toUpperCase(),
+    tag: e.tagline || e.descripcion,
+  }));
 
-const CLIENTES_ALIANZAS = [
-  { name: "GRUPO EFFI",    role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Estrategia y comunidades digitales" },
-  { name: "FERIA EFFIX",   role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Feria de emprendedores 2026" },
-  { name: "PANCAKE",       role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Stack live shopping (Mauricio Cuevas)" },
-  { name: "DISTRILATAM",   role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Estrategia digital y distribución" },
-];
+const CLIENTES_ALIANZAS = empresas
+  .filter((e) => e.tipo === "cliente")
+  .map((e) => ({
+    name: e.nombre.toUpperCase(),
+    role: e.estado === "cerrada" ? `${e.rol.toUpperCase()} · YA NO ACTIVO` : e.rol.toUpperCase(),
+    tag: e.tagline || e.descripcion,
+  }));
 
 const STATS = [
-  { n: "6+",  label: "años en negocios digitales" },
-  { n: "6",   label: "ventures propios construidos" },
-  { n: "4",   label: "países: CO, EC, RD, PE" },
-  { n: "4+",  label: "empresas asesoradas activas" },
+  { n: `${site.metricas.aniosConstruyendo}+`, label: "años en negocios digitales" },
+  { n: `${MIS_NEGOCIOS.length}`,              label: "ventures propios construidos" },
+  { n: "4",                                    label: "países: CO, EC, RD, PE" },
+  { n: `${CLIENTES_ALIANZAS.length}+`,        label: "empresas asesoradas activas" },
 ];
 
 export function HomeSobreMi() {
@@ -101,7 +103,7 @@ export function HomeSobreMi() {
               marginBottom: 32,
             }}>
               Paisa de Medellín con{" "}
-              <span style={{ color: "var(--gold)" }}>6+ años</span>
+              <span style={{ color: "var(--gold)" }}>8+ años</span>
               {" "}construyendo negocios digitales en LATAM.
             </div>
 
@@ -112,7 +114,7 @@ export function HomeSobreMi() {
                 color: "var(--muted)",
               }}>
                 Empecé en el ecommerce sin saber nada. Co-fundé SICOMMER — llegamos a ser
-                uno de los proveedores de dropshipping más grandes de Colombia — y la vendimos.
+                uno de los proveedores de dropshipping más grandes de Colombia — y en 2024 vendí mi parte a mi socio.
                 No todo fue perfecto: viví una crisis fuerte en 2024-2025 que me enseñó más
                 que cualquier éxito anterior.
               </p>
@@ -130,7 +132,7 @@ export function HomeSobreMi() {
                 fontSize: 16, lineHeight: 1.75,
                 color: "var(--muted)",
               }}>
-                Hoy combino consultoría, agencia UGC, live shopping y un SaaS propio (Kreoon)
+                Hoy combino consultoría, agencia UGC, live shopping y un marketplace de creadores propio (Kreoon)
                 para ayudar a emprendedores y marcas en LATAM a operar en modo AI-First.
                 Sin teorías. Sin cursos de 100 horas. Con sistemas que funcionan cuando no estás.
               </p>
@@ -234,7 +236,7 @@ export function HomeSobreMi() {
 
             {/* Credential tags */}
             <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-              {["Diseñador Gráfico", "Tecnólogo en Sistemas", "Co-host Casa Host", "SICOMMER INT LLC (FL)"].map(c => (
+              {["Diseñador Gráfico", "Tecnólogo en Sistemas", "Co-host Casa Host"].map(c => (
                 <span key={c} style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 11, letterSpacing: "1px",
@@ -340,15 +342,9 @@ export function HomeSobreMi() {
                 <div style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 10, letterSpacing: "1.5px",
-                  color: "var(--muted2)", marginBottom: 6,
+                  color: "var(--muted2)",
                 }}>
                   {v.role}
-                </div>
-                <div style={{
-                  fontFamily: "var(--font-dm)",
-                  fontSize: 11, color: "rgba(255,255,255,0.25)",
-                }}>
-                  {v.tag}
                 </div>
               </div>
             ))}

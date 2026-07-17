@@ -32,6 +32,7 @@
  ------------------------------------------------------------------------------ */
 /*--------- Abstracts variable ---------- */
 :root {
+  --font_instrument: "Instrument Serif", Georgia, serif;
   --white: #ffffff;
   --black: #000000;
   --primary: #C9A84C;
@@ -720,6 +721,7 @@ h6,
 }
 
 .text-display-2 {
+  font-family: var(--font_instrument);
   font-size: clamp(32px, 6vw, 72px);
   line-height: clamp(40px, 6.5vw, 80px);
 }
@@ -4349,6 +4351,7 @@ button.animate-btn::after,
   align-items: end;
 }
 .section-hero-v1 .davies-large {
+  font-family: var(--font_instrument);
   font-size: clamp(80px, 16vw, 200px);
   line-height: clamp(96px, 14vw, 176px);
   font-weight: 550;
@@ -4675,6 +4678,12 @@ button.animate-btn::after,
   justify-content: center;
   z-index: 2;
 }
+.signature-text {
+  font-family: var(--font_instrument);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--white);
+}
 .section-about-me .davies-video {
   position: relative;
   display: flex;
@@ -4847,6 +4856,18 @@ button.animate-btn::after,
 }
 .section-brand .img-brand:hover img {
   transform: scale(1.1);
+}
+.brand-wordmark {
+  font-family: var(--font_instrument);
+  font-size: clamp(14px, 1.6vw, 20px);
+  letter-spacing: 0.02em;
+  color: var(--white-64);
+  text-align: center;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+.section-brand .img-brand:hover .brand-wordmark {
+  color: var(--primary);
 }
 .section-brand .brand-list {
   display: grid;
@@ -5126,6 +5147,13 @@ button.animate-btn::after,
 }
 .logo-custom .logo-site-sv path {
   fill: var(--primary);
+}
+.logo-site-sv-text {
+  font-family: var(--font_instrument);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1;
 }
 .logo-custom .line-vertical {
   width: 1px;
@@ -6568,6 +6596,7 @@ button.animate-btn::after,
   background-color: var(--black);
 }
 .preloader span {
+  font-family: var(--font_instrument);
   font-size: 80px;
   font-weight: 800;
   color: #fff;
@@ -6788,6 +6817,13 @@ button.animate-btn::after,
 .logo-site .icon {
   font-size: 40px;
   color: var(--primary);
+}
+.logo-site-text {
+  font-family: var(--font_instrument);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--primary);
+  line-height: 1;
 }
 
 /* ---------------------------------------------------------
@@ -7383,6 +7419,15 @@ button.animate-btn::after,
 .footer-bottom .img-agency {
   margin-bottom: 40px;
   display: flex;
+}
+.footer-bottom .text-wordmark {
+  font-family: var(--font_instrument);
+  font-size: clamp(60px, 12vw, 200px);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--white);
+  margin: 0;
 }
 .footer-bottom .bottom {
   display: flex;

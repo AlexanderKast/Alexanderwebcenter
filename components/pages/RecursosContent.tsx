@@ -7,7 +7,7 @@ const STACK = [
   {
     cat: "INTELIGENCIA ARTIFICIAL",
     tools: [
-      { name: "Kreoon",      desc: "Mi SaaS. Research + guiones + estrategia de contenido en español.", link: "https://kreoon.com" },
+      { name: "Kreoon",      desc: "Mi marketplace de creadores. Estrategia, contenido y operación con IA; creadores reales.", link: "https://kreoon.com" },
       { name: "Claude",      desc: "Para razonamiento profundo, código y redacción de alto nivel.", link: "#" },
       { name: "Gemini",      desc: "Generación de imágenes y video (Veo 3). Integrado en Kreoon.", link: "#" },
       { name: "Perplexity",  desc: "Research en tiempo real. Siempre con fuentes verificadas.", link: "#" },
@@ -34,7 +34,7 @@ const STACK = [
   {
     cat: "NEGOCIOS & INFRAESTRUCTURA",
     tools: [
-      { name: "Supabase",     desc: "Base de datos de todos mis proyectos SaaS.", link: "#" },
+      { name: "Supabase",     desc: "Base de datos de todos mis proyectos.", link: "#" },
       { name: "Vercel",       desc: "Deploy de Kreoon y portafolios.", link: "#" },
       { name: "Pancake",      desc: "Stack de live shopping (Botcake + Webcake + Postcake).", link: "#" },
       { name: "WhatsApp API", desc: "Canal principal de ventas y soporte — integrado con n8n.", link: "#" },
@@ -54,21 +54,11 @@ const DOWNLOADS = [
     featured: true,
   },
   {
-    tag: "COMUNIDAD",
-    emoji: "🎓",
-    title: "Los Reyes del Contenido",
-    subtitle: "Comunidad Skool para creadores LATAM",
-    desc: "8 módulos y 87+ videos sobre creación de contenido, estrategia y monetización. Co-fundada con Lucas Spot.",
-    pages: "87+ videos",
-    href: "#",
-    featured: false,
-  },
-  {
-    tag: "SAAS",
+    tag: "MARKETPLACE",
     emoji: "🤖",
     title: "Kreoon",
-    subtitle: "Plataforma AI para estrategia de contenido",
-    desc: "Research automatizado, guiones estratégicos y análisis de mercado. El SaaS que construí porque no existía en español.",
+    subtitle: "Marketplace de creadores + agencia 360 con IA",
+    desc: "Estrategia, producción y operación corren con IA. Los creadores son reales. Lo construí porque no existía en español.",
     pages: "Prueba gratuita",
     href: "https://kreoon.com",
     featured: false,
@@ -116,7 +106,7 @@ export function RecursosContent() {
 
             <div className="dl-grid" style={{
               display: "grid",
-              gridTemplateColumns: "2fr 1fr 1fr",
+              gridTemplateColumns: "1.4fr 1fr",
               gap: "clamp(12px,1.5vw,20px)",
               alignItems: "start",
             }}>

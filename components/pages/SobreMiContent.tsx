@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { empresas } from "@/content/empresas";
 
 const TIMELINE = [
   {
@@ -22,17 +23,17 @@ const TIMELINE = [
   {
     year: "2024",
     title: "La crisis — el punto de quiebre",
-    body: "El ciclo terminó. No fue falta de ideas — fue administración. Aprendí más en ese año que en los seis anteriores juntos. SICOMMER se vendió.",
+    body: "El ciclo terminó. No fue falta de ideas — fue administración. Aprendí más en ese año que en los seis anteriores juntos. Vendí mi parte de SICOMMER a mi socio.",
   },
   {
     year: "2025",
     title: "La provisión — UGC Colombia y Kreoon",
-    body: "Lo que Dios nos entregó a Diana y a mí para comenzar de nuevo. UGC Colombia nació como la empresa más activa del ecosistema. Kreoon, como el SaaS que construí porque no existía nada así en español.",
+    body: "Lo que Dios nos entregó a Diana y a mí para comenzar de nuevo. UGC Colombia nació como la empresa más activa del ecosistema. Kreoon, el marketplace de creadores que construí porque no existía nada así en español.",
   },
   {
     year: "2026",
     title: "AI-First — el nuevo norte",
-    body: "Consultoría, LiveCake, Los Reyes del Contenido. Un ecosistema que opera sin depender de mi presencia en todo. El sistema trabaja. Yo me enfoco en lo que solo yo puedo hacer.",
+    body: "Consultoría y un ecosistema que opera sin depender de mi presencia en todo. El sistema trabaja. Yo me enfoco en lo que solo yo puedo hacer.",
   },
 ];
 
@@ -59,21 +60,21 @@ const VALORES = [
   },
 ];
 
-const MIS_NEGOCIOS = [
-  { name: "UGC COLOMBIA",            role: "CO-FOUNDER & CEO",     tag: "Agencia UGC activa — empresa principal" },
-  { name: "KREOON",                  role: "CO-FOUNDER",           tag: "SaaS IA para estrategia de contenido" },
-  { name: "LIVECAKE",                role: "CO-FOUNDER",           tag: "Agencia de live shopping" },
-  { name: "LOS REYES DEL CONTENIDO", role: "CO-FOUNDER",           tag: "Comunidad Skool — 8 módulos, 87+ videos" },
-  { name: "SANAVI NATURAL",          role: "FOUNDER",              tag: "Marca de productos naturales" },
-  { name: "SICOMMER INT",            role: "CO-FOUNDER (vendida)",  tag: "Top proveedor dropshipping Colombia" },
-];
+const MIS_NEGOCIOS = empresas
+  .filter((e) => e.tipo === "actual" || e.tipo === "trayectoria")
+  .map((e) => ({
+    name: e.nombre.toUpperCase(),
+    role: e.estado === "vendida" ? `${e.rol.toUpperCase()} (VENDIDA)` : e.rol.toUpperCase(),
+    tag: e.tagline || e.descripcion,
+  }));
 
-const ACOMPAÑO = [
-  { name: "GRUPO EFFI",   role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Estrategia y comunidades digitales" },
-  { name: "FERIA EFFIX",  role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Feria de emprendedores 2026" },
-  { name: "PANCAKE",      role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Stack live shopping — Mauricio Cuevas" },
-  { name: "DISTRILATAM",  role: "ESTRATEGA DIGITAL AI-FIRST", tag: "Estrategia digital y distribución" },
-];
+const ACOMPAÑO = empresas
+  .filter((e) => e.tipo === "cliente")
+  .map((e) => ({
+    name: e.nombre.toUpperCase(),
+    role: e.estado === "cerrada" ? `${e.rol.toUpperCase()} · YA NO ACTIVO` : e.rol.toUpperCase(),
+    tag: e.tagline || e.descripcion,
+  }));
 
 export function SobreMiContent() {
   const [photoOk, setPhotoOk] = useState(true);
@@ -114,8 +115,8 @@ export function SobreMiContent() {
 
               {[
                 "Soy Alexander Cast — Johan Alexander Castaño Céspedes. Paisa de Medellín, Diseñador Gráfico, Tecnólogo en Sistemas. Empecé en el ecommerce sin capital ni contactos, solo con la convicción de que se podía construir algo real desde cero.",
-                "Co-fundé SICOMMER y la llevamos a ser uno de los proveedores de dropshipping más grandes de Colombia en dos años. La vendimos. En 2024 viví una crisis que me enseñó más que todos los éxitos anteriores — no fue falta de ideas, fue administración.",
-                "UGC Colombia nació de esa crisis. Lo que Dios le entregó a Diana y a mí para comenzar de nuevo. Hoy es la empresa más activa de mi ecosistema. Kreoon lo construí porque no existía nada así en español — un SaaS de IA para estrategia de contenido hecho para LATAM.",
+                "Co-fundé SICOMMER y la llevamos a ser uno de los proveedores de dropshipping más grandes de Colombia en dos años, liderando estrategia y comercial. También tuve tiendas propias (Kastore y otras) con más de $1M USD en ventas y más de $100K USD invertidos en Meta/Google Ads. En 2024 vendí mi parte de SICOMMER a mi socio, tras una crisis que me enseñó más que todos los éxitos anteriores — no fue falta de ideas, fue administración.",
+                "UGC Colombia nació de esa crisis. Lo que Dios le entregó a Diana y a mí para comenzar de nuevo. Hoy es la empresa más activa de mi ecosistema. Kreoon lo construí porque no existía nada así en español — un marketplace de creadores + agencia 360 con IA hecho para LATAM.",
                 "Hoy trabajo como consultor y estratega AI-First con emprendedores y marcas que quieren construir sistemas que funcionen sin que ellos estén presentes en todo. No vendo humo. Tengo los cicatrices y los resultados para probarlo.",
               ].map((p, i) => (
                 <p key={i} style={{
@@ -135,7 +136,6 @@ export function SobreMiContent() {
                 {[
                   "Diseñador Gráfico",
                   "Tecnólogo en Sistemas",
-                  "SICOMMER INT LLC (Florida)",
                   "Co-host Casa Host",
                   "Feria Effix 2026",
                 ].map(c => (
@@ -445,8 +445,7 @@ export function SobreMiContent() {
                   transition: `opacity 0.6s ease ${360 + i * 60}ms, transform 0.6s ease ${360 + i * 60}ms`,
                 }}>
                   <div style={{ fontFamily: "var(--font-bebas)", fontSize: 15, letterSpacing: "1px", color: "rgba(255,255,255,0.7)", marginBottom: 4 }}>{v.name}</div>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "1.5px", color: "var(--muted2)", marginBottom: 6 }}>{v.role}</div>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "rgba(255,255,255,0.25)" }}>{v.tag}</div>
+                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "1.5px", color: "var(--muted2)" }}>{v.role}</div>
                 </div>
               ))}
             </div>

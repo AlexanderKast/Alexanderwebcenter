@@ -30,9 +30,9 @@ export const timeline: HitoTimeline[] = [
   },
   {
     año: "2023",
-    titulo: "Infiny Latam",
+    titulo: "Infiny Group",
     descripcion:
-      "Con esos primeros clientes, nace Infiny Latam. La decisión fue una sola: no construir de nuevo para mi ego, construir con propósito y con Dios al centro.",
+      "Con esos primeros clientes, nace Infiny Group. La decisión fue una sola: no construir de nuevo para mi ego, construir con propósito y con Dios al centro.",
   },
   {
     año: "2024",
@@ -44,18 +44,79 @@ export const timeline: HitoTimeline[] = [
     año: "2025",
     titulo: "KREOON",
     descripcion:
-      "Nace el proyecto más técnico del ecosistema: plataforma que une contenido, IA y comunidad para creadores hispanohablantes. El sistema que yo quise tener cuando empecé.",
-  },
-  {
-    año: "2026",
-    titulo: "Los Reyes del Contenido",
-    descripcion:
-      "Lanzamiento de la comunidad donde comparto proceso real, sin humo. La puerta de entrada al ecosistema y mi laboratorio público.",
+      "Nace el proyecto más ambicioso del ecosistema: marketplace de creadores reales con estrategia, contenido y operación corriendo con IA. El sistema que yo quise tener cuando empecé.",
   },
   {
     año: "Hoy",
     titulo: "Dios. Estrategia. IA.",
     descripcion:
-      "Cuatro proyectos vivos operando en paralelo. Una newsletter semanal, consultoría 1:1 y un sistema de contenido con IA como copiloto. Todo documentado en tiempo real.",
+      "Varios proyectos vivos operando en paralelo. Una newsletter semanal, consultoría 1:1 y un sistema de contenido con IA como copiloto. Todo documentado en tiempo real.",
+  },
+];
+
+/**
+ * Experiencia laboral tipo hoja de vida — para la sección "Sobre mí" / About del sitio.
+ * Reconciliada con components/pages/SobreMiContent.tsx (fuente más reciente y detallada).
+ * TODO(alex): años exactos de Kastore pendientes de confirmar. Ver comentarios en content/empresas.ts.
+ */
+export type ExperienciaItem = {
+  empresa: string;
+  rol: string;
+  periodo: string;
+  descripcion?: string;
+  empresaId?: string;
+};
+
+export const experiencia: ExperienciaItem[] = [
+  {
+    empresa: "Master IA Tech",
+    rol: "Fundador & CEO",
+    periodo: "2026 — hoy",
+    descripcion:
+      "Ingeniería, desarrollo de software, IA y contenido bajo un solo sistema.",
+    empresaId: "master-ia-tech",
+  },
+  {
+    empresa: "KREOON",
+    rol: "Cofundador",
+    periodo: "2025 — hoy",
+    descripcion: "Marketplace de creadores + agencia 360 con IA.",
+    empresaId: "kreoon",
+  },
+  {
+    empresa: "UGC Colombia",
+    rol: "Cofundador & CEO",
+    periodo: "2025 — hoy",
+    descripcion: "La empresa más activa del ecosistema.",
+    empresaId: "ugc-colombia",
+  },
+  {
+    empresa: "Sanavi Natural",
+    rol: "Fundador",
+    periodo: "— hoy",
+    descripcion: "Marca de productos naturales.",
+    empresaId: "sanavi-natural",
+  },
+  {
+    empresa: "Infiny Group",
+    rol: "Fundador",
+    periodo: "2023 — hoy",
+    empresaId: "infiny-group",
+  },
+  {
+    empresa: "SICOMMER",
+    rol: "Cofundador — Estrategia y Comercial",
+    periodo: "2018 — 2024",
+    descripcion:
+      "Uno de los mayores proveedores de dropshipping de Colombia. Operó también en Ecuador, República Dominicana y Perú. Lideré estrategia y comercial. En 2024 vendí mi parte a mi socio.",
+    empresaId: "sicommer",
+  },
+  {
+    empresa: "Kastore",
+    rol: "Fundador",
+    periodo: "[AAAA] — [AAAA]",
+    descripcion:
+      "Tiendas propias de ecommerce. Más de $1M USD en ventas y más de $100K USD invertidos en Meta/Google Ads.",
+    empresaId: "kastore",
   },
 ];

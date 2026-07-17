@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s — Alexander Castaño",
   },
   description:
-    "Paisa de Medellín con 6+ años construyendo negocios digitales en LATAM. Estrategia digital, contenido que convierte e inteligencia artificial aplicada al negocio real.",
+    "Paisa de Medellín con 8+ años construyendo negocios digitales en LATAM. Estrategia digital, contenido que convierte e inteligencia artificial aplicada al negocio real.",
   keywords: [
     "Alexander Castaño",
     "estrategia digital LATAM",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Emprende con Alexander",
     title: "Alexander Castaño — Estrategia Digital, Contenido & IA",
     description:
-      "Paisa de Medellín con 6+ años construyendo negocios digitales en LATAM.",
+      "Paisa de Medellín con 8+ años construyendo negocios digitales en LATAM.",
   },
   robots: { index: true, follow: true },
 };

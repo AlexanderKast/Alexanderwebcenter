@@ -87,7 +87,7 @@ export function buildPersonSchema(): Record<string, unknown> {
     description: site.description,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Bogota",
+      addressLocality: "Medellin",
       addressCountry: "CO",
     },
     knowsLanguage: site.idiomas,

@@ -2,30 +2,15 @@
 
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
+import { lineasServicio } from "@/content/servicios";
 
-const SERVICES = [
-  {
-    title: "ESTRATEGIA DIGITAL",
-    label: "CONSULTORÍA & SISTEMAS",
-    img: "/assets/images/section/service-1.jpg",
-    desc: "Diseño la estrategia digital de tu marca o negocio desde cero. Auditoría, roadmap y sistemas que funcionan sin que estés presente.",
-    items: ["Auditoría de marca digital", "Roadmap de contenido", "Sistema editorial automatizado", "KPIs y métricas reales"],
-  },
-  {
-    title: "CONTENIDO & UGC",
-    label: "AGENCIA DE CONTENIDO",
-    img: "/assets/images/section/service-2.jpg",
-    desc: "Produzco contenido que convierte para marcas y ecommerce. Video, carruseles, guiones y campañas UGC a escala.",
-    items: ["Estrategia de contenido", "Producción UGC para marcas", "Guiones con IA", "Campañas para ecommerce"],
-  },
-  {
-    title: "INTELIGENCIA ARTIFICIAL",
-    label: "FORMACIÓN AI-FIRST",
-    img: "/assets/images/section/service-3.jpg",
-    desc: "Forma a tu equipo y negocio para operar en modo AI-First. Herramientas, workflows y mentalidad para LATAM.",
-    items: ["Consultoría AI-First", "Automatizaciones con n8n", "Agentes IA para tu negocio", "Formación para equipos"],
-  },
-];
+const SERVICES = lineasServicio.map((s) => ({
+  title: s.titulo.toUpperCase(),
+  label: s.categoria,
+  img: s.img,
+  desc: s.descripcion,
+  items: s.items,
+}));
 
 /* ── Fila individual con su propio useReveal ── */
 function ServiceRow({

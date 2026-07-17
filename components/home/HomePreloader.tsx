@@ -2,10 +2,19 @@
 
 import { useEffect, useState } from "react";
 
+const SPLASH_KEY = "ac-splash-shown";
+
 export function HomePreloader() {
+  // Estado inicial IGUAL en servidor y cliente (0) — evita hydration mismatch.
+  // sessionStorage solo se lee dentro del efecto, después del montaje.
   const [phase, setPhase] = useState<0 | 1 | 2>(0); // 0 visible · 1 saliendo · 2 eliminado
 
   useEffect(() => {
+    if (sessionStorage.getItem(SPLASH_KEY) === "1") {
+      setPhase(2);
+      return;
+    }
+
     // Bloquear scroll mientras carga
     document.documentElement.style.overflow = "hidden";
 
@@ -13,6 +22,7 @@ export function HomePreloader() {
     const t2 = setTimeout(() => {
       setPhase(2);
       document.documentElement.style.overflow = "";
+      sessionStorage.setItem(SPLASH_KEY, "1");
     }, 3050);
 
     return () => {

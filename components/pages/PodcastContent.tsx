@@ -17,7 +17,7 @@ const FEATURED = {
   duration: "52 min",
   date: "Mayo 2026",
   desc: "El relato sin filtros de cómo nació Kreoon: el problema que quería resolver, los primeros 10 usuarios, los errores de pricing, y qué haría diferente si empezara hoy.",
-  topics: ["SaaS Bootstrap", "Pricing en LATAM", "Producto vs Mercado", "IA Aplicada"],
+  topics: ["Bootstrap sin inversión", "Pricing en LATAM", "Producto vs Mercado", "IA Aplicada"],
   href: "#",
 };
 
@@ -27,14 +27,6 @@ const EPISODES = [
     title: "UGC como activo de marca — más allá de los views",
     guest: "Diana Mile — UGC Colombia",
     duration: "44 min",
-    date: "Abr 2026",
-    href: "#",
-  },
-  {
-    ep: "EP. 10",
-    title: "Live Shopping en LATAM: lo que nadie te dice",
-    guest: "Lucas Spot — Los Reyes del Contenido",
-    duration: "61 min",
     date: "Abr 2026",
     href: "#",
   },

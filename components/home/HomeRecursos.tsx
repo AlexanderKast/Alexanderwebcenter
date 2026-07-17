@@ -15,20 +15,11 @@ const RECURSOS = [
   },
   {
     emoji: "🤖",
-    title: "Kreoon — Plataforma AI para Contenido",
-    desc: "Research automatizado, guiones estratégicos y estrategia de contenido todo en uno. El SaaS que construí porque no existía nada así en español.",
-    type: "SAAS",
+    title: "Kreoon — Marketplace de Creadores con IA",
+    desc: "Estrategia, producción y operación corren con IA. Los creadores son reales — lo construí porque no existía nada así en español.",
+    type: "MARKETPLACE",
     cta: "CONOCER KREOON",
     href: "https://kreoon.com",
-    featured: false,
-  },
-  {
-    emoji: "🎓",
-    title: "Los Reyes del Contenido",
-    desc: "Comunidad Skool con 8 módulos y 87+ videos para creadores de contenido en LATAM. Co-fundada con Lucas Spot.",
-    type: "COMUNIDAD",
-    cta: "UNIRSE",
-    href: "https://skool.com",
     featured: false,
   },
 ];
@@ -102,7 +93,7 @@ export function HomeRecursos() {
           className="recursos-grid"
           style={{
             display: "grid",
-            gridTemplateColumns: "2fr 1fr 1fr",
+            gridTemplateColumns: "1.4fr 1fr",
             gap: "clamp(16px,2vw,28px)",
             marginBottom: "clamp(48px,6vw,80px)",
           }}

@@ -11,7 +11,6 @@ const SERVICIOS_OPTIONS = [
   "Paquete Scale ($4,500)",
   "Retainer Mensual ($2,000-3,000)",
   "UGC Colombia — Agencia",
-  "LiveCake — Live Shopping",
   "Auditoría IA ($800)",
   "Otro / Explorar opciones",
 ];

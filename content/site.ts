@@ -18,11 +18,17 @@ export const site = {
   idiomas: ["Español"],
   rol: "Estratega Digital y de IA",
   fundador: [
-    "KREOON",
-    "Infiny Latam",
+    "Master IA Tech",
     "UGC Colombia",
-    "Los Reyes del Contenido",
+    "KREOON",
+    "Infiny Group",
   ],
+  /** TODO(alex): proyectos y empresas fundadas aún sin confirmar. */
+  metricas: {
+    proyectos: "[XX]",
+    empresasFundadas: "[X]",
+    aniosConstruyendo: "8",
+  },
   ogImage: "/og/alexandercast-cover.png",
   social: {
     instagram: {

@@ -86,7 +86,7 @@ const PACKAGES = [
 
 const ADDONS = [
   { name: "AUDITORÍA IA",           price: "$800",  desc: "Análisis completo de tu stack tecnológico + hoja de ruta de automatización." },
-  { name: "SETUP LIVE SHOPPING",    price: "$1,500", desc: "Configuración completa del sistema LiveCake con Pancake para tu marca." },
+  { name: "SETUP LIVE SHOPPING",    price: "$1,500", desc: "Configuración completa de tu sistema de live shopping para tu marca." },
   { name: "RETAINER MENSUAL",       price: "$2,000–3,000", desc: "Estrategia continua. Alexander acompañando tu operación mes a mes." },
   { name: "ESTRATEGIA KREOON",      price: "$1,000", desc: "Setup completo de Kreoon + capacitación de tu equipo de contenido." },
   { name: "SESIÓN IMPLEMENTACIÓN",  price: "$500–600", desc: "Ejecutamos una automatización específica en una sesión de trabajo." },

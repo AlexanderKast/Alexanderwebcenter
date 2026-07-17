@@ -109,7 +109,7 @@ export function HomeHero() {
             marginBottom: 40,
             animation: "hero-fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 750ms both",
           }}>
-            Paisa de Medellín con 6+ años construyendo negocios digitales en LATAM.
+            Paisa de Medellín con 8+ años construyendo negocios digitales en LATAM.
             Ayudo a emprendedores y marcas a crecer con estrategia digital, contenido
             que convierte e inteligencia artificial aplicada al negocio real.
           </p>
@@ -177,7 +177,7 @@ export function HomeHero() {
 
             {/* Stats */}
             {[
-              { num: "6+",   label: "Años de experiencia" },
+              { num: "8+",   label: "Años de experiencia" },
               { num: "4",    label: "Países de operación" },
               { num: "100+", label: "Clientes y alumnos" },
             ].map(({ num, label }) => (
@@ -203,15 +203,6 @@ export function HomeHero() {
                 </span>
               </div>
             ))}
-
-            <div style={{
-              marginTop: 28,
-              fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "1.5px",
-              color: "var(--muted2)",
-            }}>
-              MEDELLÍN → BOGOTÁ → MIAMI → CDMX
-            </div>
           </div>
         </div>
       </div>

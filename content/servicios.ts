@@ -71,3 +71,76 @@ export const servicios: Servicio[] = [
     destacado: false,
   },
 ];
+
+/**
+ * Líneas de servicio de Master IA Tech — el ecosistema unificado de
+ * ingeniería, IA, educación y contenido.
+ */
+export type LineaServicio = {
+  id: string;
+  titulo: string;
+  etiqueta: string;
+  categoria: string;
+  descripcion: string;
+  items: string[];
+  img: string;
+};
+
+export const lineasServicio: LineaServicio[] = [
+  {
+    id: "ingenieria-software",
+    titulo: "Ingeniería & Desarrollo de Software",
+    etiqueta: "01",
+    categoria: "DESARROLLO & SISTEMAS",
+    descripcion:
+      "Sistemas y productos digitales construidos con criterio de negocio, no solo de código.",
+    items: [
+      "Apps y plataformas web a medida",
+      "Automatizaciones e integraciones",
+      "Bases de datos y backend (Supabase, APIs)",
+    ],
+    img: "/assets/images/section/service-1.jpg",
+  },
+  {
+    id: "ia-automatizacion",
+    titulo: "IA & Automatización",
+    etiqueta: "02",
+    categoria: "AUTOMATIZACIÓN & AGENTES",
+    descripcion:
+      "Agentes, workflows y sistemas de IA aplicada que ahorran horas operativas reales.",
+    items: [
+      "Agentes IA (WhatsApp, atención, ventas)",
+      "Automatización con n8n / Make",
+      "Integraciones con Claude, GPT y otros modelos",
+    ],
+    img: "/assets/images/section/service-2.jpg",
+  },
+  {
+    id: "educacion-formacion",
+    titulo: "Educación & Formación",
+    etiqueta: "03",
+    categoria: "FORMACIÓN AI-FIRST",
+    descripcion:
+      "Mentoring, cursos y comunidad para quienes quieren aprender a construir con IA y estrategia.",
+    items: [
+      "Mentoring 1:1 y workshops para equipos",
+      "Cursos y recursos descargables",
+      "Rutas de aprendizaje personalizadas",
+    ],
+    img: "/assets/images/section/service-3.jpg",
+  },
+  {
+    id: "creacion-contenido",
+    titulo: "Creación de Contenido & UGC",
+    etiqueta: "04",
+    categoria: "AGENCIA DE CONTENIDO",
+    descripcion:
+      "Contenido que vende, producido por creadores reales con procesos documentados.",
+    items: [
+      "Producción UGC (UGC Colombia)",
+      "Estrategia de contenido y guiones",
+      "Sistemas de contenido con IA como copiloto",
+    ],
+    img: "/assets/images/section/service-4.jpg",
+  },
+];

@@ -15,7 +15,7 @@ export default function SobreMiPage() {
         overline="QUIÉN SOY"
         title="SOBRE MÍ"
         subtitle="ESTRATEGA · FUNDADOR · CONSTRUCTOR"
-        description="Construyo con fe, estrategia e inteligencia artificial. Bogotá, Colombia — operando en toda LATAM."
+        description="Construyo con fe, estrategia e inteligencia artificial. Medellín, Colombia — operando en toda LATAM."
       />
       <SobreMiContent />
     </>
