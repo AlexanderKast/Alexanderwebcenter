@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { BrandType } from '@/types/brand';
@@ -18,7 +17,7 @@ const OPTIONS: Array<{ id: BrandType; label: string; description: string; emoji:
   {
     id: 'producto',
     label: 'Producto',
-    description: 'Producto fÃ­sico o digital, ecommerce, SaaS, app',
+    description: 'Producto físico o digital, ecommerce, SaaS, app',
     emoji: 'ðŸ“¦',
   },
   {
@@ -33,9 +32,9 @@ export function TypeSelector({ value, onChange }: TypeSelectorProps) {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold text-white">Â¿QuÃ© tipo de marca estructuraremos?</h2>
+        <h2 className="text-xl font-bold text-white">¿Qué tipo de marca estructuraremos?</h2>
         <p className="mt-1.5 text-sm text-gray-400">
-          Selecciona el tipo que mejor describe tu marca. Esto adaptarÃ¡ las preguntas del formulario.
+          Selecciona el tipo que mejor describe tu marca. Esto adaptará las preguntas del formulario.
         </p>
       </div>
 

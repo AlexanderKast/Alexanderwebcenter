@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 const STEP_LABELS = [

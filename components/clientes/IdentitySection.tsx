@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState } from 'react';
@@ -46,27 +45,27 @@ export function IdentitySection({
     onUpdate('idiomas', idiomas.filter((_, i) => i !== idx));
   };
 
-  const brandLabel = tipo === 'personal' ? 'Tu nombre o alias pÃºblico' : 'Nombre de la marca';
+  const brandLabel = tipo === 'personal' ? 'Tu nombre o alias público' : 'Nombre de la marca';
   const brandPlaceholder =
     tipo === 'personal'
-      ? 'Ej: Carlos MÃ©ndez / @carlomentor'
+      ? 'Ej: Carlos Méndez / @carlomentor'
       : tipo === 'producto'
       ? 'Ej: FinanceFlow / BrandKit Pro'
       : 'Ej: Agencia Crece / Consultora Vivo';
 
   const expertiseLabel =
-    tipo === 'personal' ? 'Tu expertise y diferenciador Ãºnico' : 'Propuesta diferenciadora';
+    tipo === 'personal' ? 'Tu expertise y diferenciador único' : 'Propuesta diferenciadora';
   const expertisePlaceholder =
     tipo === 'personal'
-      ? 'Soy contador con 8 aÃ±os en startups. Ayudo a founders a pagar menos impuestos legalmente sin perderse en la burocracia...'
+      ? 'Soy contador con 8 años en startups. Ayudo a founders a pagar menos impuestos legalmente sin perderse en la burocracia...'
       : tipo === 'producto'
-      ? 'Herramienta SaaS que reemplaza 3 apps en una. Ãšnica en LATAM con onboarding en espaÃ±ol y soporte humano 24/7...'
-      : 'Agencia boutique enfocada en marcas personales. No tomamos mÃ¡s de 5 clientes al mes. Resultados en 90 dÃ­as o reembolso...';
+      ? 'Herramienta SaaS que reemplaza 3 apps en una. Única en LATAM con onboarding en español y soporte humano 24/7...'
+      : 'Agencia boutique enfocada en marcas personales. No tomamos más de 5 clientes al mes. Resultados en 90 días o reembolso...';
 
   return (
     <div className="space-y-6">
       <p className="text-sm text-gray-400">
-        Define los elementos fundamentales. Estos datos aparecen en todos los documentos generados â€” sÃ© exacto.
+        Define los elementos fundamentales. Estos datos aparecen en todos los documentos generados — sé exacto.
       </p>
 
       {/* Nombre de marca */}
@@ -90,7 +89,7 @@ export function IdentitySection({
           Industria / Nicho *
         </Label>
         <p className="helper-text">
-          SÃ© especÃ­fico: no solo &quot;marketing&quot; sino &quot;marketing digital para tiendas de ropa femenina&quot;.
+          Sé específico: no solo &quot;marketing&quot; sino &quot;marketing digital para tiendas de ropa femenina&quot;.
         </p>
         <Input
           id="industriaNicho"
@@ -107,7 +106,7 @@ export function IdentitySection({
           {expertiseLabel} *
         </Label>
         <p className="helper-text">
-          Lo que te hace ÃšNICO. Menciona aÃ±os de experiencia, resultados concretos o metodologÃ­as propias.
+          Lo que te hace ÚNICO. Menciona años de experiencia, resultados concretos o metodologías propias.
         </p>
         <Textarea
           id="expertiseDiferenciador"
@@ -118,18 +117,18 @@ export function IdentitySection({
         />
         <div className="flex justify-end mt-1">
           <span className={`text-xs ${expertiseDiferenciador.length >= 10 ? 'text-yellow-400' : 'text-gray-600'}`}>
-            {expertiseDiferenciador.length} chars {expertiseDiferenciador.length < 10 ? '(mÃ­n. 10)' : ''}
+            {expertiseDiferenciador.length} chars {expertiseDiferenciador.length < 10 ? '(mín. 10)' : ''}
           </span>
         </div>
       </div>
 
-      {/* Grid: aÃ±os + ubicaciÃ³n */}
+      {/* Grid: años + ubicación */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="field-group">
           <Label htmlFor="anosExperiencia" className="label-text">
-            AÃ±os de experiencia
+            Años de experiencia
           </Label>
-          <p className="helper-text">Pon 0 si estÃ¡s empezando.</p>
+          <p className="helper-text">Pon 0 si estás empezando.</p>
           <Input
             id="anosExperiencia"
             type="number"
@@ -143,9 +142,9 @@ export function IdentitySection({
 
         <div className="field-group">
           <Label htmlFor="ubicacionGeografica" className="label-text">
-            UbicaciÃ³n / Mercado *
+            Ubicación / Mercado *
           </Label>
-          <p className="helper-text">PaÃ­s o regiÃ³n principal de operaciÃ³n.</p>
+          <p className="helper-text">País o región principal de operación.</p>
           <Input
             id="ubicacionGeografica"
             className="mt-2"
@@ -156,21 +155,21 @@ export function IdentitySection({
         </div>
       </div>
 
-      {/* CÃ³mo quieres que te perciban */}
+      {/* Cómo quieres que te perciban */}
       <div className="field-group">
         <Label htmlFor="comoPierciben" className="label-text">
-          Â¿CÃ³mo quieres que te perciban?{' '}
+          ¿Cómo quieres que te perciban?{' '}
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
         <p className="helper-text">
-          Frases literales que te gustarÃ­a que dijera la gente sobre ti.
+          Frases literales que te gustaría que dijera la gente sobre ti.
         </p>
         <Textarea
           id="comoPierciben"
           className="mt-2 min-h-[90px]"
           value={comoPierciben}
           onChange={(e) => onUpdate('comoPierciben', e.target.value)}
-          placeholder={`"Cuando quiero aprender de inversiones, siempre pienso en Ã©l primero"\n"Lo que enseÃ±a es prÃ¡ctico, no teorÃ­a"`}
+          placeholder={`"Cuando quiero aprender de inversiones, siempre pienso en él primero"\n"Lo que enseña es práctico, no teoría"`}
         />
       </div>
 
@@ -183,7 +182,7 @@ export function IdentitySection({
             value={newIdioma}
             onChange={(e) => setNewIdioma(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addIdioma())}
-            placeholder="Ej: EspaÃ±ol, InglÃ©s"
+            placeholder="Ej: Español, Inglés"
             className="flex-1"
           />
           <Button

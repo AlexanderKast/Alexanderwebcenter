@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -73,7 +72,7 @@ function DynamicList({
           <span
             className={`ml-2 text-xs font-normal ${items.length >= min ? 'text-green-400' : 'text-gray-600'}`}
           >
-            {items.length}/{min} mÃ­n.
+            {items.length}/{min} mín.
           </span>
         </Label>
         {description && <p className="helper-text">{description}</p>}
@@ -166,27 +165,27 @@ export function PhilosophySection({
 
   return (
     <div className="space-y-8">
-      {/* PropÃ³sito de marca */}
+      {/* Propósito de marca */}
       <div className="space-y-3">
         <div className="field-group">
           <Label htmlFor="propositoMarca" className="label-text">
-            PropÃ³sito de la marca *
+            Propósito de la marca *
           </Label>
           <p className="helper-text">
-            El &quot;por quÃ©&quot; mÃ¡s profundo â€” mÃ¡s allÃ¡ de hacer dinero.
+            El &quot;por qué&quot; más profundo — más allá de hacer dinero.
           </p>
         </div>
 
-        {/* FÃ³rmula helper */}
+        {/* Fórmula helper */}
         <div className="p-4 bg-yellow-400/5 border border-yellow-400/20 rounded-xl">
           <p className="text-xs font-semibold text-yellow-400 mb-2">
-            Tip: completa esta fÃ³rmula para inspirarte
+            Tip: completa esta fórmula para inspirarte
           </p>
           <p className="text-xs text-yellow-400/70 leading-relaxed italic">
             &quot;Existimos para{' '}
-            <span className="font-semibold text-yellow-400">[verbo de acciÃ³n]</span> a{' '}
+            <span className="font-semibold text-yellow-400">[verbo de acción]</span> a{' '}
             <span className="font-semibold text-yellow-400">[tu audiencia]</span> para que{' '}
-            <span className="font-semibold text-yellow-400">[resultado transformacional]</span> y asÃ­{' '}
+            <span className="font-semibold text-yellow-400">[resultado transformacional]</span> y así{' '}
             <span className="font-semibold text-yellow-400">[impacto mayor]</span>.&quot;
           </p>
         </div>
@@ -196,11 +195,11 @@ export function PhilosophySection({
           className="min-h-[110px]"
           value={propositoMarca}
           onChange={(e) => onUpdate('propositoMarca', e.target.value)}
-          placeholder="Democratizar el acceso a educaciÃ³n financiera para jÃ³venes latinoamericanos que nunca recibieron estas herramientas en casa..."
+          placeholder="Democratizar el acceso a educación financiera para jóvenes latinoamericanos que nunca recibieron estas herramientas en casa..."
         />
         {propositoMarca.length > 0 && propositoMarca.length < 30 && (
           <p className="error-text">
-            Necesitas al menos 30 caracteres ({30 - propositoMarca.length} mÃ¡s)
+            Necesitas al menos 30 caracteres ({30 - propositoMarca.length} más)
           </p>
         )}
       </div>
@@ -235,7 +234,7 @@ export function PhilosophySection({
         )}
         <DynamicList
           label="Creencias fundamentales"
-          description="Verdades que tu marca defiende profundamente. Las que guÃ­an cada decisiÃ³n de contenido."
+          description="Verdades que tu marca defiende profundamente. Las que guían cada decisión de contenido."
           items={creenciasFundamentales}
           onAdd={(v) => onUpdate('creenciasFundamentales', [...creenciasFundamentales, v])}
           onRemove={(i) =>
@@ -249,20 +248,20 @@ export function PhilosophySection({
       </div>
 
       <DynamicList
-        label="QuÃ© rechaza la marca"
-        description="PrÃ¡cticas, actitudes o ideas que tu marca activamente rechaza."
+        label="Qué rechaza la marca"
+        description="Prácticas, actitudes o ideas que tu marca activamente rechaza."
         items={queRechaza}
         onAdd={(v) => onUpdate('queRechaza', [...queRechaza, v])}
         onRemove={(i) => onUpdate('queRechaza', queRechaza.filter((_, j) => j !== i))}
-        placeholder='"Los gurÃºs que prometen hacerse rico en 30 dÃ­as sin esfuerzo"'
+        placeholder='"Los gurús que prometen hacerse rico en 30 días sin esfuerzo"'
         min={2}
         max={5}
         variant="red"
       />
 
       <DynamicList
-        label="LÃ­mites Ã©ticos"
-        description="LÃ­neas que tu marca jamÃ¡s cruzarÃ­a, por ninguna suma de dinero."
+        label="Límites éticos"
+        description="Líneas que tu marca jamás cruzaría, por ninguna suma de dinero."
         items={limitesEticos}
         onAdd={(v) => onUpdate('limitesEticos', [...limitesEticos, v])}
         onRemove={(i) => onUpdate('limitesEticos', limitesEticos.filter((_, j) => j !== i))}
@@ -281,25 +280,25 @@ export function PhilosophySection({
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
         <p className="helper-text">
-          El momento o experiencia que llevÃ³ a crear esta marca.
+          El momento o experiencia que llevó a crear esta marca.
         </p>
         <Textarea
           id="historiaOrigen"
           className="mt-2 min-h-[100px]"
           value={historiaOrigen}
           onChange={(e) => onUpdate('historiaOrigen', e.target.value)}
-          placeholder="QuÃ© estabas viviendo, quÃ© problema te frustrÃ³ o quÃ© oportunidad viste que nadie mÃ¡s estaba aprovechando..."
+          placeholder="Qué estabas viviendo, qué problema te frustró o qué oportunidad viste que nadie más estaba aprovechando..."
         />
       </div>
 
       {/* Batallas */}
       <div className="field-group">
         <Label htmlFor="historiaBatallas" className="label-text">
-          Las batallas mÃ¡s duras que atravesaste{' '}
+          Las batallas más duras que atravesaste{' '}
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
         <p className="helper-text">
-          Momentos difÃ­ciles, fracasos o crisis que superaste. El contenido de vulnerabilidad mÃ¡s poderoso.
+          Momentos difíciles, fracasos o crisis que superaste. El contenido de vulnerabilidad más poderoso.
         </p>
         <Textarea
           id="historiaBatallas"
@@ -317,7 +316,7 @@ export function PhilosophySection({
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
         <p className="helper-text">
-          Hitos importantes â€” nÃºmeros, reconocimientos, momentos de quiebre positivos.
+          Hitos importantes — números, reconocimientos, momentos de quiebre positivos.
         </p>
         <Textarea
           id="historiaLogros"

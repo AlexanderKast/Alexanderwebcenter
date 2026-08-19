@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { Input } from '@/components/ui/input';
@@ -6,15 +5,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 
 const TIEMPO_CARDS = [
-  { value: 3,  emoji: 'âš¡', label: '1â€“3 h',      description: 'Muy poco, lo hago entre otras cosas' },
-  { value: 7,  emoji: 'ðŸ•', label: '4â€“7 h',      description: 'Algunos ratos libres a la semana' },
-  { value: 15, emoji: 'ðŸ’ª', label: '8â€“15 h',     description: 'Le dedico tiempo real cada semana' },
-  { value: 25, emoji: 'ðŸš€', label: '16â€“25 h',    description: 'Es una prioridad en mi agenda' },
-  { value: 40, emoji: 'ðŸ”¥', label: '26â€“40 h',    description: 'PrÃ¡cticamente tiempo completo' },
+  { value: 3,  emoji: '⚡', label: '1–3 h',      description: 'Muy poco, lo hago entre otras cosas' },
+  { value: 7,  emoji: 'ðŸ•', label: '4–7 h',      description: 'Algunos ratos libres a la semana' },
+  { value: 15, emoji: 'ðŸ’ª', label: '8–15 h',     description: 'Le dedico tiempo real cada semana' },
+  { value: 25, emoji: 'ðŸš€', label: '16–25 h',    description: 'Es una prioridad en mi agenda' },
+  { value: 40, emoji: 'ðŸ”¥', label: '26–40 h',    description: 'Prácticamente tiempo completo' },
 ];
 
 const OBJETIVO_OPTIONS = [
-  { id: 'awareness', label: 'Visibilidad',   description: 'Que mÃ¡s gente conozca tu marca y te descubra', emoji: 'ðŸ“¢' },
+  { id: 'awareness', label: 'Visibilidad',   description: 'Que más gente conozca tu marca y te descubra', emoji: 'ðŸ“¢' },
   { id: 'leads',     label: 'Contactos',     description: 'Que personas interesadas te escriban o dejen sus datos', emoji: 'ðŸŽ¯' },
   { id: 'ventas',    label: 'Ventas',        description: 'Convertir seguidores en compradores directos', emoji: 'ðŸ’°' },
   { id: 'comunidad', label: 'Comunidad',     description: 'Construir una audiencia fiel que te apoye y comparta', emoji: 'â¤ï¸' },
@@ -60,7 +59,7 @@ export function ObjectivesSection({
       {/* Objetivo principal */}
       <div className="field-group">
         <Label className="label-text">Objetivo principal *</Label>
-        <p className="helper-text">El norte que guÃ­a toda la estrategia de contenido.</p>
+        <p className="helper-text">El norte que guía toda la estrategia de contenido.</p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3">
           {OBJETIVO_OPTIONS.map((opt) => {
             const isSelected = objetivoPrincipal === opt.id;
@@ -96,11 +95,11 @@ export function ObjectivesSection({
         </div>
       </div>
 
-      {/* KPI crÃ­tico */}
+      {/* KPI crítico */}
       <div className="field-group">
-        <Label htmlFor="kpiCritico" className="label-text">Â¿CÃ³mo sabrÃ¡s que estÃ¡ funcionando? *</Label>
+        <Label htmlFor="kpiCritico" className="label-text">¿Cómo sabrás que está funcionando? *</Label>
         <p className="helper-text">
-          El nÃºmero o resultado concreto que te dirÃ¡ &quot;esto sÃ­ estÃ¡ dando resultados&quot;. Por ejemplo: 20 personas nuevas que preguntan por mes, 1.000 seguidores nuevos, 5 ventas semanales...
+          El número o resultado concreto que te dirá &quot;esto sí está dando resultados&quot;. Por ejemplo: 20 personas nuevas que preguntan por mes, 1.000 seguidores nuevos, 5 ventas semanales...
         </p>
         <Input
           id="kpiCritico"
@@ -114,7 +113,7 @@ export function ObjectivesSection({
       {/* Frecuencia de contenido */}
       <div className="field-group">
         <Label htmlFor="frecuenciaContenido" className="label-text">Frecuencia de contenido *</Label>
-        <p className="helper-text">Â¿Con quÃ© regularidad publicarÃ¡s y en quÃ© formatos?</p>
+        <p className="helper-text">¿Con qué regularidad publicarás y en qué formatos?</p>
         <Input
           id="frecuenciaContenido"
           className="mt-2"
@@ -156,8 +155,8 @@ export function ObjectivesSection({
 
       {/* Tiempo por semana */}
       <div className="p-5 rounded-xl bg-gray-950/50 border border-gray-800 space-y-3">
-        <Label className="label-text">Â¿CuÃ¡nto tiempo puedes dedicarle por semana? *</Label>
-        <p className="helper-text">Esto define quÃ© tan ambicioso puede ser el plan de contenido.</p>
+        <Label className="label-text">¿Cuánto tiempo puedes dedicarle por semana? *</Label>
+        <p className="helper-text">Esto define qué tan ambicioso puede ser el plan de contenido.</p>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-1">
           {TIEMPO_CARDS.map((card, idx) => {
             const prevValue = idx === 0 ? 0 : TIEMPO_CARDS[idx - 1].value;
@@ -197,7 +196,7 @@ export function ObjectivesSection({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div className="field-group">
           <Label htmlFor="presupuesto" className="label-text">
-            Â¿CuÃ¡nto puedes invertir al mes?{' '}
+            ¿Cuánto puedes invertir al mes?{' '}
             <span className="font-normal text-gray-600">(opcional)</span>
           </Label>
           <p className="helper-text">Para publicidad pagada (pauta). Si no tienes presupuesto de pauta, escribe $0.</p>
@@ -211,14 +210,14 @@ export function ObjectivesSection({
         </div>
 
         <div className="field-group">
-          <Label htmlFor="timeline" className="label-text">Â¿En cuÃ¡nto tiempo quieres ver resultados? *</Label>
-          <p className="helper-text">SÃ© realista â€” construir marca sÃ³lida toma tiempo.</p>
+          <Label htmlFor="timeline" className="label-text">¿En cuánto tiempo quieres ver resultados? *</Label>
+          <p className="helper-text">Sé realista — construir marca sólida toma tiempo.</p>
           <Input
             id="timeline"
             className="mt-2"
             value={timeline}
             onChange={(e) => onUpdate('timeline', e.target.value)}
-            placeholder="Ej: Primeros resultados en 90 dÃ­as, escala en 6 meses"
+            placeholder="Ej: Primeros resultados en 90 días, escala en 6 meses"
           />
         </div>
       </div>
@@ -226,10 +225,10 @@ export function ObjectivesSection({
       {/* Equipo */}
       <div className="field-group">
         <Label htmlFor="equipo" className="label-text">
-          Â¿Con quiÃ©n cuentas para crear contenido?{' '}
+          ¿Con quién cuentas para crear contenido?{' '}
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
-        <p className="helper-text">Â¿Trabajas solo o tienes ayuda? Eso define quÃ© tan ambicioso puede ser el plan.</p>
+        <p className="helper-text">¿Trabajas solo o tienes ayuda? Eso define qué tan ambicioso puede ser el plan.</p>
         <Textarea
           id="equipo"
           className="mt-2"
