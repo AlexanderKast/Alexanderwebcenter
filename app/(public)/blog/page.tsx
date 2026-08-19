@@ -21,6 +21,7 @@ export default async function BlogIndexPage() {
       <SectionHeading
         superlabel="Blog"
         title="Insights"
+          as="h1"
         description="La version larga de lo que comparto en newsletter. Sin relleno."
       />
 

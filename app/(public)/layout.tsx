@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { HomeVideoBackground } from "@/components/home/HomeVideoBackground";
 import { HomeHeader }          from "@/components/home/HomeHeader";
 import { HomeFooter }          from "@/components/home/HomeFooter";
+import { site } from "@/content/site";
 
 export const viewport: Viewport = {
   themeColor: "#000000",
@@ -12,8 +13,12 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
+const TITULO_PUBLICO = "Alexander Castaño — Estrategia Digital, Contenido & IA";
+const DESCRIPCION_PUBLICA =
+  "Paisa de Medellín con 8+ años construyendo negocios digitales en LATAM.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://alexandercast.com"),
+  metadataBase: new URL(site.url),
   title: {
     default: "Alexander Castaño — Estrategia Digital, Contenido & IA",
     template: "%s — Alexander Castaño",
@@ -29,14 +34,23 @@ export const metadata: Metadata = {
     "agencia de contenido",
     "emprende con alexander",
   ],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "es_CO",
-    url: "https://alexandercast.com",
+    url: site.url,
     siteName: "Emprende con Alexander",
-    title: "Alexander Castaño — Estrategia Digital, Contenido & IA",
-    description:
-      "Paisa de Medellín con 8+ años construyendo negocios digitales en LATAM.",
+    title: TITULO_PUBLICO,
+    description: DESCRIPCION_PUBLICA,
+    // Sin imagen declarada, compartir el sitio en WhatsApp o LinkedIn
+    // mostraba solo texto.
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITULO_PUBLICO,
+    description: DESCRIPCION_PUBLICA,
+    images: [site.ogImage],
   },
   robots: { index: true, follow: true },
 };
