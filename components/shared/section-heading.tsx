@@ -6,6 +6,13 @@ type SectionHeadingProps = {
   description?: string;
   align?: "left" | "center";
   className?: string;
+  /**
+   * Nivel del encabezado. Por defecto h2, porque el componente se usa
+   * sobre todo en secciones interiores. Cuando encabeza la pagina hay que
+   * pasar "h1": si no, la pagina queda sin h1, lo que rompe la jerarquia
+   * para buscadores y lectores de pantalla.
+   */
+  as?: "h1" | "h2";
 };
 
 export function SectionHeading({
@@ -14,6 +21,7 @@ export function SectionHeading({
   description,
   align = "center",
   className,
+  as: Titulo = "h2",
 }: SectionHeadingProps) {
   const alignment =
     align === "center"
@@ -33,9 +41,9 @@ export function SectionHeading({
           {superlabel}
         </span>
       ) : null}
-      <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
+      <Titulo className="text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
         {title}
-      </h2>
+      </Titulo>
       {description ? (
         <p className="text-base text-white/60 md:text-lg leading-relaxed">
           {description}

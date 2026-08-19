@@ -17,6 +17,7 @@ export default function NewsletterPage() {
         <SectionHeading
           superlabel="Newsletter"
           title="Dios, Estrategia e IA — cada domingo"
+          as="h1"
           description="Una sola idea por semana, aplicable a tu negocio. Sin fluff. Lectura de 5 minutos."
         />
         <div className="mt-10">

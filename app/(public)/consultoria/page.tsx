@@ -23,6 +23,7 @@ export default function ConsultoriaPage() {
         <SectionHeading
           superlabel="Trabaja conmigo"
           title="Consultoria directa"
+          as="h1"
           description="Sesiones pensadas para emprendedores que construyen en serio. Sin paquetes inflados, sin escalera de bait."
         />
 

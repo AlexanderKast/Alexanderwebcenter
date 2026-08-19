@@ -1,12 +1,19 @@
 /**
- * Constantes globales del sitio alexandercast.com
+ * Constantes globales del sitio.
+ *
+ * La URL sale de NEXT_PUBLIC_SITE_URL para que canonical, Open Graph y
+ * sitemap apunten siempre al dominio que realmente sirve el sitio. El
+ * fallback es alexandercast.online, que es el dominio activo en Vercel;
+ * cuando alexandercast.com quede apuntado, basta con cambiar la variable.
  */
+
+const URL_SITIO = process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.alexandercast.online";
 
 export const site = {
   name: "Alexander Cast",
   handle: "@alexemprendee",
   tagline: "Dios. Estrategia. IA.",
-  url: "https://alexandercast.com",
+  url: URL_SITIO,
   locale: "es-CO",
   description:
     "Estratega digital, de contenido e IA. Ayudo a emprendedores tradicionales a dar el salto al digital y a quienes están creando su marca personal, producto o negocio desde cero.",
@@ -29,7 +36,9 @@ export const site = {
     empresasFundadas: "[X]",
     aniosConstruyendo: "8",
   },
-  ogImage: "/og/alexandercast-cover.png",
+  // Imagen generada por app/opengraph-image.tsx. Antes apuntaba a
+  // /og/alexandercast-cover.png, que no existe en public/ (daba 404).
+  ogImage: "/opengraph-image",
   social: {
     instagram: {
       handle: "@alexemprendee",

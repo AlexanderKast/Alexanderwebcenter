@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
+import { site } from "@/content/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -23,15 +24,36 @@ export const viewport: Viewport = {
   maximumScale: 5,
 };
 
+const TITULO_POR_DEFECTO = "Alexander Cast — Estrategia Digital & IA";
+const DESCRIPCION_POR_DEFECTO =
+  "Estratega digital, de contenido e IA. Fundador de KREOON e Infiny Group. Medellín, Colombia.";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://alexandercast.com"),
+  metadataBase: new URL(site.url),
   title: {
-    default: "Alexander Cast — Estrategia Digital & IA",
+    default: TITULO_POR_DEFECTO,
     template: "%s — Alexander Cast",
   },
-  description:
-    "Estratega digital, de contenido e IA. Fundador de KREOON e Infiny Group. Medellín, Colombia.",
+  description: DESCRIPCION_POR_DEFECTO,
   robots: { index: true, follow: true },
+  // Canonical y Open Graph por defecto: sin esto, las paginas que no llaman
+  // a buildMetadata() quedaban sin canonical y sin imagen al compartirlas.
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    locale: "es_CO",
+    url: site.url,
+    title: TITULO_POR_DEFECTO,
+    description: DESCRIPCION_POR_DEFECTO,
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: site.name }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITULO_POR_DEFECTO,
+    description: DESCRIPCION_POR_DEFECTO,
+    images: [site.ogImage],
+  },
 };
 
 /**
