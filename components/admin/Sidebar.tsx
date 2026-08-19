@@ -21,6 +21,7 @@ import {
   Building2,
   Sparkles,
   UserCheck,
+  ClipboardList,
 } from "lucide-react";
 import type { AdminUser } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -37,6 +38,7 @@ const sections: Section[] = [
       { label: "Suscriptores", href: "/admin/suscriptores", icon: Mail },
       { label: "Consultorías", href: "/admin/consultorias", icon: CalendarCheck },
       { label: "Mensajes", href: "/admin/mensajes", icon: MessageSquare },
+      { label: "Briefs de marca", href: "/admin/briefs", icon: ClipboardList },
     ],
   },
   {
