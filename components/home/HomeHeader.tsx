@@ -1,14 +1,17 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const NAV = [
-  { n: "01", label: "SERVICIOS", href: "/servicios" },
-  { n: "02", label: "SOBRE MÍ",  href: "/sobre-mi"  },
-  { n: "03", label: "RECURSOS",  href: "/recursos"   },
-  { n: "04", label: "PODCAST",   href: "/podcast"    },
-  { n: "05", label: "CONTACTO",  href: "/contacto"   },
+  { n: "01", label: "SERVICIOS",   href: "/servicios"   },
+  { n: "02", label: "CONSULTORÍA", href: "/consultoria" },
+  { n: "03", label: "SOBRE MÍ",    href: "/sobre-mi"    },
+  { n: "04", label: "BLOG",        href: "/blog"        },
+  { n: "05", label: "RECURSOS",    href: "/recursos"    },
+  { n: "06", label: "PODCAST",     href: "/podcast"     },
+  { n: "07", label: "CONTACTO",    href: "/contacto"    },
 ];
 
 export function HomeHeader() {
@@ -22,8 +25,8 @@ export function HomeHeader() {
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  /* Cierra el menú móvil al navegar */
-  useEffect(() => { setOpen(false); }, [pathname]);
+  /* El menú móvil se cierra desde el onClick de cada enlace. Hacerlo en un
+     efecto sobre pathname obliga a un render extra en cada navegación. */
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -44,13 +47,13 @@ export function HomeHeader() {
       }}>
 
         {/* Logo */}
-        <a href="/" style={{
+        <Link href="/" style={{
           fontFamily: "var(--font-bebas)",
           fontSize: 20, letterSpacing: 4,
           color: "var(--gold)", flexShrink: 0,
         }}>
           ALEXANDER
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav role="navigation" aria-label="Navegación principal"
@@ -60,7 +63,7 @@ export function HomeHeader() {
           {NAV.map(({ n, label, href }) => {
             const active = isActive(href);
             return (
-              <a
+              <Link
                 key={href}
                 href={href}
                 role="menuitem"
@@ -85,15 +88,14 @@ export function HomeHeader() {
                     height: 1, background: "var(--gold)",
                   }} />
                 )}
-              </a>
+              </Link>
             );
           })}
         </nav>
 
         {/* CTA + hamburger */}
         <div style={{ display: "flex", alignItems: "center", gap: 16, flexShrink: 0 }}>
-          <a
-            href="/contacto"
+          <Link href="/contacto"
             className="home-cta-desktop"
             style={{
               fontFamily: "var(--font-bebas)",
@@ -106,7 +108,7 @@ export function HomeHeader() {
             onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
           >
             TRABAJEMOS JUNTOS
-          </a>
+          </Link>
 
           <button
             onClick={() => setOpen(o => !o)}
@@ -139,10 +141,11 @@ export function HomeHeader() {
           {NAV.map(({ n, label, href }) => {
             const active = isActive(href);
             return (
-              <a
+              <Link
                 key={href}
                 href={href}
                 aria-current={active ? "page" : undefined}
+                onClick={() => setOpen(false)}
                 style={{
                   display: "block",
                   fontFamily: "var(--font-bebas)",
@@ -156,11 +159,11 @@ export function HomeHeader() {
                   {n}
                 </span>
                 {label}
-              </a>
+              </Link>
             );
           })}
-          <a
-            href="/contacto"
+          <Link href="/contacto"
+            onClick={() => setOpen(false)}
             style={{
               display: "inline-block", marginTop: 28,
               fontFamily: "var(--font-bebas)", fontSize: 14, letterSpacing: "2px",
@@ -168,7 +171,7 @@ export function HomeHeader() {
             }}
           >
             TRABAJEMOS JUNTOS
-          </a>
+          </Link>
         </nav>
       )}
 

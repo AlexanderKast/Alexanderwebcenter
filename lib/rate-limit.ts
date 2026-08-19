@@ -47,13 +47,59 @@ function getEmailLimiter(): Ratelimit | null {
   return emailLimiterInstance;
 }
 
+/* ============================================================
+   Respaldo en memoria.
+   Sin Upstash configurado esto antes dejaba pasar TODO en silencio:
+   los formularios quedaban sin limite y nadie se enteraba. Ahora se
+   limita por proceso. No es tan bueno como Redis (cada instancia
+   serverless tiene su memoria), pero corta las rafagas y deja aviso
+   en los logs.
+   ============================================================ */
+const ventanasEnMemoria = new Map<string, number[]>();
+let yaAvisamos = false;
+
+function limitarEnMemoria(clave: string, maximo: number, ventanaMs: number): LimitResult {
+  if (!yaAvisamos) {
+    yaAvisamos = true;
+    console.warn(
+      "[rate-limit] Sin UPSTASH_REDIS_REST_URL/TOKEN: se usa el respaldo en memoria, " +
+        "que no se comparte entre instancias. Configura Upstash para un limite real.",
+    );
+  }
+
+  const ahora = Date.now();
+  const previos = (ventanasEnMemoria.get(clave) ?? []).filter((t) => ahora - t < ventanaMs);
+
+  if (previos.length >= maximo) {
+    ventanasEnMemoria.set(clave, previos);
+    return { success: false, limit: maximo, remaining: 0, reset: previos[0] + ventanaMs };
+  }
+
+  previos.push(ahora);
+  ventanasEnMemoria.set(clave, previos);
+
+  // Limpieza barata: evita que el mapa crezca sin fin en un proceso largo.
+  if (ventanasEnMemoria.size > 5000) {
+    for (const [k, marcas] of ventanasEnMemoria) {
+      if (marcas.every((t) => ahora - t >= ventanaMs)) ventanasEnMemoria.delete(k);
+    }
+  }
+
+  return {
+    success: true,
+    limit: maximo,
+    remaining: maximo - previos.length,
+    reset: ahora + ventanaMs,
+  };
+}
+
 /**
  * Rate limit por IP para formularios. 5 reqs / 10 min.
- * En dev o sin Redis configurado retorna success: true.
+ * Sin Redis usa el respaldo en memoria en vez de permitir todo.
  */
 export async function formLimiter(ip: string): Promise<LimitResult> {
   const limiter = getFormLimiter();
-  if (!limiter) return { success: true };
+  if (!limiter) return limitarEnMemoria(`form:${ip}`, 5, 10 * 60 * 1000);
   const res = await limiter.limit(ip);
   return {
     success: res.success,
@@ -65,10 +111,11 @@ export async function formLimiter(ip: string): Promise<LimitResult> {
 
 /**
  * Rate limit por email para prevenir spam de envios. 3 reqs / 1 h.
+ * Sin Redis usa el respaldo en memoria en vez de permitir todo.
  */
 export async function emailLimiter(email: string): Promise<LimitResult> {
   const limiter = getEmailLimiter();
-  if (!limiter) return { success: true };
+  if (!limiter) return limitarEnMemoria(`email:${email.toLowerCase()}`, 3, 60 * 60 * 1000);
   const res = await limiter.limit(email.toLowerCase());
   return {
     success: res.success,
