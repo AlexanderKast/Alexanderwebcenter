@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -73,7 +72,7 @@ function BulkInputPanel({ placeholder, onAdd }: { placeholder: string; onAdd: (i
         placeholder={placeholder}
         className="min-h-[90px] text-sm"
       />
-      <p className="text-xs text-gray-600">Separa cada expresiÃ³n con Enter o coma.</p>
+      <p className="text-xs text-gray-600">Separa cada expresión con Enter o coma.</p>
       <Button
         type="button"
         variant="outline"
@@ -196,7 +195,7 @@ export function VoiceSection({
   return (
     <div className="space-y-7">
       <p className="text-sm text-gray-400">
-        El ADN comunicacional de tu marca. Esta es la secciÃ³n mÃ¡s importante â€” tÃ³matela con calma.
+        El ADN comunicacional de tu marca. Esta es la sección más importante — tómatela con calma.
       </p>
 
       {/* Estilo comunicacional */}
@@ -205,21 +204,21 @@ export function VoiceSection({
           Estilo comunicacional *
         </Label>
         <p className="helper-text">
-          Describe cÃ³mo habla tu marca: tono, actitud, referencias, metÃ¡foras que usas.
+          Describe cómo habla tu marca: tono, actitud, referencias, metáforas que usas.
         </p>
         <Textarea
           id="estiloComuncacional"
           className="mt-2 min-h-[90px]"
           value={estiloComuncacional}
           onChange={(e) => onUpdate('estiloComuncacional', e.target.value)}
-          placeholder="Cercano y directo, como un amigo experto que te habla sin rodeos. Usa metÃ¡foras del mundo real. JamÃ¡s condescendiente..."
+          placeholder="Cercano y directo, como un amigo experto que te habla sin rodeos. Usa metáforas del mundo real. Jamás condescendiente..."
         />
       </div>
 
-      {/* Formalidad â€” tarjetas visuales */}
+      {/* Formalidad — tarjetas visuales */}
       <div className="p-5 rounded-xl bg-gray-950/50 border border-gray-800 space-y-3">
-        <Label className="label-text">Â¿CÃ³mo habla tu marca? *</Label>
-        <p className="helper-text">Elige el tono que mÃ¡s se parece a cÃ³mo te comunicas con tus clientes.</p>
+        <Label className="label-text">¿Cómo habla tu marca? *</Label>
+        <p className="helper-text">Elige el tono que más se parece a cómo te comunicas con tus clientes.</p>
         <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-1">
           {[
             { value: 2,  emoji: 'ðŸ˜‚', label: 'Muy casual',    description: 'Como hablar con un amigo, sin filtros' },
@@ -262,8 +261,8 @@ export function VoiceSection({
 
       {/* Humor */}
       <div className="field-group">
-        <Label className="label-text">Â¿Usas humor en tu contenido? *</Label>
-        <p className="helper-text">Â¿Con quÃ© frecuencia aparecen chistes, ironia o momentos graciosos?</p>
+        <Label className="label-text">¿Usas humor en tu contenido? *</Label>
+        <p className="helper-text">¿Con qué frecuencia aparecen chistes, ironia o momentos graciosos?</p>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-2">
           {[
             { value: 'Alto',      emoji: 'ðŸ˜„', label: 'Bastante',    description: 'El humor es parte de tu estilo' },
@@ -307,9 +306,9 @@ export function VoiceSection({
       <div className="p-5 rounded-xl bg-gray-950/50 border border-gray-800 space-y-4">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <Label className="label-text">Frases que tu marca sÃ­ dirÃ­a *</Label>
+            <Label className="label-text">Frases que tu marca sí diría *</Label>
             <p className="helper-text">
-              Palabras o frases que usas naturalmente cuando hablas con tus clientes. Cuantas mÃ¡s pongas, mÃ¡s autÃ©ntica y precisa quedarÃ¡ la voz de tu marca â€” la IA las usa para aprender a escribir <em>exactamente como tÃº</em>.
+              Palabras o frases que usas naturalmente cuando hablas con tus clientes. Cuantas más pongas, más auténtica y precisa quedará la voz de tu marca — la IA las usa para aprender a escribir <em>exactamente como tú</em>.
             </p>
           </div>
           {expresionesNaturales.length >= 1 && estiloComuncacional.length > 20 && (
@@ -319,7 +318,7 @@ export function VoiceSection({
               className="flex-shrink-0 text-[11px] text-yellow-400/70 hover:text-yellow-400 transition-colors flex items-center gap-1 mt-0.5"
             >
               <span>âœ¦</span>
-              {expresionSugsLoading ? 'Pensando...' : expresionSugs.length > 0 ? 'Cerrar' : 'Sugerir mÃ¡s'}
+              {expresionSugsLoading ? 'Pensando...' : expresionSugs.length > 0 ? 'Cerrar' : 'Sugerir más'}
             </button>
           )}
         </div>
@@ -337,7 +336,7 @@ export function VoiceSection({
           />
         )}
 
-        <ProgressCounter current={expresionesNaturales.length} min={15} label="expresiones mÃ­nimo" />
+        <ProgressCounter current={expresionesNaturales.length} min={15} label="expresiones mínimo" />
 
         {/* Toggle modo */}
         <div className="flex rounded-lg border border-gray-800 overflow-hidden bg-gray-900 text-sm w-fit">
@@ -371,14 +370,14 @@ export function VoiceSection({
               value={newExpresion}
               onChange={(e) => setNewExpresion(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addExpresion())}
-              placeholder='"Dale pues" / "Parce, escÃºchame" / "AquÃ­ te lo explico"'
+              placeholder='"Dale pues" / "Parce, escúchame" / "Aquí te lo explico"'
               className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               onClick={addExpresion}
-              aria-label="Agregar expresiÃ³n"
+              aria-label="Agregar expresión"
               className="border-gray-700 text-gray-300 hover:bg-gray-800"
             >
               <Plus className="w-4 h-4" />
@@ -386,7 +385,7 @@ export function VoiceSection({
           </div>
         ) : (
           <BulkInputPanel
-            placeholder={'Pega aquÃ­ tus expresiones:\nDale pues\nParce, escÃºchame\nVamos que se puede'}
+            placeholder={'Pega aquí tus expresiones:\nDale pues\nParce, escúchame\nVamos que se puede'}
             onAdd={addBulkExpresiones}
           />
         )}
@@ -403,13 +402,13 @@ export function VoiceSection({
       {/* Prohibiciones */}
       <div className="p-5 rounded-xl bg-gray-950/50 border border-gray-800 space-y-4">
         <div>
-          <Label className="label-text">Cosas que tu marca NUNCA dirÃ­a *</Label>
+          <Label className="label-text">Cosas que tu marca NUNCA diría *</Label>
           <p className="helper-text">
-            Palabras, frases o actitudes que van en contra de tu marca. Cada prohibiciÃ³n que agregues le enseÃ±a a la IA quÃ© evitar â€” esto es lo que separa una voz genÃ©rica de una voz autÃ©nticamente tuya.
+            Palabras, frases o actitudes que van en contra de tu marca. Cada prohibición que agregues le enseña a la IA qué evitar — esto es lo que separa una voz genérica de una voz auténticamente tuya.
           </p>
         </div>
 
-        <ProgressCounter current={prohibiciones.length} min={10} label="prohibiciones mÃ­nimo" />
+        <ProgressCounter current={prohibiciones.length} min={10} label="prohibiciones mínimo" />
 
         {/* Toggle modo */}
         <div className="flex rounded-lg border border-gray-800 overflow-hidden bg-gray-900 text-sm w-fit">
@@ -443,14 +442,14 @@ export function VoiceSection({
               value={newProhibicion}
               onChange={(e) => setNewProhibicion(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addProhibicion())}
-              placeholder='"crack" / "gurÃº" / jerga vulgar / resultados garantizados'
+              placeholder='"crack" / "gurú" / jerga vulgar / resultados garantizados'
               className="flex-1"
             />
             <Button
               type="button"
               variant="outline"
               onClick={addProhibicion}
-              aria-label="Agregar prohibiciÃ³n"
+              aria-label="Agregar prohibición"
               className="border-gray-700 text-gray-300 hover:bg-gray-800"
             >
               <Plus className="w-4 h-4" />
@@ -458,7 +457,7 @@ export function VoiceSection({
           </div>
         ) : (
           <BulkInputPanel
-            placeholder={'Pega aquÃ­ tus prohibiciones:\nGurÃº\nCrack\nHacerse rico rÃ¡pido'}
+            placeholder={'Pega aquí tus prohibiciones:\nGurú\nCrack\nHacerse rico rápido'}
             onAdd={addBulkProhibiciones}
           />
         )}
@@ -478,13 +477,13 @@ export function VoiceSection({
           Regionalismos o slang{' '}
           <span className="font-normal text-gray-600">(opcional)</span>
         </Label>
-        <p className="helper-text">TÃ©rminos locales que usa tu audiencia para calibrar el tono geogrÃ¡fico.</p>
+        <p className="helper-text">Términos locales que usa tu audiencia para calibrar el tono geográfico.</p>
         <Textarea
           id="regionalismos"
           className="mt-2"
           value={regionalismos}
           onChange={(e) => onUpdate('regionalismos', e.target.value)}
-          placeholder='Usa tÃ©rminos colombianos como "bacano", "parce". Evita regionalismos de EspaÃ±a.'
+          placeholder='Usa términos colombianos como "bacano", "parce". Evita regionalismos de España.'
         />
       </div>
 
@@ -500,7 +499,7 @@ export function VoiceSection({
           className="mt-2"
           value={temasSensibles}
           onChange={(e) => onUpdate('temasSensibles', e.target.value)}
-          placeholder="PolÃ­tica, religiÃ³n, comparaciones directas con competidores nombrados..."
+          placeholder="Política, religión, comparaciones directas con competidores nombrados..."
         />
       </div>
     </div>

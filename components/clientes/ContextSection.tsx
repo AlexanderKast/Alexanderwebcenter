@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState } from 'react';
@@ -108,7 +107,7 @@ export function ContextSection({
   return (
     <div className="space-y-5">
       <p className="text-sm text-gray-400">
-        SecciÃ³n opcional. Agrega detalles especÃ­ficos que afinarÃ¡n el sistema de marca.
+        Sección opcional. Agrega detalles específicos que afinarán el sistema de marca.
       </p>
 
       {/* Figuras de referencia */}
@@ -122,7 +121,7 @@ export function ContextSection({
 
         <div className="field-group">
           <Label className="text-xs font-semibold text-gray-400">Tu referente favorito</Label>
-          <p className="text-xs text-gray-600 mt-0.5">El creador o figura pÃºblica que mÃ¡s admiras y cuyo estilo te gustarÃ­a tener como referencia.</p>
+          <p className="text-xs text-gray-600 mt-0.5">El creador o figura pública que más admiras y cuyo estilo te gustaría tener como referencia.</p>
           <Input
             className="mt-2 text-sm"
             value={figurasReferencia.heroInfluencer}
@@ -152,7 +151,7 @@ export function ContextSection({
 
       <OptionalList
         label="Productos o servicios secundarios"
-        description="Otras ofertas que existen o estÃ¡n planeadas."
+        description="Otras ofertas que existen o están planeadas."
         items={productosSecundarios}
         placeholder="Ej: Curso introductorio ($97)"
         onAdd={(v) => onUpdate('productosSecundarios', [...productosSecundarios, v])}
@@ -187,10 +186,10 @@ export function ContextSection({
       />
 
       <OptionalList
-        label="Â¿QuÃ© herramientas usas en tu negocio?"
-        description="Plataformas de venta, email, comunidad o automatizaciÃ³n que el sistema debe conocer para integrarse."
+        label="¿Qué herramientas usas en tu negocio?"
+        description="Plataformas de venta, email, comunidad o automatización que el sistema debe conocer para integrarse."
         items={integracionesNecesarias}
-        placeholder="Ej: Mailchimp para emails / Hotmart para ventas / WhatsApp para atenciÃ³n"
+        placeholder="Ej: Mailchimp para emails / Hotmart para ventas / WhatsApp para atención"
         onAdd={(v) => onUpdate('integracionesNecesarias', [...integracionesNecesarias, v])}
         onRemove={(i) => onUpdate('integracionesNecesarias', integracionesNecesarias.filter((_, j) => j !== i))}
       />
@@ -199,10 +198,10 @@ export function ContextSection({
       <div className="mt-4 p-5 rounded-xl bg-yellow-400/5 border border-yellow-400/25 flex items-start gap-3">
         <CheckCircle2 className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
         <div>
-          <p className="text-sm font-semibold text-yellow-400">Â¡Listo para enviar!</p>
+          <p className="text-sm font-semibold text-yellow-400">¡Listo para enviar!</p>
           <p className="text-sm text-gray-400 mt-0.5">
-            Al hacer clic en &ldquo;Enviar y generar&rdquo; tu informaciÃ³n quedarÃ¡ guardada en Drive y
-            Alexander comenzarÃ¡ a trabajar en tu estrategia de marca.
+            Al hacer clic en &ldquo;Enviar y generar&rdquo; tu información quedará guardada en Drive y
+            Alexander comenzará a trabajar en tu estrategia de marca.
           </p>
         </div>
       </div>

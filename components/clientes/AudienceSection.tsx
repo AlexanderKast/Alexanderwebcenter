@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState, useCallback } from 'react';
@@ -10,12 +9,12 @@ import { X, Plus } from 'lucide-react';
 import { AISuggestionChips } from './AISuggestionChips';
 
 const SOFISTICACION_CARDS = [
-  { value: 0, emoji: 'ðŸŒ±', label: 'Principiante total', description: 'Nunca ha oÃ­do hablar del tema' },
-  { value: 1, emoji: 'ðŸ“–', label: 'Aprendiendo', description: 'Ha escuchado algo pero no sabe bien cÃ³mo funciona' },
-  { value: 2, emoji: 'ðŸ”§', label: 'Intermedio', description: 'Conoce el tema y ha intentado algo sin mucho Ã©xito' },
+  { value: 0, emoji: 'ðŸŒ±', label: 'Principiante total', description: 'Nunca ha oído hablar del tema' },
+  { value: 1, emoji: 'ðŸ“–', label: 'Aprendiendo', description: 'Ha escuchado algo pero no sabe bien cómo funciona' },
+  { value: 2, emoji: 'ðŸ”§', label: 'Intermedio', description: 'Conoce el tema y ha intentado algo sin mucho éxito' },
   { value: 3, emoji: 'ðŸ“ˆ', label: 'Avanzado', description: 'Ya tiene resultados pero busca optimizar' },
   { value: 4, emoji: 'ðŸš€', label: 'Muy avanzado', description: 'Conoce bien el tema y compara opciones' },
-  { value: 5, emoji: 'ðŸ†', label: 'Experto', description: 'Domina el tema y busca soluciones especÃ­ficas' },
+  { value: 5, emoji: 'ðŸ†', label: 'Experto', description: 'Domina el tema y busca soluciones específicas' },
 ];
 
 interface AudienceSectionProps {
@@ -101,19 +100,19 @@ export function AudienceSection({
 
   return (
     <div className="space-y-6">
-      {/* Perfil demogrÃ¡fico */}
+      {/* Perfil demográfico */}
       <div className="field-group">
         <Label htmlFor="perfilDemografico" className="label-text">
-          Â¿QuiÃ©n es tu cliente ideal? *
+          ¿Quién es tu cliente ideal? *
         </Label>
-        <p className="helper-text">Describe a esa persona perfecta: edad, quÃ© hace, dÃ³nde vive, cuÃ¡nto gana, quÃ© le gusta...</p>
+        <p className="helper-text">Describe a esa persona perfecta: edad, qué hace, dónde vive, cuánto gana, qué le gusta...</p>
         <Textarea
           id="perfilDemografico"
           className="mt-2 min-h-[100px]"
           value={perfilDemografico}
           onChange={(e) => onUpdate('perfilDemografico', e.target.value)}
           onBlur={handlePerfilBlur}
-          placeholder="Hombres y mujeres de 28-45 aÃ±os, emprendedores o freelancers con ingresos variables, viven en ciudades medianas o grandes de LATAM..."
+          placeholder="Hombres y mujeres de 28-45 años, emprendedores o freelancers con ingresos variables, viven en ciudades medianas o grandes de LATAM..."
         />
       </div>
 
@@ -122,13 +121,13 @@ export function AudienceSection({
         <Label htmlFor="problemaPrincipal" className="label-text">
           Problema principal que resuelves *
         </Label>
-        <p className="helper-text">Â¿CuÃ¡l es el dolor mÃ¡s grande de tu audiencia que tÃº resuelves?</p>
+        <p className="helper-text">¿Cuál es el dolor más grande de tu audiencia que tú resuelves?</p>
         <Textarea
           id="problemaPrincipal"
           className="mt-2 min-h-[80px]"
           value={problemaPrincipal}
           onChange={(e) => onUpdate('problemaPrincipal', e.target.value)}
-          placeholder="No saben cÃ³mo atraer clientes de forma consistente sin depender de referidos o de pagar ads costosos..."
+          placeholder="No saben cómo atraer clientes de forma consistente sin depender de referidos o de pagar ads costosos..."
         />
         <AISuggestionChips
           suggestions={problemaSugs}
@@ -145,7 +144,7 @@ export function AudienceSection({
         <Label htmlFor="resultadoDeseado" className="label-text">
           Resultado deseado por tu audiencia *
         </Label>
-        <p className="helper-text">Â¿QuÃ© quieren lograr? Â¿CÃ³mo quieren sentirse despuÃ©s de trabajar contigo?</p>
+        <p className="helper-text">¿Qué quieren lograr? ¿Cómo quieren sentirse después de trabajar contigo?</p>
         <Textarea
           id="resultadoDeseado"
           className="mt-2 min-h-[80px]"
@@ -155,12 +154,12 @@ export function AudienceSection({
         />
       </div>
 
-      {/* Nivel de sofisticaciÃ³n */}
+      {/* Nivel de sofisticación */}
       <div className="p-5 rounded-xl bg-gray-950/50 border border-gray-800 space-y-4">
         <div>
-          <Label className="label-text">Â¿QuÃ© tanto sabe tu cliente del tema? *</Label>
+          <Label className="label-text">¿Qué tanto sabe tu cliente del tema? *</Label>
           <p className="helper-text">
-            Esto define el vocabulario y la profundidad de tu contenido. Elige la opciÃ³n que mejor describe a la mayorÃ­a de tus clientes.
+            Esto define el vocabulario y la profundidad de tu contenido. Elige la opción que mejor describe a la mayoría de tus clientes.
           </p>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -203,7 +202,7 @@ export function AudienceSection({
           Objeciones principales *
           <span className="ml-2 text-xs font-normal text-gray-500">{objecionesPrincipales.length}/5</span>
         </Label>
-        <p className="helper-text">Â¿Por quÃ© razones dudan o no compran? (mÃ­nimo 3, mÃ¡ximo 5)</p>
+        <p className="helper-text">¿Por qué razones dudan o no compran? (mínimo 3, máximo 5)</p>
 
         {objecionesPrincipales.length < 5 && (
           <div className="flex gap-2 mt-2">
@@ -247,14 +246,14 @@ export function AudienceSection({
         )}
 
         {objecionesPrincipales.length < 3 && (
-          <p className="error-text">Necesitas {3 - objecionesPrincipales.length} objeciÃ³n(es) mÃ¡s</p>
+          <p className="error-text">Necesitas {3 - objecionesPrincipales.length} objeción(es) más</p>
         )}
       </div>
 
       {/* Competencia directa */}
       <div className="field-group">
-        <Label className="label-text">Â¿QuiÃ©n mÃ¡s ofrece algo similar a lo tuyo? *</Label>
-        <p className="helper-text">Personas, marcas o empresas con las que tus clientes te comparan o podrÃ­an comparar.</p>
+        <Label className="label-text">¿Quién más ofrece algo similar a lo tuyo? *</Label>
+        <p className="helper-text">Personas, marcas o empresas con las que tus clientes te comparan o podrían comparar.</p>
         <div className="flex gap-2 mt-2">
           <Input
             value={newCompetidor}
@@ -294,7 +293,7 @@ export function AudienceSection({
       <div className="field-group">
         <div className="flex items-center justify-between">
           <Label htmlFor="ventajaCompetitiva" className="label-text">
-            Â¿Por quÃ© te elegirÃ­an a ti? *
+            ¿Por qué te elegirían a ti? *
           </Label>
           {competenciaDirecta.length >= 1 && (
             <button
@@ -307,7 +306,7 @@ export function AudienceSection({
             </button>
           )}
         </div>
-        <p className="helper-text">Explica quÃ© hace que tu propuesta sea Ãºnica. Â¿QuÃ© puedes hacer tÃº que los demÃ¡s no pueden o no hacen?</p>
+        <p className="helper-text">Explica qué hace que tu propuesta sea única. ¿Qué puedes hacer tú que los demás no pueden o no hacen?</p>
         <Textarea
           id="ventajaCompetitiva"
           className="mt-2 min-h-[80px]"
@@ -328,17 +327,17 @@ export function AudienceSection({
       {/* Costo de no actuar */}
       <div className="field-group">
         <Label htmlFor="costoNoActuar" className="label-text">
-          Â¿CuÃ¡l es el costo de no actuar? *
+          ¿Cuál es el costo de no actuar? *
         </Label>
         <p className="helper-text">
-          Si tu cliente NO resuelve su problema ahora, Â¿quÃ© tan mala puede llegar a ser su situaciÃ³n?
+          Si tu cliente NO resuelve su problema ahora, ¿qué tan mala puede llegar a ser su situación?
         </p>
         <Textarea
           id="costoNoActuar"
           className="mt-2 min-h-[90px]"
           value={costoNoActuar}
           onChange={(e) => onUpdate('costoNoActuar', e.target.value)}
-          placeholder="SeguirÃ¡n perdiendo tiempo y dinero con estrategias que no funcionan. En 12 meses mÃ¡s estarÃ¡n en el mismo punto..."
+          placeholder="Seguirán perdiendo tiempo y dinero con estrategias que no funcionan. En 12 meses más estarán en el mismo punto..."
         />
       </div>
 
@@ -348,7 +347,7 @@ export function AudienceSection({
           Error principal del cliente *
         </Label>
         <p className="helper-text">
-          El error mÃ¡s comÃºn que impide que tu cliente ideal consiga los resultados que busca.
+          El error más común que impide que tu cliente ideal consiga los resultados que busca.
         </p>
         <Textarea
           id="errorPrincipal"
@@ -359,20 +358,20 @@ export function AudienceSection({
         />
       </div>
 
-      {/* A quiÃ©n no ayudo */}
+      {/* A quién no ayudo */}
       <div className="field-group">
         <Label htmlFor="aQuienNoAyudo" className="label-text">
-          Â¿A quiÃ©n NO puedes ayudar? *
+          ¿A quién NO puedes ayudar? *
         </Label>
         <p className="helper-text">
-          Ser claro en esto filtra clientes incorrectos y hace mÃ¡s creÃ­ble tu propuesta.
+          Ser claro en esto filtra clientes incorrectos y hace más creíble tu propuesta.
         </p>
         <Textarea
           id="aQuienNoAyudo"
           className="mt-2 min-h-[80px]"
           value={aQuienNoAyudo}
           onChange={(e) => onUpdate('aQuienNoAyudo', e.target.value)}
-          placeholder="Personas que buscan resultados sin esfuerzo, que no estÃ¡n dispuestas a cambiar hÃ¡bitos..."
+          placeholder="Personas que buscan resultados sin esfuerzo, que no están dispuestas a cambiar hábitos..."
         />
       </div>
     </div>

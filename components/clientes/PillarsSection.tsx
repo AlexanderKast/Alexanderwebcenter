@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import { useState } from 'react';
@@ -22,9 +21,9 @@ interface PillarsSectionProps {
 }
 
 const EXAMPLE_PILLARS: Pilar[] = [
-  { nombre: 'EducaciÃ³n', porcentaje: 40 },
-  { nombre: 'InspiraciÃ³n', porcentaje: 25 },
-  { nombre: 'DetrÃ¡s de cÃ¡maras', porcentaje: 20 },
+  { nombre: 'Educación', porcentaje: 40 },
+  { nombre: 'Inspiración', porcentaje: 25 },
+  { nombre: 'Detrás de cámaras', porcentaje: 20 },
   { nombre: 'Ventas', porcentaje: 15 },
 ];
 
@@ -79,7 +78,7 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
             Tu mensaje central *
           </Label>
           <p className="helper-text">
-            La idea principal que tu marca repite una y otra vez. No es un slogan â€” es una verdad que defiendes con convicciÃ³n y que guÃ­a todo tu contenido.
+            La idea principal que tu marca repite una y otra vez. No es un slogan — es una verdad que defiendes con convicción y que guía todo tu contenido.
           </p>
         </div>
 
@@ -87,9 +86,9 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
         <div className="p-4 bg-yellow-400/5 border border-yellow-400/20 rounded-xl">
           <p className="text-xs font-semibold text-yellow-400 mb-2">Ejemplos de mensajes centrales:</p>
           <ul className="text-xs text-gray-400 space-y-1">
-            <li>â€¢ &ldquo;Cualquier persona puede vivir de su marca personal si domina el contenido estratÃ©gico&rdquo;</li>
-            <li>â€¢ &ldquo;El problema no es que no tengas tiempo â€” es que no tienes un sistema&rdquo;</li>
-            <li>â€¢ &ldquo;El contenido que vende no es el mÃ¡s viral, es el mÃ¡s coherente&rdquo;</li>
+            <li>• &ldquo;Cualquier persona puede vivir de su marca personal si domina el contenido estratégico&rdquo;</li>
+            <li>• &ldquo;El problema no es que no tengas tiempo — es que no tienes un sistema&rdquo;</li>
+            <li>• &ldquo;El contenido que vende no es el más viral, es el más coherente&rdquo;</li>
           </ul>
         </div>
 
@@ -101,14 +100,14 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
           placeholder="La creencia central que quieres que tu audiencia adopte..."
         />
         {mensajeCentral.length > 0 && mensajeCentral.length < 20 && (
-          <p className="error-text">Necesitas al menos 20 caracteres ({20 - mensajeCentral.length} mÃ¡s)</p>
+          <p className="error-text">Necesitas al menos 20 caracteres ({20 - mensajeCentral.length} más)</p>
         )}
       </div>
 
-      {/* Ejemplo tÃ­pico cuando no hay pilares */}
+      {/* Ejemplo típico cuando no hay pilares */}
       {pilares.length === 0 && (
         <div className="p-4 bg-gray-950/50 border border-dashed border-gray-700 rounded-xl">
-          <p className="text-sm font-medium text-gray-300 mb-2">Ejemplo tÃ­pico para marcas de conocimiento:</p>
+          <p className="text-sm font-medium text-gray-300 mb-2">Ejemplo típico para marcas de conocimiento:</p>
           <div className="flex flex-wrap gap-2 mb-3">
             {EXAMPLE_PILLARS.map((p) => (
               <span key={p.nombre} className="chip chip-gold text-xs">
@@ -131,7 +130,7 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
         <div className="field-group">
           <Label className="label-text">
             Agregar pilar
-            <span className="ml-2 text-xs font-normal text-gray-600">{pilares.length}/5 mÃ¡ximo</span>
+            <span className="ml-2 text-xs font-normal text-gray-600">{pilares.length}/5 máximo</span>
           </Label>
           <p className="helper-text">Escribe el nombre del tema y presiona Enter. Luego ajusta el porcentaje.</p>
           <div className="flex gap-2 mt-2">
@@ -139,7 +138,7 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
               value={newNombre}
               onChange={(e) => setNewNombre(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addPilar())}
-              placeholder="Ej: EducaciÃ³n / MotivaciÃ³n / DetrÃ¡s de cÃ¡maras / Casos de Ã©xito"
+              placeholder="Ej: Educación / Motivación / Detrás de cámaras / Casos de éxito"
               className="flex-1"
             />
             <Button
@@ -275,18 +274,18 @@ export function PillarsSection({ pilares, mensajeCentral, onUpdate }: PillarsSec
             <p className={`text-xs mt-2 ${total > 100 ? 'text-red-400' : 'text-yellow-400'}`}>
               {total < 100
                 ? `Falta ${100 - total}% por distribuir`
-                : `Sobran ${total - 100}% â€” reduce algunos pilares`}
+                : `Sobran ${total - 100}% — reduce algunos pilares`}
             </p>
           )}
           {isComplete && (
-            <p className="text-xs text-green-400 mt-2 font-medium">Perfecto â€” suma exactamente 100%</p>
+            <p className="text-xs text-green-400 mt-2 font-medium">Perfecto — suma exactamente 100%</p>
           )}
         </motion.div>
       )}
 
       {pilares.length < 3 && (
         <p className="text-sm text-yellow-400 font-medium">
-          Necesitas mÃ­nimo 3 pilares â€” agrega {3 - pilares.length} mÃ¡s.
+          Necesitas mínimo 3 pilares — agrega {3 - pilares.length} más.
         </p>
       )}
     </div>

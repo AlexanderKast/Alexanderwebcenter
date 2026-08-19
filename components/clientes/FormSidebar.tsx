@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 import Image from 'next/image';
@@ -11,11 +10,11 @@ interface FormSidebarProps {
 const STEPS = [
   { label: 'Tipo de Marca', description: 'Personal, producto o servicio' },
   { label: 'Identidad', description: 'Nombre, nicho, expertise' },
-  { label: 'Audiencia', description: 'A quiÃ©n le hablas' },
-  { label: 'Propuesta de Valor', description: 'QuÃ© ofreces y precio' },
-  { label: 'Voz y Tono', description: 'CÃ³mo habla tu marca' },
+  { label: 'Audiencia', description: 'A quién le hablas' },
+  { label: 'Propuesta de Valor', description: 'Qué ofreces y precio' },
+  { label: 'Voz y Tono', description: 'Cómo habla tu marca' },
   { label: 'Pilares', description: 'Temas de contenido' },
-  { label: 'FilosofÃ­a', description: 'PropÃ³sito y valores' },
+  { label: 'Filosofía', description: 'Propósito y valores' },
   { label: 'Objetivos', description: 'KPIs y plataformas' },
   { label: 'Contexto', description: 'Extras y restricciones' },
 ];
@@ -129,7 +128,7 @@ export function FormSidebar({ currentStep, completedSteps }: FormSidebarProps) {
       <div className="px-6 py-5 space-y-2" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-          <p className="text-xs text-stone-600">Progreso guardado automÃ¡ticamente</p>
+          <p className="text-xs text-stone-600">Progreso guardado automáticamente</p>
         </div>
         {remainingMinutes > 0 && (
           <p className="text-xs text-stone-700">~{remainingMinutes} min estimados restantes</p>

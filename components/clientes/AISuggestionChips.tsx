@@ -1,4 +1,3 @@
-﻿// @ts-nocheck
 'use client';
 
 interface AISuggestionChipsProps {
@@ -35,7 +34,7 @@ export function AISuggestionChips({ suggestions, loading, onSelect }: AISuggesti
       </div>
       {!loading && suggestions.length > 0 && (
         <p className="text-[11px] text-gray-700">
-          Ideas basadas en tus respuestas â€” edita libremente
+          Ideas basadas en tus respuestas — edita libremente
         </p>
       )}
     </div>
