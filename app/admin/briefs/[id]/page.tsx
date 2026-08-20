@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft, Mail, Phone } from 'lucide-react';
 import { requireAuth } from '@/lib/auth';
-import { createSupabaseServiceRole } from '@/lib/supabase/server';
+import { createSupabaseBrief } from '@/lib/supabase/server';
 import { conMarca, seccionesPara } from '@/lib/brief/schema';
 import type { BriefEstado, BriefSubmission } from '@/types/brief';
 import { cambiarEstadoBrief, guardarNotasBrief } from '../actions';
@@ -24,7 +24,7 @@ export default async function BriefDetallePage({ params }: Props) {
   await requireAuth();
   const { id } = await params;
 
-  const supabase = createSupabaseServiceRole();
+  const supabase = createSupabaseBrief();
 
   const [cabecera, respuestas] = await Promise.all([
     supabase.from('brief_submissions').select('*').eq('id', id).maybeSingle(),

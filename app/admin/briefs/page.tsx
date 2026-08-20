@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { requireAuth } from '@/lib/auth';
-import { createSupabaseServiceRole } from '@/lib/supabase/server';
+import { createSupabaseBrief } from '@/lib/supabase/server';
 import type { BriefEstado, BriefSubmission } from '@/types/brief';
 
 export const dynamic = 'force-dynamic';
@@ -37,7 +37,7 @@ export default async function BriefsPage({ searchParams }: Props) {
   await requireAuth();
   const { estado, q } = await searchParams;
 
-  const supabase = createSupabaseServiceRole();
+  const supabase = createSupabaseBrief();
   let consulta = supabase
     .from('brief_submissions')
     .select(

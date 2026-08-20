@@ -17,10 +17,6 @@ export default function BriefLayout({ children }: { children: React.ReactNode })
             <ArrowLeft className="size-4" aria-hidden />
             Volver al sitio
           </Link>
-
-          <span className="text-xs font-semibold uppercase tracking-widest text-yellow-400">
-            Alexander Cast
-          </span>
         </div>
       </header>
 
