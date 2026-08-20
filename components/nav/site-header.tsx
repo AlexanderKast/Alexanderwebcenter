@@ -23,6 +23,7 @@ const navItems: { label: string; href: string; anchor?: string }[] = [
   { label: "Beneficios", href: "/#beneficios", anchor: "beneficios" },
   { label: "Recurso", href: "/#recurso", anchor: "recurso" },
   { label: "Consultoría", href: "/consultoria" },
+  { label: "Formulario", href: "/brief" },
   { label: "Blog", href: "/blog" },
 ];
 

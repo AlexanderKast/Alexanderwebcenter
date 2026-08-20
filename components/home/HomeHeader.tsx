@@ -12,6 +12,7 @@ const NAV = [
   { n: "05", label: "RECURSOS",    href: "/recursos"    },
   { n: "06", label: "PODCAST",     href: "/podcast"     },
   { n: "07", label: "CONTACTO",    href: "/contacto"    },
+  { n: "08", label: "FORMULARIO",  href: "/brief"       },
 ];
 
 export function HomeHeader() {

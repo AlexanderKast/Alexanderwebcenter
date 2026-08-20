@@ -84,6 +84,8 @@ export type LineaServicio = {
   descripcion: string;
   items: string[];
   img: string;
+  /** Si existe, la tarjeta lleva a esta ruta. */
+  href?: string;
 };
 
 export const lineasServicio: LineaServicio[] = [
@@ -142,5 +144,20 @@ export const lineasServicio: LineaServicio[] = [
       "Sistemas de contenido con IA como copiloto",
     ],
     img: "/assets/images/section/service-4.jpg",
+  },
+  {
+    id: "brief-desarrollo",
+    titulo: "Formulario de Gustos de Desarrollo",
+    etiqueta: "05",
+    categoria: "BRIEF DE PROYECTO",
+    descripcion:
+      "Antes de cotizar o construir: contanos qué querés, para quién y con qué estilo. 20 minutos que ahorran semanas de ida y vuelta.",
+    items: [
+      "Qué se construye y para quién",
+      "Estilo, referentes y tono de la marca",
+      "Presupuesto, plazos y quién decide",
+    ],
+    img: "/assets/images/section/service-1.jpg",
+    href: "/brief",
   },
 ];

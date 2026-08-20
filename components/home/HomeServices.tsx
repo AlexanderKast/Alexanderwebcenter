@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { useReveal } from "@/hooks/useReveal";
 import { lineasServicio } from "@/content/servicios";
@@ -10,6 +11,7 @@ const SERVICES = lineasServicio.map((s) => ({
   img: s.img,
   desc: s.descripcion,
   items: s.items,
+  href: s.href,
 }));
 
 /* ── Fila individual con su propio useReveal ── */
@@ -42,58 +44,73 @@ function ServiceRow({
                      transform 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms`,
       }}
     >
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: "clamp(28px,4vw,44px) 0",
-        borderTop: "1px solid rgba(255,255,255,0.07)",
-        cursor: "pointer",
-        transition: "all .3s ease",
-        gap: 24,
-      }}>
-        {/* Número */}
-        <span style={{
-          fontFamily: "var(--font-bebas)",
-          fontSize: 13, letterSpacing: "2px",
-          color: hovered === i ? "var(--gold)" : "var(--muted2)",
-          flexShrink: 0, transition: "color .3s",
-        }}>
-          0{i + 1}
-        </span>
+      {(() => {
+        const fila = (
+          <div style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            padding: "clamp(28px,4vw,44px) 0",
+            borderTop: "1px solid rgba(255,255,255,0.07)",
+            cursor: "pointer",
+            transition: "all .3s ease",
+            gap: 24,
+          }}>
+            {/* Número */}
+            <span style={{
+              fontFamily: "var(--font-bebas)",
+              fontSize: 13, letterSpacing: "2px",
+              color: hovered === i ? "var(--gold)" : "var(--muted2)",
+              flexShrink: 0, transition: "color .3s",
+            }}>
+              0{i + 1}
+            </span>
 
-        {/* Título */}
-        <h3 style={{
-          fontFamily: "var(--font-bebas)",
-          fontSize: "clamp(38px,5vw,70px)",
-          letterSpacing: "-1px",
-          color: hovered === i ? "#fff" : "rgba(255,255,255,0.75)",
-          flex: 1, transition: "color .3s", lineHeight: 1,
-        }}>
-          {s.title}
-        </h3>
+            {/* Título */}
+            <h3 style={{
+              fontFamily: "var(--font-bebas)",
+              fontSize: "clamp(38px,5vw,70px)",
+              letterSpacing: "-1px",
+              color: hovered === i ? "#fff" : "rgba(255,255,255,0.75)",
+              flex: 1, transition: "color .3s", lineHeight: 1,
+            }}>
+              {s.title}
+            </h3>
 
-        {/* Label */}
-        <span style={{
-          fontFamily: "var(--font-dm)",
-          fontSize: 11, letterSpacing: "2px",
-          color: hovered === i ? "var(--gold)" : "var(--muted2)",
-          flexShrink: 0, transition: "color .3s",
-        }}>
-          {s.label}
-        </span>
+            {/* Label */}
+            <span style={{
+              fontFamily: "var(--font-dm)",
+              fontSize: 11, letterSpacing: "2px",
+              color: hovered === i ? "var(--gold)" : "var(--muted2)",
+              flexShrink: 0, transition: "color .3s",
+            }}>
+              {s.label}
+            </span>
 
-        {/* Flecha */}
-        <span style={{
-          fontFamily: "var(--font-bebas)", fontSize: 24,
-          color: hovered === i ? "var(--gold)" : "rgba(255,255,255,0.2)",
-          flexShrink: 0,
-          transform: hovered === i ? "translateX(4px)" : "translateX(0)",
-          transition: "all .3s ease",
-        }}>
-          ↗
-        </span>
-      </div>
+            {/* Flecha */}
+            <span style={{
+              fontFamily: "var(--font-bebas)", fontSize: 24,
+              color: hovered === i ? "var(--gold)" : "rgba(255,255,255,0.2)",
+              flexShrink: 0,
+              transform: hovered === i ? "translateX(4px)" : "translateX(0)",
+              transition: "all .3s ease",
+            }}>
+              ↗
+            </span>
+          </div>
+        );
+        return s.href ? (
+          <Link
+            href={s.href}
+            aria-label={`${s.title} — abrir formulario`}
+            style={{ display: "block", textDecoration: "none", color: "inherit" }}
+          >
+            {fila}
+          </Link>
+        ) : (
+          fila
+        );
+      })()}
 
       {/* Contenido expandido */}
       <div style={{
