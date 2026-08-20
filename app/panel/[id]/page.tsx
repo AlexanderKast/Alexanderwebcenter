@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { notFound, redirect } from 'next/navigation';
-import { usuarioPanel } from '@/lib/brief/panel-auth';
-import { createSupabaseBrief } from '@/lib/supabase/server';
+import { clientePanel, usuarioPanel } from '@/lib/brief/panel-auth';
 import { conMarca, resolverCliente, seccionesPara } from '@/lib/brief/schema';
 
 export const dynamic = 'force-dynamic';
@@ -34,7 +33,9 @@ export default async function PaginaDetalle({ params }: Props) {
   const { id } = await params;
   if (!UUID.test(id)) notFound();
 
-  const supabase = createSupabaseBrief();
+  // Lee con la sesion del admin: las politicas de la base solo dejan
+  // ver las respuestas a ese correo.
+  const supabase = await clientePanel();
   const { data: cabecera } = await supabase
     .from('brief_submissions')
     .select('*')
