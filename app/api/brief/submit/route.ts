@@ -2,7 +2,8 @@ import { createHmac } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { formLimiter } from '@/lib/rate-limit';
-import { createSupabaseBrief, hostDelBrief } from '@/lib/supabase/server';
+import { hostDelBrief } from '@/lib/supabase/server';
+import { supabasePublicoBrief } from '@/lib/brief/cliente-publico';
 import { resolverCliente, validarRespuestas } from '@/lib/brief/schema';
 
 /**
@@ -120,11 +121,15 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const supabase = createSupabaseBrief();
+    const supabase = supabasePublicoBrief();
+    // El id lo pone el servidor: anon puede insertar pero no leer, asi
+    // que no se puede pedir el id de vuelta con .select().
+    const idEnvio = crypto.randomUUID();
 
-    const { data: creado, error: errorCabecera } = await supabase
+    const { error: errorCabecera } = await supabase
       .from('brief_submissions')
       .insert({
+        id: idEnvio,
         cliente: cliente.slug,
         marca: cliente.marca,
         sector: cliente.sector,
@@ -139,16 +144,14 @@ export async function POST(req: NextRequest) {
         payload: { cliente: cliente.slug, marca: cliente.marca, valores: resultado.valores },
         ip_hash: hashIp(ip),
         user_agent: (req.headers.get('user-agent') ?? '').slice(0, 255),
-      })
-      .select('id')
-      .single();
+      });
 
-    if (errorCabecera || !creado) {
-      throw new Error(errorCabecera?.message ?? 'No se pudo crear la cabecera');
+    if (errorCabecera) {
+      throw new Error(errorCabecera.message);
     }
 
     const filas = Object.entries(resultado.valores).map(([campoId, valor]) => ({
-      submission_id: creado.id as string,
+      submission_id: idEnvio,
       campo_id: campoId.slice(0, 60),
       valor,
     }));
@@ -160,7 +163,7 @@ export async function POST(req: NextRequest) {
       if (errorRespuestas) console.error('[brief] answers:', errorRespuestas.message);
     }
 
-    return NextResponse.json({ ok: true, id: creado.id });
+    return NextResponse.json({ ok: true, id: idEnvio });
   } catch (error) {
     const detalle = error instanceof Error ? error.message : 'desconocido';
     // El host ayuda a distinguir 'la base no responde' de 'apunta a otro lado'.

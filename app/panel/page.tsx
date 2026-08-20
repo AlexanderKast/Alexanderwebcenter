@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import { usuarioPanel } from '@/lib/brief/panel-auth';
-import { createSupabaseBrief } from '@/lib/supabase/server';
+import { clientePanel, usuarioPanel } from '@/lib/brief/panel-auth';
 
 export const dynamic = 'force-dynamic';
 
@@ -36,7 +35,9 @@ function fecha(valor: string): string {
 export default async function PaginaPanel() {
   if (!(await usuarioPanel())) redirect('/panel/login');
 
-  const supabase = createSupabaseBrief();
+  // Lee con la sesion del admin: las politicas de la base solo dejan
+  // ver las respuestas a ese correo.
+  const supabase = await clientePanel();
   const { data, error } = await supabase
     .from('brief_submissions')
     .select(
