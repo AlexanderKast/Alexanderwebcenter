@@ -461,6 +461,27 @@ export const BRIEF_SECCIONES: BriefSeccion[] = [
         "r": 1
       },
       {
+        "id": "q6_1c",
+        "l": "Logo: subilo acá o pegá el link",
+        "ty": "archivo",
+        "h": "Si tenés el vectorial (.AI, .SVG, .EPS) mejor. También sirve un link de Drive o Dropbox con la carpeta.",
+        "ph": "https://drive.google.com/..."
+      },
+      {
+        "id": "q6_2c",
+        "l": "Manual de marca, colores o tipografías",
+        "ty": "archivo",
+        "h": "PDF, imagen o link. Si no hay manual, sirve una captura con los colores que usan.",
+        "ph": "https://drive.google.com/..."
+      },
+      {
+        "id": "q6_3c",
+        "l": "Fotos de producto",
+        "ty": "archivo",
+        "h": "Pegá el link de la carpeta con las fotos en alta, o subí una de muestra.",
+        "ph": "https://drive.google.com/..."
+      },
+      {
         "id": "q6_4",
         "l": "¿Tienen video de producto o contenido de clientes?",
         "ty": "area"

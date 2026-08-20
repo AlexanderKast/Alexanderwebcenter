@@ -1,7 +1,7 @@
 'use client';
 
-import { useId } from 'react';
-import { Check } from 'lucide-react';
+import { useId, useState } from 'react';
+import { Check, Upload } from 'lucide-react';
 import { conMarca } from '@/lib/brief/schema';
 import type { BriefCampo } from '@/types/brief';
 
@@ -93,6 +93,19 @@ export function CampoBrief({ campo, marca, acento, valor, conError, onChange }: 
           />
         )}
 
+        {campo.ty === 'archivo' && (
+          <CampoArchivo
+            id={idControl}
+            nombre={campo.id}
+            placeholder={campo.ph}
+            describedBy={idAyuda}
+            valor={typeof valor === 'string' ? valor : ''}
+            clase={`${claseCampo} ${borde}`}
+            acento={acento}
+            onChange={(nuevo) => onChange(campo, nuevo)}
+          />
+        )}
+
         {esOpciones && (
           <div
             role={campo.ty === 'radio' ? 'radiogroup' : 'group'}
@@ -148,6 +161,116 @@ export function CampoBrief({ campo, marca, acento, valor, conError, onChange }: 
           Esta respuesta la necesitamos para avanzar.
         </p>
       )}
+    </div>
+  );
+}
+
+interface CampoArchivoProps {
+  id: string;
+  nombre: string;
+  placeholder?: string;
+  describedBy?: string;
+  valor: string;
+  clase: string;
+  acento: string;
+  onChange: (valor: string) => void;
+}
+
+/**
+ * Dos formas de responder lo mismo: pegar el link (Drive, Dropbox, web) o
+ * subir el archivo. En ambos casos lo que queda guardado es una URL.
+ */
+function CampoArchivo({
+  id,
+  nombre,
+  placeholder,
+  describedBy,
+  valor,
+  clase,
+  acento,
+  onChange,
+}: CampoArchivoProps) {
+  const [subiendo, setSubiendo] = useState(false);
+  const [error, setError] = useState('');
+  const [subido, setSubido] = useState('');
+
+  async function subir(archivo: File | undefined) {
+    if (!archivo) return;
+    setError('');
+    setSubiendo(true);
+    try {
+      const cuerpo = new FormData();
+      cuerpo.append('archivo', archivo);
+      const res = await fetch('/api/brief/upload', { method: 'POST', body: cuerpo });
+      const datos = (await res.json()) as { ok?: boolean; url?: string; error?: string };
+      if (!res.ok || !datos.ok || !datos.url) {
+        setError(datos.error ?? 'No pudimos subir el archivo.');
+        return;
+      }
+      setSubido(archivo.name);
+      onChange(datos.url);
+    } catch {
+      setError('Se cayó la conexión mientras subía el archivo.');
+    } finally {
+      setSubiendo(false);
+    }
+  }
+
+  return (
+    <div className="space-y-2">
+      <input
+        id={id}
+        name={nombre}
+        type="url"
+        inputMode="url"
+        value={valor}
+        placeholder={placeholder ?? 'https://…'}
+        aria-describedby={describedBy}
+        onChange={(e) => {
+          setSubido('');
+          onChange(e.target.value);
+        }}
+        className={clase}
+      />
+
+      <div className="flex flex-wrap items-center gap-3">
+        <label
+          className={`inline-flex cursor-pointer items-center gap-2 rounded-xl border border-white/15 px-3.5 py-2 text-[13px] text-white/70 transition-colors hover:border-white/30 hover:text-white ${
+            subiendo ? 'pointer-events-none opacity-60' : ''
+          }`}
+        >
+          <Upload className="h-3.5 w-3.5" aria-hidden />
+          {subiendo ? 'Subiendo…' : 'Subir archivo'}
+          <input
+            type="file"
+            className="hidden"
+            accept=".png,.jpg,.jpeg,.webp,.svg,.gif,.pdf,.zip,.ai"
+            disabled={subiendo}
+            onChange={(e) => void subir(e.target.files?.[0])}
+          />
+        </label>
+
+        {subido && !error && (
+          <span className="text-[13px]" style={{ color: acento }}>
+            Listo: {subido}
+          </span>
+        )}
+        {!subido && valor && !error && (
+          <a
+            href={valor}
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-[13px] text-white/50 underline underline-offset-4 hover:text-white/80"
+          >
+            Abrir enlace
+          </a>
+        )}
+        {error && <span className="text-[13px] text-red-300">{error}</span>}
+      </div>
+
+      <p className="text-[12px] text-white/30">
+        Hasta 10 MB · PNG, JPG, WEBP, SVG, PDF, AI o ZIP. También podés pegar un link de Drive.
+      </p>
     </div>
   );
 }
