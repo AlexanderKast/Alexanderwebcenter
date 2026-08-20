@@ -1,3 +1,4 @@
+import { HomeChromeEstilos } from '@/components/home/HomeChromeEstilos';
 import { HomeVideoBackground } from '@/components/home/HomeVideoBackground';
 import { HomeHeader } from '@/components/home/HomeHeader';
 import { HomeFooter } from '@/components/home/HomeFooter';
@@ -10,6 +11,7 @@ import { HomeFooter } from '@/components/home/HomeFooter';
 export default function BriefLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <HomeChromeEstilos />
       <HomeVideoBackground />
       <HomeHeader />
       {children}
