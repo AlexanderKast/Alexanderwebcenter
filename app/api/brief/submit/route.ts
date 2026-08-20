@@ -2,7 +2,7 @@ import { createHmac } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { formLimiter } from '@/lib/rate-limit';
-import { createSupabaseBrief } from '@/lib/supabase/server';
+import { createSupabaseBrief, hostDelBrief } from '@/lib/supabase/server';
 import { resolverCliente, validarRespuestas } from '@/lib/brief/schema';
 
 /**
@@ -163,7 +163,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true, id: creado.id });
   } catch (error) {
     const detalle = error instanceof Error ? error.message : 'desconocido';
-    console.error('[brief] submit:', detalle);
+    // El host ayuda a distinguir 'la base no responde' de 'apunta a otro lado'.
+    console.error('[brief] submit:', detalle, '| base:', hostDelBrief());
     return NextResponse.json(
       { ok: false, error: 'No pudimos guardar el envio. Intentalo de nuevo en un momento.' },
       { status: 500 },
