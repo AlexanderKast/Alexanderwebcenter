@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 import { requireAuth } from '@/lib/auth';
-import { createSupabaseServiceRole } from '@/lib/supabase/server';
+import { createSupabaseBrief } from '@/lib/supabase/server';
 import { BRIEF_ESTADOS, type BriefEstado } from '@/types/brief';
 
 /**
@@ -22,7 +22,7 @@ export async function cambiarEstadoBrief(formData: FormData): Promise<void> {
 
   if (!esUuid(id) || !BRIEF_ESTADOS.includes(estado)) return;
 
-  const supabase = createSupabaseServiceRole();
+  const supabase = createSupabaseBrief();
   await supabase.from('brief_submissions').update({ estado }).eq('id', id);
 
   revalidatePath('/admin/briefs');
@@ -37,7 +37,7 @@ export async function guardarNotasBrief(formData: FormData): Promise<void> {
 
   const notas = String(formData.get('notas') ?? '').slice(0, 5000);
 
-  const supabase = createSupabaseServiceRole();
+  const supabase = createSupabaseBrief();
   await supabase.from('brief_submissions').update({ notas }).eq('id', id);
 
   revalidatePath(`/admin/briefs/${id}`);

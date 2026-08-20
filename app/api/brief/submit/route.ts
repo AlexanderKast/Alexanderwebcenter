@@ -2,7 +2,7 @@ import { createHmac } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { formLimiter } from '@/lib/rate-limit';
-import { createSupabaseServiceRole } from '@/lib/supabase/server';
+import { createSupabaseBrief } from '@/lib/supabase/server';
 import { resolverCliente, validarRespuestas } from '@/lib/brief/schema';
 
 /**
@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const supabase = createSupabaseServiceRole();
+    const supabase = createSupabaseBrief();
 
     const { data: creado, error: errorCabecera } = await supabase
       .from('brief_submissions')

@@ -192,6 +192,25 @@ export function BriefForm({ slug, marca, acento, secciones }: BriefFormProps) {
     }
   }, [respuestas, progreso.pct, slug, trampa, claveBorrador, router, irA]);
 
+  /**
+   * Vaciar el borrador. Solo se ofrece con el formulario completo:
+   * a medio llenar, lo que se guarda es justamente lo que no hay que perder.
+   */
+  const reiniciar = useCallback(() => {
+    if (!window.confirm("Esto borra todas tus respuestas y empieza de cero. ¿Seguro?")) return;
+    try {
+      localStorage.removeItem(claveBorrador);
+      localStorage.removeItem(`${claveBorrador}:paso`);
+    } catch {
+      // sin borrador que limpiar
+    }
+    setEditadas({});
+    setCamposMal([]);
+    setErrores([]);
+    setAviso("");
+    irA(0);
+  }, [claveBorrador, irA]);
+
   function siguiente() {
     if (esRevision) {
       void enviar();
@@ -389,6 +408,16 @@ export function BriefForm({ slug, marca, acento, secciones }: BriefFormProps) {
             <ArrowLeft className="h-4 w-4" aria-hidden />
             Atrás
           </button>
+
+          {progreso.pct === 100 ? (
+            <button
+              type="button"
+              onClick={reiniciar}
+              className="rounded-xl border border-white/15 px-4 py-2.5 text-sm text-white/60 transition-colors hover:border-white/30 hover:text-white"
+            >
+              Empezar de nuevo
+            </button>
+          ) : null}
 
           <button
             type="button"
