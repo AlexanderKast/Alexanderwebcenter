@@ -38,7 +38,7 @@ const sections: Section[] = [
       { label: "Suscriptores", href: "/admin/suscriptores", icon: Mail },
       { label: "Consultorías", href: "/admin/consultorias", icon: CalendarCheck },
       { label: "Mensajes", href: "/admin/mensajes", icon: MessageSquare },
-      { label: "Briefs de marca", href: "/admin/briefs", icon: ClipboardList },
+      { label: "Briefs de marca", href: "/panel", icon: ClipboardList },
     ],
   },
   {
