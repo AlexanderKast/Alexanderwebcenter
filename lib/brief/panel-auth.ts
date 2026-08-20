@@ -14,8 +14,14 @@ const ANON =
   process.env.BRIEF_SUPABASE_ANON_KEY ??
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjZnVpbWF6dGRzZWtxZ3RyYm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxOTExMTYsImV4cCI6MjEwMjc2NzExNn0.Wu0237cbVx1_yGKn8Uq_FVhwqej1h6QlkSsr4DbrNOc';
 
+/**
+ * Manda la llave anon: es la del proyecto del brief y viaja con el codigo.
+ * Si se resolviera primero por variables de entorno, en produccion caia en
+ * la base del sitio y el login fallaba con "correo o contrasena incorrectos"
+ * porque la cuenta no vive ahi.
+ */
 function urlDelBrief(): string {
-  return urlBase() ?? urlDesdeLlave(ANON) ?? 'https://rcfuimaztdsekqgtrbmb.supabase.co';
+  return urlDesdeLlave(ANON) ?? urlBase() ?? 'https://rcfuimaztdsekqgtrbmb.supabase.co';
 }
 
 /** Quien puede entrar al panel. Coma separa varios correos. */
