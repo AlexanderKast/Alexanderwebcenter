@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft, ArrowRight, Check, Loader2, Save } from 'lucide-react';
 import { calcularProgreso, camposVisibles, conMarca, esVisible, tieneValor } from '@/lib/brief/schema';
@@ -361,19 +361,35 @@ export function BriefForm({ slug, marca, acento, secciones }: BriefFormProps) {
             )}
 
             <div className="mt-7 space-y-7">
-              {seccionActual.f.map((campo) =>
-                esVisible(campo, respuestas) ? (
-                  <CampoBrief
-                    key={campo.id}
-                    campo={campo}
-                    marca={marca}
-                    acento={acento}
-                    valor={respuestas[campo.id]}
-                    conError={camposMal.includes(campo.id)}
-                    onChange={actualizar}
-                  />
-                ) : null,
-              )}
+              {/* Los campos condicionales aparecen y se van con animacion:
+                  asi se entiende que la respuesta anterior los abrio. */}
+              <AnimatePresence initial={false} mode="popLayout">
+                {seccionActual.f.map((campo, i) =>
+                  esVisible(campo, respuestas) ? (
+                    <motion.div
+                      key={campo.id}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{
+                        opacity: 1,
+                        y: 0,
+                        transition: { delay: Math.min(i * 0.03, 0.22), duration: 0.26 },
+                      }}
+                      exit={{ opacity: 0, y: -6, transition: { duration: 0.15 } }}
+                      transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <CampoBrief
+                        campo={campo}
+                        marca={marca}
+                        acento={acento}
+                        valor={respuestas[campo.id]}
+                        conError={camposMal.includes(campo.id)}
+                        onChange={actualizar}
+                      />
+                    </motion.div>
+                  ) : null,
+                )}
+              </AnimatePresence>
             </div>
           </motion.section>
         ) : (
