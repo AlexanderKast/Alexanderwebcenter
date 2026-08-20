@@ -465,14 +465,16 @@ export const BRIEF_SECCIONES: BriefSeccion[] = [
         "l": "Logo: subilo acá o pegá el link",
         "ty": "archivo",
         "h": "Si tenés el vectorial (.AI, .SVG, .EPS) mejor. También sirve un link de Drive o Dropbox con la carpeta.",
-        "ph": "https://drive.google.com/..."
+        "ph": "https://drive.google.com/...",
+        "when": { "f": "q6_1", "v": ["Sí, vectorial", "Solo en imagen (JPG/PNG)"] }
       },
       {
         "id": "q6_2c",
         "l": "Manual de marca, colores o tipografías",
         "ty": "archivo",
         "h": "PDF, imagen o link. Si no hay manual, sirve una captura con los colores que usan.",
-        "ph": "https://drive.google.com/..."
+        "ph": "https://drive.google.com/...",
+        "when": { "f": "q6_2", "v": ["Sí, completo", "Solo colores"] }
       },
       {
         "id": "q6_3c",
@@ -497,9 +499,19 @@ export const BRIEF_SECCIONES: BriefSeccion[] = [
         ]
       },
       {
+        "id": "q6_5b",
+        "l": "Fotos del equipo, la planta o el proceso",
+        "ty": "archivo",
+        "h": "Subí una o pegá el link de la carpeta.",
+        "ph": "https://drive.google.com/...",
+        "when": { "f": "q6_5", "v": ["Sí"] }
+      },
+      {
         "id": "q6_6",
-        "l": "¿Tienen mockups de empaque, render 3D o el packaging fotografiado?",
-        "ty": "area"
+        "l": "Mockups de empaque, render 3D o packaging fotografiado",
+        "ty": "archivo",
+        "h": "Si existe, subilo o pegá el link. Si no hay nada todavía, dejalo vacío.",
+        "ph": "https://drive.google.com/..."
       }
     ]
   },

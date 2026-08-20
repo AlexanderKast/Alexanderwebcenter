@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { motion } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { AlertCircle, ArrowLeft, ArrowRight, Check, Loader2, Save } from 'lucide-react';
 import { calcularProgreso, camposVisibles, conMarca, esVisible, tieneValor } from '@/lib/brief/schema';
@@ -335,7 +336,13 @@ export function BriefForm({ slug, marca, acento, secciones }: BriefFormProps) {
         )}
 
         {seccionActual ? (
-          <section className="mt-4">
+          <motion.section
+            key={seccionActual.n}
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="mt-4"
+          >
             <h2 className="text-2xl font-semibold text-white md:text-3xl">
               {conMarca(seccionActual.t, marca)}
             </h2>
@@ -368,7 +375,7 @@ export function BriefForm({ slug, marca, acento, secciones }: BriefFormProps) {
                 ) : null,
               )}
             </div>
-          </section>
+          </motion.section>
         ) : (
           <RevisionBrief
             secciones={secciones}

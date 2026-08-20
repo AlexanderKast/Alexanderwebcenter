@@ -32,7 +32,7 @@ export default async function BriefClientePage({ params }: Props) {
   const secciones = seccionesPara(cliente.sector);
 
   return (
-    <main className="min-h-screen bg-[#030303] text-white">
+    <main className="relative z-10 min-h-screen pt-[92px] text-white">
       <header className="border-b border-white/10">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-5 lg:px-8">
           <div className="flex items-center gap-3">

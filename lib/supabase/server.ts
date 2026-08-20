@@ -50,15 +50,37 @@ export function createSupabaseServiceRole(): SupabaseClient {
  * BRIEF_SUPABASE_URL y BRIEF_SUPABASE_SERVICE_ROLE_KEY se usan esas;
  * si no, cae en la base del sitio.
  */
+/**
+ * Saca la URL del proyecto del propio token: el JWT de Supabase trae el
+ * ref en su payload. Asi alcanza con configurar la llave.
+ */
+export function urlDesdeLlave(key: string): string | null {
+  try {
+    const carga = key.split(".")[1];
+    if (!carga) return null;
+    const json = JSON.parse(Buffer.from(carga, "base64").toString("utf8")) as { ref?: string };
+    return json.ref ? `https://${json.ref}.supabase.co` : null;
+  } catch {
+    return null;
+  }
+}
+
 export function createSupabaseBrief(): SupabaseClient {
-  const url =
-    process.env.BRIEF_SUPABASE_URL ??
-    process.env.NEXT_PUBLIC_SUPABASE_URL ??
-    process.env.SUPABASE_URL;
   const key =
     process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) {
-    throw new Error("Faltan BRIEF_SUPABASE_URL o BRIEF_SUPABASE_SERVICE_ROLE_KEY");
+  if (!key) {
+    throw new Error("Falta BRIEF_SUPABASE_SERVICE_ROLE_KEY");
+  }
+
+  // Si la llave es la del brief, la URL sale de ella: alcanza con una
+  // sola variable y no se pueden mezclar dos proyectos por descuido.
+  const url =
+    process.env.BRIEF_SUPABASE_URL ??
+    (process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ? urlDesdeLlave(key) : null) ??
+    process.env.NEXT_PUBLIC_SUPABASE_URL ??
+    process.env.SUPABASE_URL;
+  if (!url) {
+    throw new Error("No pude resolver la URL de la base del brief");
   }
   return createClient(url, key, {
     auth: {
