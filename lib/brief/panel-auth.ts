@@ -1,7 +1,7 @@
 import 'server-only';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { urlDesdeLlave, urlValida } from '@/lib/supabase/server';
+import { urlDelBrief as urlBase, urlDesdeLlave } from '@/lib/supabase/server';
 
 /**
  * Sesion del panel del brief. Corre contra el proyecto Supabase del
@@ -15,12 +15,7 @@ const ANON =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjZnVpbWF6dGRzZWtxZ3RyYm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxOTExMTYsImV4cCI6MjEwMjc2NzExNn0.Wu0237cbVx1_yGKn8Uq_FVhwqej1h6QlkSsr4DbrNOc';
 
 function urlDelBrief(): string {
-  return (
-    urlValida(process.env.BRIEF_SUPABASE_URL) ??
-    urlDesdeLlave(process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY) ??
-    urlDesdeLlave(ANON) ??
-    'https://rcfuimaztdsekqgtrbmb.supabase.co'
-  );
+  return urlBase() ?? urlDesdeLlave(ANON) ?? 'https://rcfuimaztdsekqgtrbmb.supabase.co';
 }
 
 /** Quien puede entrar al panel. Coma separa varios correos. */
