@@ -54,9 +54,10 @@ export function createSupabaseServiceRole(): SupabaseClient {
  * Saca la URL del proyecto del propio token: el JWT de Supabase trae el
  * ref en su payload. Asi alcanza con configurar la llave.
  */
-export function urlDesdeLlave(key: string): string | null {
+export function urlDesdeLlave(key: string | undefined): string | null {
+  if (!key) return null;
   try {
-    const carga = key.split(".")[1];
+    const carga = key.trim().split(".")[1];
     if (!carga) return null;
     const json = JSON.parse(Buffer.from(carga, "base64").toString("utf8")) as { ref?: string };
     return json.ref ? `https://${json.ref}.supabase.co` : null;
@@ -65,20 +66,36 @@ export function urlDesdeLlave(key: string): string | null {
   }
 }
 
+/**
+ * Una variable mal pegada (sin https://, con espacios, a medias) no debe
+ * tumbar la pagina: si no es una URL http(s) de verdad, se ignora.
+ */
+export function urlValida(valor: string | undefined): string | null {
+  if (!valor) return null;
+  const limpio = valor.trim().replace(/\/+$/, "");
+  try {
+    const url = new URL(limpio);
+    return url.protocol === "https:" || url.protocol === "http:" ? url.origin : null;
+  } catch {
+    return null;
+  }
+}
+
 export function createSupabaseBrief(): SupabaseClient {
-  const key =
-    process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const key = (
+    process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY
+  )?.trim();
   if (!key) {
     throw new Error("Falta BRIEF_SUPABASE_SERVICE_ROLE_KEY");
   }
 
-  // Si la llave es la del brief, la URL sale de ella: alcanza con una
-  // sola variable y no se pueden mezclar dos proyectos por descuido.
+  // La URL sale de la propia llave: alcanza con una sola variable y no se
+  // pueden mezclar dos proyectos por descuido.
   const url =
-    process.env.BRIEF_SUPABASE_URL ??
-    (process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ? urlDesdeLlave(key) : null) ??
-    process.env.NEXT_PUBLIC_SUPABASE_URL ??
-    process.env.SUPABASE_URL;
+    urlValida(process.env.BRIEF_SUPABASE_URL) ??
+    urlDesdeLlave(process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY) ??
+    urlValida(process.env.NEXT_PUBLIC_SUPABASE_URL) ??
+    urlValida(process.env.SUPABASE_URL);
   if (!url) {
     throw new Error("No pude resolver la URL de la base del brief");
   }

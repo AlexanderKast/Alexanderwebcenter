@@ -1,7 +1,7 @@
 import 'server-only';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import { urlDesdeLlave } from '@/lib/supabase/server';
+import { urlDesdeLlave, urlValida } from '@/lib/supabase/server';
 
 /**
  * Sesion del panel del brief. Corre contra el proyecto Supabase del
@@ -15,10 +15,9 @@ const ANON =
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjZnVpbWF6dGRzZWtxZ3RyYm1iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcxOTExMTYsImV4cCI6MjEwMjc2NzExNn0.Wu0237cbVx1_yGKn8Uq_FVhwqej1h6QlkSsr4DbrNOc';
 
 function urlDelBrief(): string {
-  const clave = process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY;
   return (
-    process.env.BRIEF_SUPABASE_URL ??
-    (clave ? urlDesdeLlave(clave) : null) ??
+    urlValida(process.env.BRIEF_SUPABASE_URL) ??
+    urlDesdeLlave(process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY) ??
     urlDesdeLlave(ANON) ??
     'https://rcfuimaztdsekqgtrbmb.supabase.co'
   );
