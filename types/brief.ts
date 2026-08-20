@@ -3,7 +3,15 @@
  * El cuestionario vive en content/brief/schema.ts.
  */
 
-export type BriefCampoTipo = 'text' | 'tel' | 'email' | 'area' | 'radio' | 'check';
+export type BriefCampoTipo =
+  | 'text'
+  | 'tel'
+  | 'email'
+  | 'area'
+  | 'radio'
+  | 'check'
+  /** link (Drive, Dropbox, web) o archivo subido: se guarda la URL */
+  | 'archivo';
 
 export type BriefEstado = 'nuevo' | 'leido' | 'en_proceso' | 'archivado';
 

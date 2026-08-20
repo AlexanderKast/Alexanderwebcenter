@@ -15,6 +15,9 @@ const MAX_TEXTO = 300;
 const MAX_AREA = 5000;
 const MAX_EMAIL = 190;
 const MAX_TEL = 40;
+const MAX_URL = 500;
+/** Solo http(s): evita javascript:, data: y demas esquemas. */
+const URL_VALIDA = /^https?:\/\/[^\s]+\.[^\s]{2,}$/i;
 
 /** Campos sin los cuales no podemos responderle a la persona. */
 export const CAMPOS_OBLIGATORIOS = ['contacto_nombre', 'contacto_whatsapp'] as const;
@@ -171,6 +174,12 @@ export function validarRespuestas(
       valor = valor.slice(0, MAX_TEL);
       if (valor && !TEL_VALIDO.test(valor)) {
         errores.push('El telefono o WhatsApp solo admite numeros, espacios y los signos + ( ) - .');
+        valor = '';
+      }
+    } else if (campo.ty === 'archivo') {
+      valor = valor.slice(0, MAX_URL);
+      if (valor && !URL_VALIDA.test(valor)) {
+        errores.push('El enlace del archivo debe empezar por http:// o https://');
         valor = '';
       }
     }
