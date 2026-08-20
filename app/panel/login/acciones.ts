@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation';
 import { clientePanel, correosPermitidos } from '@/lib/brief/panel-auth';
+import { hostDelBrief } from '@/lib/supabase/server';
 
 export interface EstadoAcceso {
   error: string;
@@ -22,6 +23,8 @@ export async function accionEntrar(_previo: EstadoAcceso, datos: FormData): Prom
   const supabase = await clientePanel();
   const { error } = await supabase.auth.signInWithPassword({ email, password: clave });
   if (error) {
+    // Sin esto, un fallo de configuracion se ve igual que una clave mala.
+    console.error('[panel/login]', error.status, error.message, '| base:', hostDelBrief());
     return { error: 'Correo o contraseña incorrectos.' };
   }
 
