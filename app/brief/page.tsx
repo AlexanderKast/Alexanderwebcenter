@@ -19,7 +19,7 @@ export default function BriefPage() {
   const secciones = seccionesPara(cliente.sector);
 
   return (
-    <main className="min-h-screen bg-[#030303] text-white">
+    <main className="relative z-10 min-h-screen pt-[92px] text-white">
       <BriefForm
         slug={cliente.slug}
         marca={cliente.marca}

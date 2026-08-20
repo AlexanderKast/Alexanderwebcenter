@@ -27,7 +27,7 @@ const QUE_SIGUE = [
 
 export default function BriefGraciasPage() {
   return (
-    <main className="mx-auto w-full max-w-3xl px-6 py-16 text-white">
+    <main className="relative z-10 mx-auto w-full max-w-3xl px-6 pb-24 pt-[130px] text-white">
       <div className="text-center">
         <span className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400 text-black">
           <Check className="h-7 w-7" aria-hidden />
