@@ -10,6 +10,7 @@ export const navPrimary: NavItem[] = [
   { label: "Beneficios", href: "/#beneficios" },
   { label: "Recurso", href: "/#recurso" },
   { label: "Consultoría", href: "/consultoria" },
+  { label: "Formulario", href: "/brief" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -21,6 +22,7 @@ export const navFooter: { title: string; items: NavItem[] }[] = [
       { label: "Beneficios", href: "/#beneficios" },
       { label: "Recurso", href: "/#recurso" },
       { label: "Consultoría", href: "/consultoria" },
+      { label: "Formulario", href: "/brief" },
       { label: "Blog", href: "/blog" },
     ],
   },
