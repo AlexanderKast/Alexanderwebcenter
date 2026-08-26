@@ -129,7 +129,7 @@ export function ContactoContent() {
                       <div style={{ fontFamily: "var(--font-bebas)", fontSize: "clamp(16px,1.8vw,22px)", letterSpacing: "0.5px", color: "#fff", marginBottom: 8 }}>
                         {opt.title}
                       </div>
-                      <p style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.6, color: "var(--muted)", marginBottom: 14 }}>
+                      <p style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.6, color: "var(--texto-suave)", marginBottom: 14 }}>
                         {opt.desc}
                       </p>
                       <div style={{ fontFamily: "var(--font-bebas)", fontSize: 13, letterSpacing: "2px", color: "var(--gold)" }}>
@@ -148,7 +148,7 @@ export function ContactoContent() {
                 opacity: topVisible ? 1 : 0,
                 transition: "opacity 0.7s ease 500ms",
               }}>
-                <p style={{ fontFamily: "var(--font-dm)", fontSize: 12, lineHeight: 1.7, color: "var(--muted2)" }}>
+                <p style={{ fontFamily: "var(--font-dm)", fontSize: 12, lineHeight: 1.7, color: "var(--texto-tenue)" }}>
                   ⏱ Respondo personalmente en menos de 24h hábiles. Si tu proyecto es urgente,
                   menciona <em style={{ color: "var(--gold)" }}>urgente</em> al inicio del mensaje.
                 </p>
@@ -176,7 +176,7 @@ export function ContactoContent() {
                     <div style={{ fontFamily: "var(--font-bebas)", fontSize: 22, letterSpacing: "1px", color: "var(--gold)", marginBottom: 10 }}>
                       MENSAJE RECIBIDO
                     </div>
-                    <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--muted)" }}>
+                    <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--texto-suave)" }}>
                       Te respondo en menos de 24h.
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export function ContactoContent() {
                   <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                     <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
                       <div>
-                        <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--muted2)", display: "block", marginBottom: 8 }}>
+                        <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--texto-tenue)", display: "block", marginBottom: 8 }}>
                           NOMBRE *
                         </label>
                         <input
@@ -204,7 +204,7 @@ export function ContactoContent() {
                         />
                       </div>
                       <div>
-                        <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--muted2)", display: "block", marginBottom: 8 }}>
+                        <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--texto-tenue)", display: "block", marginBottom: 8 }}>
                           CORREO *
                         </label>
                         <input
@@ -226,7 +226,7 @@ export function ContactoContent() {
                     </div>
 
                     <div>
-                      <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--muted2)", display: "block", marginBottom: 8 }}>
+                      <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--texto-tenue)", display: "block", marginBottom: 8 }}>
                         ¿QUÉ NECESITAS?
                       </label>
                       <select
@@ -255,7 +255,7 @@ export function ContactoContent() {
                     </div>
 
                     <div>
-                      <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--muted2)", display: "block", marginBottom: 8 }}>
+                      <label style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1.5px", color: "var(--texto-tenue)", display: "block", marginBottom: 8 }}>
                         CUÉNTAME MÁS
                       </label>
                       <textarea
@@ -358,7 +358,7 @@ export function ContactoContent() {
                   {openFaq === i && (
                     <div style={{
                       padding: "0 clamp(16px,2vw,24px) clamp(16px,2vw,24px)",
-                      fontFamily: "var(--font-dm)", fontSize: 14, lineHeight: 1.7, color: "var(--muted)",
+                      fontFamily: "var(--font-dm)", fontSize: 14, lineHeight: 1.7, color: "var(--texto-suave)",
                     }}>
                       {faq.a}
                     </div>
@@ -418,7 +418,7 @@ export function ContactoContent() {
                     <div style={{ fontFamily: "var(--font-bebas)", fontSize: 15, letterSpacing: "1px", color: "#fff", marginBottom: 4 }}>
                       {s.name}
                     </div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--muted2)" }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--texto-tenue)" }}>
                       {s.handle}
                     </div>
                   </div>

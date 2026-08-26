@@ -156,7 +156,7 @@ export function HomeRecursos() {
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 14, lineHeight: 1.65,
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
                 flex: 1,
               }}>
                 {r.desc}
@@ -203,7 +203,7 @@ export function HomeRecursos() {
             </div>
             <p style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 14, color: "var(--muted)",
+              fontSize: 14, color: "var(--texto-suave)",
             }}>
               Tips de IA, contenido y negocios digitales. Sin spam. Solo lo que uso yo.
             </p>

@@ -111,7 +111,7 @@ export function HomeSobreMi() {
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 16, lineHeight: 1.75,
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
               }}>
                 Empecé en el ecommerce sin saber nada. Co-fundé SICOMMER — llegamos a ser
                 uno de los proveedores de dropshipping más grandes de Colombia — y en 2024 vendí mi parte a mi socio.
@@ -121,7 +121,7 @@ export function HomeSobreMi() {
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 16, lineHeight: 1.75,
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
               }}>
                 Mi fe me ancla. UGC Colombia nació como la provisión de Dios en ese momento
                 difícil — hoy es la empresa más activa del ecosistema. A eso me refiero cuando
@@ -130,7 +130,7 @@ export function HomeSobreMi() {
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 16, lineHeight: 1.75,
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
               }}>
                 Hoy combino consultoría, agencia UGC, live shopping y un marketplace de creadores propio (Kreoon)
                 para ayudar a emprendedores y marcas en LATAM a operar en modo AI-First.
@@ -163,7 +163,7 @@ export function HomeSobreMi() {
                   <div style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 12, lineHeight: 1.5,
-                    color: "var(--muted2)", marginTop: 4,
+                    color: "var(--texto-tenue)", marginTop: 4,
                   }}>
                     {s.label}
                   </div>
@@ -219,7 +219,7 @@ export function HomeSobreMi() {
                     <span style={{ fontFamily: "var(--font-bebas)", fontSize: 32, color: "var(--gold)", letterSpacing: 2 }}>AC</span>
                   </div>
                   <div style={{
-                    fontFamily: "var(--font-dm)", fontSize: 12, letterSpacing: "1.8px", color: "var(--muted2)",
+                    fontFamily: "var(--font-dm)", fontSize: 12, letterSpacing: "1.8px", color: "var(--texto-tenue)",
                   }}>
                     ALEXANDER CAST
                   </div>
@@ -240,7 +240,7 @@ export function HomeSobreMi() {
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, letterSpacing: "1px",
                   border: "1px solid rgba(255,255,255,0.08)",
-                  color: "var(--muted2)",
+                  color: "var(--texto-tenue)",
                   padding: "6px 12px",
                 }}>
                   {c}
@@ -297,7 +297,7 @@ export function HomeSobreMi() {
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 12, color: "var(--muted2)",
+                  fontSize: 12, color: "var(--texto-tenue)",
                 }}>
                   {v.tag}
                 </div>
@@ -309,7 +309,7 @@ export function HomeSobreMi() {
           <div style={{
             fontFamily: "var(--font-dm)",
             fontSize: 12, letterSpacing: "1.8px",
-            color: "var(--muted2)", marginBottom: 20,
+            color: "var(--texto-tenue)", marginBottom: 20,
             opacity: venVisible ? 1 : 0,
             transform: venVisible ? "translateY(0)" : "translateY(12px)",
             transition: "opacity 0.6s ease 200ms, transform 0.6s ease 200ms",
@@ -341,7 +341,7 @@ export function HomeSobreMi() {
                 <div style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, letterSpacing: "1.5px",
-                  color: "var(--muted2)",
+                  color: "var(--texto-tenue)",
                 }}>
                   {v.role}
                 </div>

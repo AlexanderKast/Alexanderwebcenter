@@ -99,7 +99,7 @@ export default async function SkillsGraciasPage({
             fontFamily: "var(--font-dm)",
             fontSize: "clamp(14px,1.6vw,17px)",
             lineHeight: 1.65,
-            color: "var(--muted)",
+            color: "var(--texto-suave)",
             maxWidth: 520,
             margin: "0 auto 48px",
           }}
@@ -149,7 +149,7 @@ export default async function SkillsGraciasPage({
                   style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 13,
-                    color: "var(--muted)",
+                    color: "var(--texto-suave)",
                   }}
                 >
                   {d.detalle}
@@ -189,7 +189,7 @@ export default async function SkillsGraciasPage({
               fontFamily: "var(--font-dm)",
               fontSize: 12,
               letterSpacing: "1.5px",
-              color: "var(--muted)",
+              color: "var(--texto-suave)",
               borderBottom: "1px solid var(--gold-dim)",
               paddingBottom: 2,
             }}

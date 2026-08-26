@@ -84,7 +84,7 @@ export function HomeStats() {
             <div style={{
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: "var(--muted)",
+              color: "var(--texto-suave)",
               whiteSpace: "pre-line",
               lineHeight: 1.6,
             }}>

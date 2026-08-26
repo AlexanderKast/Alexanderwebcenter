@@ -135,7 +135,7 @@ function PackageCard({ pkg, i, visible }: { pkg: typeof PACKAGES[0]; i: number; 
       <div style={{
         fontFamily: "var(--font-dm)",
         fontSize: 10, letterSpacing: "2.5px",
-        color: pkg.featured ? "var(--gold)" : "var(--muted2)",
+        color: pkg.featured ? "var(--gold)" : "var(--texto-tenue)",
         border: `1px solid ${pkg.featured ? "var(--gold-dim)" : "rgba(255,255,255,0.08)"}`,
         padding: "4px 10px",
         width: "fit-content",
@@ -166,7 +166,7 @@ function PackageCard({ pkg, i, visible }: { pkg: typeof PACKAGES[0]; i: number; 
         </div>
         <div style={{
           fontFamily: "var(--font-dm)",
-          fontSize: 12, color: "var(--muted2)",
+          fontSize: 12, color: "var(--texto-tenue)",
           marginTop: 2,
         }}>
           {pkg.priceSuffix} · {pkg.duration}
@@ -180,7 +180,7 @@ function PackageCard({ pkg, i, visible }: { pkg: typeof PACKAGES[0]; i: number; 
       <p style={{
         fontFamily: "var(--font-dm)",
         fontSize: 14, lineHeight: 1.7,
-        color: "var(--muted)",
+        color: "var(--texto-suave)",
       }}>
         {pkg.desc}
       </p>
@@ -190,7 +190,7 @@ function PackageCard({ pkg, i, visible }: { pkg: typeof PACKAGES[0]; i: number; 
         {pkg.includes.map(item => (
           <li key={item} style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 13, color: "var(--muted)",
+            fontSize: 13, color: "var(--texto-suave)",
             display: "flex", alignItems: "flex-start", gap: 10,
           }}>
             <span style={{ color: "var(--gold)", flexShrink: 0, marginTop: 1 }}>✓</span>
@@ -312,7 +312,7 @@ export function ServiciosContent() {
                     </div>
                     <div style={{
                       fontFamily: "var(--font-dm)",
-                      fontSize: 13, color: "var(--muted2)",
+                      fontSize: 13, color: "var(--texto-tenue)",
                     }}>
                       {a.desc}
                     </div>
@@ -406,7 +406,7 @@ export function ServiciosContent() {
                   <p style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 15, lineHeight: 1.7,
-                    color: "var(--muted)",
+                    color: "var(--texto-suave)",
                     paddingBottom: 24,
                   }}>
                     {f.a}
@@ -448,7 +448,7 @@ export function ServiciosContent() {
             </h2>
             <p style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 16, color: "var(--muted)", maxWidth: 440,
+              fontSize: 16, color: "var(--texto-suave)", maxWidth: 440,
             }}>
               Si no estás seguro, la Sesión Estratégica es el primer paso.
               Salimos con un mapa claro de qué necesitas exactamente.

@@ -60,7 +60,7 @@ function ServiceRow({
             <span style={{
               fontFamily: "var(--font-bebas)",
               fontSize: 13, letterSpacing: "2px",
-              color: hovered === i ? "var(--gold)" : "var(--muted2)",
+              color: hovered === i ? "var(--gold)" : "var(--texto-tenue)",
               flexShrink: 0, transition: "color .3s",
             }}>
               0{i + 1}
@@ -81,7 +81,7 @@ function ServiceRow({
             <span style={{
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: hovered === i ? "var(--gold)" : "var(--muted2)",
+              color: hovered === i ? "var(--gold)" : "var(--texto-tenue)",
               flexShrink: 0, transition: "color .3s",
             }}>
               {s.label}
@@ -127,7 +127,7 @@ function ServiceRow({
           <p style={{
             fontFamily: "var(--font-dm)",
             fontSize: 15, lineHeight: 1.7,
-            color: "var(--muted)",
+            color: "var(--texto-suave)",
           }}>
             {s.desc}
           </p>
@@ -135,7 +135,7 @@ function ServiceRow({
             {s.items.map(item => (
               <li key={item} style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 13, color: "var(--muted)",
+                fontSize: 13, color: "var(--texto-suave)",
                 display: "flex", alignItems: "center", gap: 10,
               }}>
                 <span style={{ color: "var(--gold)", fontSize: 16 }}>//</span>

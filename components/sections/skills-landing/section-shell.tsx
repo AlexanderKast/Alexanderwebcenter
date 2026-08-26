@@ -64,7 +64,7 @@ export const bodyText: React.CSSProperties = {
   fontFamily: "var(--font-dm)",
   fontSize: "clamp(14px,1.5vw,17px)",
   lineHeight: 1.65,
-  color: "var(--muted)",
+  color: "var(--texto-suave)",
 };
 
 export const cardStyle: React.CSSProperties = {

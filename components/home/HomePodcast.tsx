@@ -97,7 +97,7 @@ export function HomePodcast() {
             </div>
             <p style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 14, color: "var(--muted)",
+              fontSize: 14, color: "var(--texto-suave)",
               marginTop: 16, maxWidth: 440,
               opacity: secVisible ? 1 : 0,
               transition: "opacity 0.6s ease 300ms",
@@ -119,7 +119,7 @@ export function HomePodcast() {
             <div style={{
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: "var(--muted2)", marginBottom: 4,
+              color: "var(--texto-tenue)", marginBottom: 4,
             }}>
               ESCUCHAR EN
             </div>
@@ -132,12 +132,12 @@ export function HomePodcast() {
                 style={{
                   fontFamily: "var(--font-bebas)",
                   fontSize: 12, letterSpacing: "2px",
-                  color: "var(--muted)",
+                  color: "var(--texto-suave)",
                   display: "flex", alignItems: "center", gap: 6,
                   transition: "color .2s",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
               >
                 <span style={{ color: "var(--gold)", fontSize: 8 }}>●</span>
                 {p.label}
@@ -206,7 +206,7 @@ export function HomePodcast() {
                 <p style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 13, lineHeight: 1.6,
-                  color: "var(--muted2)",
+                  color: "var(--texto-tenue)",
                 }}>
                   {ep.desc}
                 </p>
@@ -223,14 +223,14 @@ export function HomePodcast() {
                 <div style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, letterSpacing: "1.5px",
-                  color: "var(--muted2)",
+                  color: "var(--texto-tenue)",
                 }}>
                   {ep.duracion}
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, letterSpacing: "1px",
-                  color: "var(--muted2)",
+                  color: "var(--texto-tenue)",
                 }}>
                   {ep.fecha}
                 </div>

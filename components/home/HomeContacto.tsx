@@ -132,7 +132,7 @@ export function HomeContacto() {
               fontFamily: "var(--font-dm)",
               fontSize: "clamp(16px,1.8vw,20px)",
               lineHeight: 1.7,
-              color: "var(--muted)",
+              color: "var(--texto-suave)",
               marginBottom: 40,
               maxWidth: 440,
             }}>
@@ -209,7 +209,7 @@ export function HomeContacto() {
               <div style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 12, letterSpacing: "1.8px",
-                color: "var(--muted2)",
+                color: "var(--texto-tenue)",
               }}>
                 TAMBIÉN PUEDES ESCRIBIRME A:
               </div>
@@ -219,12 +219,12 @@ export function HomeContacto() {
                 style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 15,
-                  color: "var(--muted)",
+                  color: "var(--texto-suave)",
                   display: "flex", alignItems: "center", gap: 8,
                   transition: "color .2s",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
               >
                 <span style={{ color: "var(--gold)", fontSize: 12 }}>✉</span>
                 founder@kreoon.com
@@ -237,12 +237,12 @@ export function HomeContacto() {
                 style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 15,
-                  color: "var(--muted)",
+                  color: "var(--texto-suave)",
                   display: "flex", alignItems: "center", gap: 8,
                   transition: "color .2s",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
               >
                 <span style={{ color: "var(--gold)", fontSize: 12 }}>↗</span>
                 @alexemprendee
@@ -254,7 +254,7 @@ export function HomeContacto() {
               marginTop: 32,
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: "var(--muted2)",
+              color: "var(--texto-tenue)",
             }}>
               📍 MEDELLÍN, COLOMBIA — ATIENDO TODA LATAM
             </div>
@@ -297,7 +297,7 @@ export function HomeContacto() {
                   <p style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 15, lineHeight: 1.7,
-                    color: "var(--muted)",
+                    color: "var(--texto-suave)",
                   }}>
                     Gracias. Te respondo en menos de 24 horas.
                     Mientras tanto, sígueme en{" "}
@@ -314,7 +314,7 @@ export function HomeContacto() {
                       <label style={{
                         fontFamily: "var(--font-dm)",
                         fontSize: 12, letterSpacing: "1.8px",
-                        color: "var(--muted2)", display: "block", marginBottom: 6,
+                        color: "var(--texto-tenue)", display: "block", marginBottom: 6,
                       }}>
                         NOMBRE *
                       </label>
@@ -333,7 +333,7 @@ export function HomeContacto() {
                       <label style={{
                         fontFamily: "var(--font-dm)",
                         fontSize: 12, letterSpacing: "1.8px",
-                        color: "var(--muted2)", display: "block", marginBottom: 6,
+                        color: "var(--texto-tenue)", display: "block", marginBottom: 6,
                       }}>
                         EMAIL *
                       </label>
@@ -354,7 +354,7 @@ export function HomeContacto() {
                     <label style={{
                       fontFamily: "var(--font-dm)",
                       fontSize: 12, letterSpacing: "1.8px",
-                      color: "var(--muted2)", display: "block", marginBottom: 6,
+                      color: "var(--texto-tenue)", display: "block", marginBottom: 6,
                     }}>
                       ¿EN QUÉ TE PUEDO AYUDAR?
                     </label>
@@ -383,7 +383,7 @@ export function HomeContacto() {
                     <label style={{
                       fontFamily: "var(--font-dm)",
                       fontSize: 12, letterSpacing: "1.8px",
-                      color: "var(--muted2)", display: "block", marginBottom: 6,
+                      color: "var(--texto-tenue)", display: "block", marginBottom: 6,
                     }}>
                       MENSAJE
                     </label>
@@ -427,7 +427,7 @@ export function HomeContacto() {
 
                   <p style={{
                     fontFamily: "var(--font-dm)",
-                    fontSize: 12, color: "var(--muted2)",
+                    fontSize: 12, color: "var(--texto-tenue)",
                     textAlign: "center",
                   }}>
                     Respondo en menos de 24 horas · Sin spam

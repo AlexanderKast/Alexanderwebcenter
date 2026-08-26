@@ -68,7 +68,7 @@ export function HomePreloader() {
       <div style={{
         fontFamily: "var(--font-dm)",
         fontSize: 12, letterSpacing: "1.8px",
-        color: "var(--muted2)",
+        color: "var(--texto-tenue)",
         textTransform: "uppercase",
         animation: "pl-rise 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s both",
       }}>

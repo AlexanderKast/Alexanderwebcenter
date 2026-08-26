@@ -133,7 +133,7 @@ export function HomeProcess() {
               <p style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 15, lineHeight: 1.7,
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
               }}>
                 {s.body}
               </p>

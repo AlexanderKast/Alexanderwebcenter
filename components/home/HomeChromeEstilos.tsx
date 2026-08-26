@@ -14,12 +14,30 @@ export function HomeChromeEstilos() {
            padding y margin de las paginas. */
         @layer base {
           *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-          html { scroll-behavior: smooth; }
+          html {
+            scroll-behavior: smooth;
+            /*
+             * Varias secciones entran con translateX positivo (24-40px) y,
+             * mientras siguen bajo el fold, ese desplazamiento ensancha el
+             * documento: en movil se podia scrollear ~12px de costado.
+             * Se usa clip y no hidden a proposito: hidden convertiria al
+             * elemento en contenedor de scroll y romperia los position: sticky.
+             */
+            overflow-x: clip;
+          }
           body {
             background: #000;
             color: #fff;
             font-family: var(--font-sans), system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
+            /*
+             * Las animaciones de entrada arrancan con translateX, y mientras
+             * la seccion sigue bajo el fold ese desplazamiento ensancha el
+             * documento: en movil aparecia scroll horizontal.
+             * Se usa clip y no hidden a proposito: hidden convierte al body en
+             * contenedor de scroll y rompe los position: sticky de adentro.
+             */
+            overflow-x: clip;
           }
           /*
            * Alias sobre los tokens de globals.css. Antes este bloque redefinia
@@ -35,8 +53,6 @@ export function HomeChromeEstilos() {
             --surface2: var(--surface-2);
             /* Subidos desde 0.55/0.35: sobre el video de fondo esos valores
                no llegaban a contraste AA y el texto secundario no se leia. */
-            --muted:  rgba(255,255,255,0.74);
-            --muted2: rgba(255,255,255,0.56);
             --font-dm: var(--font-sans);
           }
           a { text-decoration: none; color: inherit; }
@@ -74,6 +90,21 @@ export function HomeChromeEstilos() {
               align-items: center;
             }
           }
+        }
+
+        /*
+         * Tokens de texto del chrome. Van SIN capa a proposito.
+         *
+         * Antes se llamaban --muted / --muted2 y vivian dentro de @layer base,
+         * pero globals.css declara su propio --muted: #101010 (una superficie
+         * de shadcn) sin capa. El CSS sin capa le gana al CSS en capa, asi que
+         * --muted resolvia a #101010: texto casi negro sobre fondo negro. Ese
+         * era el motivo real de que el nav y las descripciones no se vieran.
+         * Con nombres propios ya no hay colision posible.
+         */
+        :root {
+          --texto-suave: rgba(255,255,255,0.74);
+          --texto-tenue: rgba(255,255,255,0.56);
         }
 
         /* No existia ningun respeto por reduced-motion en el sitio publico. */

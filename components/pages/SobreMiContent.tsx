@@ -122,7 +122,7 @@ export function SobreMiContent() {
                 <p key={i} style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 16, lineHeight: 1.75,
-                  color: "var(--muted)",
+                  color: "var(--texto-suave)",
                   marginBottom: i < 3 ? 20 : 0,
                   opacity: storyVisible ? 1 : 0,
                   transition: `opacity 0.7s ease ${200 + i * 100}ms`,
@@ -143,7 +143,7 @@ export function SobreMiContent() {
                     fontFamily: "var(--font-dm)",
                     fontSize: 11, letterSpacing: "1px",
                     border: "1px solid rgba(255,255,255,0.08)",
-                    color: "var(--muted2)",
+                    color: "var(--texto-tenue)",
                     padding: "5px 12px",
                   }}>
                     {c}
@@ -188,7 +188,7 @@ export function SobreMiContent() {
                     }}>
                       <span style={{ fontFamily: "var(--font-bebas)", fontSize: 32, color: "var(--gold)", letterSpacing: 2 }}>AC</span>
                     </div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "2px", color: "var(--muted2)" }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "2px", color: "var(--texto-tenue)" }}>
                       ALEXANDER CAST
                     </div>
                   </div>
@@ -203,7 +203,7 @@ export function SobreMiContent() {
                 padding: 24,
                 display: "flex", flexDirection: "column", gap: 12,
               }}>
-                <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "2px", color: "var(--muted2)" }}>
+                <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "2px", color: "var(--texto-tenue)" }}>
                   ENCONTRARME EN
                 </div>
                 {[
@@ -213,12 +213,12 @@ export function SobreMiContent() {
                     style={{
                       fontFamily: "var(--font-bebas)",
                       fontSize: 15, letterSpacing: "1px",
-                      color: "var(--muted)",
+                      color: "var(--texto-suave)",
                       display: "flex", alignItems: "center", gap: 8,
                       transition: "color .2s",
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
                   >
                     <span style={{ color: "var(--gold)" }}>↗</span>
                     {r.platform}
@@ -297,7 +297,7 @@ export function SobreMiContent() {
                     <p style={{
                       fontFamily: "var(--font-dm)",
                       fontSize: 14, lineHeight: 1.7,
-                      color: "var(--muted)",
+                      color: "var(--texto-suave)",
                     }}>
                       {t.body}
                     </p>
@@ -353,7 +353,7 @@ export function SobreMiContent() {
                   <div style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 10, letterSpacing: "2px",
-                    color: "var(--muted2)", marginBottom: 12,
+                    color: "var(--texto-tenue)", marginBottom: 12,
                   }}>
                     {v.n}
                   </div>
@@ -368,7 +368,7 @@ export function SobreMiContent() {
                   <p style={{
                     fontFamily: "var(--font-dm)",
                     fontSize: 14, lineHeight: 1.7,
-                    color: "var(--muted)",
+                    color: "var(--texto-suave)",
                   }}>
                     {v.body}
                   </p>
@@ -418,14 +418,14 @@ export function SobreMiContent() {
                 }}>
                   <div style={{ fontFamily: "var(--font-bebas)", fontSize: 17, letterSpacing: "1.5px", color: "#fff", marginBottom: 4 }}>{v.name}</div>
                   <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "1.5px", color: "var(--gold)", marginBottom: 8 }}>{v.role}</div>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--muted2)" }}>{v.tag}</div>
+                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--texto-tenue)" }}>{v.tag}</div>
                 </div>
               ))}
             </div>
 
             <div style={{
               fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "3px",
-              color: "var(--muted2)", marginBottom: 20,
+              color: "var(--texto-tenue)", marginBottom: 20,
               opacity: venVisible ? 1 : 0,
               transition: "opacity 0.6s ease 300ms",
             }}>
@@ -445,7 +445,7 @@ export function SobreMiContent() {
                   transition: `opacity 0.6s ease ${360 + i * 60}ms, transform 0.6s ease ${360 + i * 60}ms`,
                 }}>
                   <div style={{ fontFamily: "var(--font-bebas)", fontSize: 15, letterSpacing: "1px", color: "rgba(255,255,255,0.7)", marginBottom: 4 }}>{v.name}</div>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "1.5px", color: "var(--muted2)" }}>{v.role}</div>
+                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "1.5px", color: "var(--texto-tenue)" }}>{v.role}</div>
                 </div>
               ))}
             </div>
@@ -475,7 +475,7 @@ export function SobreMiContent() {
             }}>
               ¿TRABAJAMOS JUNTOS?
             </h2>
-            <p style={{ fontFamily: "var(--font-dm)", fontSize: 16, color: "var(--muted)", maxWidth: 400 }}>
+            <p style={{ fontFamily: "var(--font-dm)", fontSize: 16, color: "var(--texto-suave)", maxWidth: 400 }}>
               Si lo que leíste tiene sentido con lo que buscas, hablemos.
             </p>
           </div>

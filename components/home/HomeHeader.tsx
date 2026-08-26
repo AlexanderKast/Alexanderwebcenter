@@ -95,14 +95,14 @@ export function HomeHeader() {
                   // 10px con 2.5px de tracking era ilegible. 12/1.6 se lee
                   // y sigue leyendose como nav editorial.
                   fontSize: 12, letterSpacing: "1.6px",
-                  color: active ? "#fff" : "var(--muted)",
+                  color: active ? "#fff" : "var(--texto-suave)",
                   padding: "8px 12px",
                   transition: "color .2s",
                   position: "relative",
                   whiteSpace: "nowrap",
                 }}
                 onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                onMouseLeave={e => (e.currentTarget.style.color = active ? "#fff" : "var(--muted)")}
+                onMouseLeave={e => (e.currentTarget.style.color = active ? "#fff" : "var(--texto-suave)")}
               >
                 <span style={{ color: "var(--gold)", marginRight: 5 }}>{n}</span>
                 {label}

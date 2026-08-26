@@ -82,7 +82,7 @@ export function SkillsGrid() {
                     fontFamily: "monospace",
                     fontSize: 10,
                     letterSpacing: "0.5px",
-                    color: "var(--muted2)",
+                    color: "var(--texto-tenue)",
                     background: "rgba(255,255,255,0.05)",
                     padding: "4px 8px",
                   }}

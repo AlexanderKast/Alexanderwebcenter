@@ -116,7 +116,7 @@ export function PodcastContent() {
                 <div style={{ fontFamily: "var(--font-bebas)", fontSize: "clamp(32px,3.5vw,48px)", color: "var(--gold)", lineHeight: 1 }}>
                   {s.value}
                 </div>
-                <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, letterSpacing: "1.5px", color: "var(--muted2)", marginTop: 6 }}>
+                <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, letterSpacing: "1.5px", color: "var(--texto-tenue)", marginTop: 6 }}>
                   {s.label}
                 </div>
               </div>
@@ -164,7 +164,7 @@ export function PodcastContent() {
                       {p.name}
                     </div>
                     {p.soon && (
-                      <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, color: "var(--muted2)", marginTop: 2 }}>
+                      <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, color: "var(--texto-tenue)", marginTop: 2 }}>
                         Próximamente
                       </div>
                     )}
@@ -218,10 +218,10 @@ export function PodcastContent() {
                   <span style={{ fontFamily: "var(--font-bebas)", fontSize: 13, letterSpacing: "2px", color: "var(--gold)" }}>
                     {FEATURED.ep}
                   </span>
-                  <span style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--muted2)" }}>
+                  <span style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--texto-tenue)" }}>
                     {FEATURED.duration}
                   </span>
-                  <span style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--muted2)" }}>
+                  <span style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--texto-tenue)" }}>
                     {FEATURED.date}
                   </span>
                 </div>
@@ -239,7 +239,7 @@ export function PodcastContent() {
                   🎙️ {FEATURED.guest}
                 </div>
 
-                <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, lineHeight: 1.7, color: "var(--muted)", maxWidth: 640, marginBottom: 20 }}>
+                <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, lineHeight: 1.7, color: "var(--texto-suave)", maxWidth: 640, marginBottom: 20 }}>
                   {FEATURED.desc}
                 </p>
 
@@ -247,7 +247,7 @@ export function PodcastContent() {
                   {FEATURED.topics.map(t => (
                     <span key={t} style={{
                       fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1px",
-                      color: "var(--muted2)",
+                      color: "var(--texto-tenue)",
                       border: "1px solid rgba(255,255,255,0.12)",
                       padding: "4px 12px",
                     }}>
@@ -320,13 +320,13 @@ export function PodcastContent() {
                     (e.currentTarget.children[1] as HTMLElement).style.color = "#fff";
                   }}
                   onMouseLeave={e => {
-                    (e.currentTarget.children[0] as HTMLElement).style.color = "var(--muted2)";
+                    (e.currentTarget.children[0] as HTMLElement).style.color = "var(--texto-tenue)";
                     (e.currentTarget.children[1] as HTMLElement).style.color = "inherit";
                   }}
                 >
                   <div style={{
                     fontFamily: "var(--font-bebas)", fontSize: 13, letterSpacing: "1.5px",
-                    color: "var(--muted2)", transition: "color 0.2s",
+                    color: "var(--texto-tenue)", transition: "color 0.2s",
                   }}>
                     {ep.ep}
                   </div>
@@ -334,15 +334,15 @@ export function PodcastContent() {
                     <div style={{ fontFamily: "var(--font-bebas)", fontSize: "clamp(16px,1.8vw,22px)", letterSpacing: "0.5px", color: "#fff", lineHeight: 1.2, marginBottom: 6 }}>
                       {ep.title}
                     </div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--muted2)" }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--texto-tenue)" }}>
                       🎙️ {ep.guest}
                     </div>
                   </div>
                   <div style={{ textAlign: "right", flexShrink: 0 }}>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--muted2)", marginBottom: 4 }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--texto-tenue)", marginBottom: 4 }}>
                       {ep.duration}
                     </div>
-                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--muted2)" }}>
+                    <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--texto-tenue)" }}>
                       {ep.date}
                     </div>
                   </div>
@@ -377,7 +377,7 @@ export function PodcastContent() {
               }}>
                 SUSCRÍBETE AL PODCAST
               </h2>
-              <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--muted)", maxWidth: 400 }}>
+              <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--texto-suave)", maxWidth: 400 }}>
                 Nuevo episodio cada semana. Negocios reales, estrategia aplicada, sin relleno.
               </p>
             </div>

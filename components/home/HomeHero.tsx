@@ -4,7 +4,7 @@ const TAGS = [
   "ESTRATEGA DIGITAL AI-FIRST",
   "CREADOR DE CONTENIDO",
   "CONSULTOR IA PARA LATAM",
-  "MEDELLÍN, COLOMBIA 🇨🇴",
+  "MEDELLÍN, COLOMBIA",
 ];
 
 /* Líneas del título con delay de entrada */
@@ -65,7 +65,7 @@ export function HomeHero() {
                 style={{
                   fontFamily: "var(--font-dm)",
                   fontSize: 12, letterSpacing: "1.8px",
-                  color: "var(--muted)",
+                  color: "var(--texto-suave)",
                   display: "flex", alignItems: "center", gap: 10,
                   animation: `hero-slide-left 0.7s cubic-bezier(0.16,1,0.3,1) ${80 + i * 80}ms both`,
                 }}
@@ -109,7 +109,7 @@ export function HomeHero() {
             fontFamily: "var(--font-dm)",
             fontSize: "clamp(15px,1.6vw,18px)",
             lineHeight: 1.65,
-            color: "var(--muted)",
+            color: "var(--texto-suave)",
             maxWidth: 480,
             marginBottom: 40,
             animation: "hero-fade-up 0.9s cubic-bezier(0.16,1,0.3,1) 750ms both",
@@ -162,7 +162,7 @@ export function HomeHero() {
               marginBottom: 32,
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: "var(--muted)",
+              color: "var(--texto-suave)",
             }}>
               <span style={{
                 width: 8, height: 8, borderRadius: "50%",
@@ -194,7 +194,7 @@ export function HomeHero() {
                 </span>
                 <span style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 13, color: "var(--muted)",
+                  fontSize: 13, color: "var(--texto-suave)",
                   textAlign: "right", maxWidth: 180, letterSpacing: "0.5px",
                 }}>
                   {label}
@@ -217,7 +217,7 @@ export function HomeHero() {
         <div style={{
           fontFamily: "var(--font-dm)",
           fontSize: 12, letterSpacing: "1.8px",
-          color: "var(--muted2)",
+          color: "var(--texto-tenue)",
         }}>
           SCROLL
         </div>

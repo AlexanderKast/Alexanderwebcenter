@@ -48,7 +48,7 @@ export function HomeFooter() {
             <p style={{
               fontFamily: "var(--font-dm)",
               fontSize: 14, lineHeight: 1.7,
-              color: "var(--muted)",
+              color: "var(--texto-suave)",
             }}>
               Estrategia digital, contenido que convierte e inteligencia artificial
               aplicada al negocio real. Para emprendedores y marcas en LATAM.
@@ -57,7 +57,7 @@ export function HomeFooter() {
               marginTop: 24,
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.8px",
-              color: "var(--muted2)",
+              color: "var(--texto-tenue)",
             }}>
               MEDELLÍN, COLOMBIA — PARA TODA LATAM
             </div>
@@ -76,11 +76,11 @@ export function HomeFooter() {
               <a key={href} href={href} style={{
                 fontFamily: "var(--font-dm)",
                 fontSize: 12, letterSpacing: "1.5px",
-                color: "var(--muted)",
+                color: "var(--texto-suave)",
                 transition: "color .2s",
               }}
               onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-              onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+              onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
               >
                 {label}
               </a>
@@ -103,12 +103,12 @@ export function HomeFooter() {
                     style={{
                       fontFamily: "var(--font-dm)",
                       fontSize: 12, letterSpacing: "1.5px",
-                      color: "var(--muted)",
+                      color: "var(--texto-suave)",
                       transition: "color .2s",
                       display: "flex", alignItems: "center", gap: 8,
                     }}
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-                    onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
+                    onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-suave)")}
                   >
                     <span style={{ color: "var(--gold)", fontSize: 12 }}>↗</span>
                     {label}
@@ -158,17 +158,17 @@ export function HomeFooter() {
           <div style={{
             fontFamily: "var(--font-dm)",
             fontSize: 12, letterSpacing: "1px",
-            color: "var(--muted2)",
+            color: "var(--texto-tenue)",
           }}>
             © 2025 EMPRENDE CON ALEXANDER ·{" "}
-            <span style={{ color: "var(--muted)" }}>Estrat</span>
+            <span style={{ color: "var(--texto-suave)" }}>Estrat</span>
             <span style={{ color: "var(--gold)" }}>IA</span>
           </div>
 
           <div style={{
             fontFamily: "var(--font-dm)",
             fontSize: 12, letterSpacing: "1.5px",
-            color: "var(--muted2)",
+            color: "var(--texto-tenue)",
           }}>
             DISEÑO & DESARROLLO — AI-FIRST LATAM
           </div>

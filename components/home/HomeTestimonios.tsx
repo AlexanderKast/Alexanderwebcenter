@@ -150,7 +150,7 @@ export function HomeTestimonios() {
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 12, color: "var(--muted2)",
+                  fontSize: 12, color: "var(--texto-tenue)",
                   marginTop: 2,
                 }}>
                   {t.role}
@@ -193,7 +193,7 @@ export function HomeTestimonios() {
                   transition: "all .25s ease",
                   fontFamily: "var(--font-bebas)",
                   fontSize: 13,
-                  color: active === i ? "#000" : "var(--muted2)",
+                  color: active === i ? "#000" : "var(--texto-tenue)",
                 }}
               >
                 {i + 1}
@@ -235,7 +235,7 @@ export function HomeTestimonios() {
               </div>
               <div style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 13, color: "var(--muted2)",
+                fontSize: 13, color: "var(--texto-tenue)",
               }}>
                 {item.label}
               </div>

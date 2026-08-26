@@ -134,9 +134,9 @@ export function RecursosContent() {
                   <div style={{ fontSize: "clamp(28px,3vw,36px)" }}>{d.emoji}</div>
                   <div style={{ fontFamily: "var(--font-dm)", fontSize: 10, letterSpacing: "2px", color: "var(--gold)" }}>{d.tag}</div>
                   <h3 style={{ fontFamily: "var(--font-bebas)", fontSize: "clamp(20px,2vw,28px)", letterSpacing: "0.5px", color: "#fff", lineHeight: 1.2 }}>{d.title}</h3>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--muted2)" }}>{d.subtitle}</div>
-                  <p style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.65, color: "var(--muted)", flex: 1 }}>{d.desc}</p>
-                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--muted2)", marginTop: "auto" }}>{d.pages}</div>
+                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 12, color: "var(--texto-tenue)" }}>{d.subtitle}</div>
+                  <p style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.65, color: "var(--texto-suave)", flex: 1 }}>{d.desc}</p>
+                  <div style={{ fontFamily: "var(--font-dm)", fontSize: 11, color: "var(--texto-tenue)", marginTop: "auto" }}>{d.pages}</div>
                   <div style={{ fontFamily: "var(--font-bebas)", fontSize: 13, letterSpacing: "2px", color: "var(--gold)", display: "flex", alignItems: "center", gap: 6 }}>
                     {d.featured ? "DESCARGAR GRATIS" : "ACCEDER"} ↗
                   </div>
@@ -195,7 +195,7 @@ export function RecursosContent() {
                         <div style={{ fontFamily: "var(--font-bebas)", fontSize: 15, letterSpacing: "1px", color: "#fff" }}>
                           {tool.name}
                         </div>
-                        <div style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.6, color: "var(--muted2)" }}>
+                        <div style={{ fontFamily: "var(--font-dm)", fontSize: 13, lineHeight: 1.6, color: "var(--texto-tenue)" }}>
                           {tool.desc}
                         </div>
                       </div>
@@ -229,7 +229,7 @@ export function RecursosContent() {
               }}>
                 ESTRATEGIA SEMANAL EN TU CORREO
               </h2>
-              <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--muted)", maxWidth: 440 }}>
+              <p style={{ fontFamily: "var(--font-dm)", fontSize: 14, color: "var(--texto-suave)", maxWidth: 440 }}>
                 Tips de IA, contenido y negocios digitales. Solo lo que uso yo. Sin spam.
               </p>
             </div>

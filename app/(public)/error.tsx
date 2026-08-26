@@ -46,7 +46,7 @@ export default function PublicError({
         >
           NO PUDIMOS CARGAR ESTA PÁGINA
         </h1>
-        <p style={{ color: "var(--muted)", fontSize: 16, lineHeight: 1.7 }}>
+        <p style={{ color: "var(--texto-suave)", fontSize: 16, lineHeight: 1.7 }}>
           Fue un problema de nuestro lado. Probá de nuevo en un momento.
         </p>
         <button

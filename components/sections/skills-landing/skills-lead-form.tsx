@@ -25,7 +25,7 @@ const labelStyle: React.CSSProperties = {
   fontFamily: "var(--font-dm)",
   fontSize: 11,
   letterSpacing: "2px",
-  color: "var(--muted)",
+  color: "var(--texto-suave)",
   display: "block",
   marginBottom: 8,
 };
@@ -168,7 +168,7 @@ export function SkillsLeadForm({ idPrefix }: { idPrefix: string }) {
         </p>
       ) : null}
 
-      <p style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1px", color: "var(--muted2)" }}>
+      <p style={{ fontFamily: "var(--font-dm)", fontSize: 11, letterSpacing: "1px", color: "var(--texto-tenue)" }}>
         SIN SPAM. SOLO EL PACK Y ESTRATEGIA IA FIRST.
       </p>
     </form>

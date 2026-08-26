@@ -81,15 +81,15 @@ export function PageHero({
             style={{
               fontFamily: "var(--font-dm)",
               fontSize: 12, letterSpacing: "1.6px",
-              color: "var(--muted2)",
+              color: "var(--texto-tenue)",
               transition: "color .2s",
             }}
             onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
-            onMouseLeave={e => (e.currentTarget.style.color = "var(--muted2)")}
+            onMouseLeave={e => (e.currentTarget.style.color = "var(--texto-tenue)")}
           >
             {backLabel}
           </a>
-          <span style={{ color: "var(--muted2)", fontSize: 12 }}>／</span>
+          <span style={{ color: "var(--texto-tenue)", fontSize: 12 }}>／</span>
           <span style={{
             fontFamily: "var(--font-dm)",
             fontSize: 12, letterSpacing: "1.6px",
@@ -151,7 +151,7 @@ export function PageHero({
             fontFamily: "var(--font-dm)",
             fontSize: "clamp(14px,1.5vw,17px)",
             lineHeight: 1.7,
-            color: "var(--muted)",
+            color: "var(--texto-suave)",
             maxWidth: 560,
             margin: 0,
             opacity: visible ? 1 : 0,
