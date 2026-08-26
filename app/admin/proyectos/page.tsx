@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { Settings2 } from "lucide-react";
+import { Plus, Settings2 } from "lucide-react";
 import { Estadisticas } from "@/components/proyectos/Estadisticas";
 import { Filtros } from "@/components/proyectos/Filtros";
 import { TableroInterno } from "@/components/proyectos/TableroInterno";
@@ -61,15 +61,27 @@ export default async function ProyectosPage({ searchParams }: Props) {
           </p>
         </div>
 
-        {puedeGestionarConfiguracion(usuario.role) && (
-          <Link
-            href="/admin/proyectos/columnas"
-            className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/70 transition-colors hover:border-white/20 hover:text-white"
-          >
-            <Settings2 className="h-4 w-4" />
-            Configurar columnas
-          </Link>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {puedeGestionarConfiguracion(usuario.role) && (
+            <Link
+              href="/admin/proyectos/columnas"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm text-white/70 transition-colors hover:border-white/20 hover:text-white"
+            >
+              <Settings2 className="h-4 w-4" />
+              Configurar columnas
+            </Link>
+          )}
+
+          {puedeEditarProyectos(usuario.role) && (
+            <Link
+              href="/admin/proyectos/nuevo"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#D4AF37] px-3 py-2 text-sm text-black transition-colors hover:opacity-90"
+            >
+              <Plus className="h-4 w-4" />
+              Nuevo proyecto
+            </Link>
+          )}
+        </div>
       </header>
 
       <Estadisticas datos={estadisticas} />
