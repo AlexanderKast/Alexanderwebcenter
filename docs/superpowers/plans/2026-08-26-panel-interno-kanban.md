@@ -2129,8 +2129,12 @@ export function TableroInterno({ columnas, proyectos, puedeEditar }: Props) {
 
 Crear `app/admin/proyectos/page.tsx`:
 
+`Filtros` usa `useSearchParams()`, así que va envuelto en `<Suspense>`: sin eso,
+si la ruta alguna vez se prerenderiza, Next tira error de build.
+
 ```tsx
 import Link from "next/link";
+import { Suspense } from "react";
 import { Settings2 } from "lucide-react";
 import { Estadisticas } from "@/components/proyectos/Estadisticas";
 import { Filtros } from "@/components/proyectos/Filtros";
@@ -2205,15 +2209,17 @@ export default async function ProyectosPage({ searchParams }: Props) {
 
       <Estadisticas datos={estadisticas} />
 
-      <Filtros
-        sociedades={sociedades}
-        responsables={responsables}
-        seleccion={{
-          sociedad: params.sociedad ?? "",
-          responsable: params.responsable ?? "",
-          estado: estado ?? "",
-        }}
-      />
+      <Suspense fallback={<div className="h-10" />}>
+        <Filtros
+          sociedades={sociedades}
+          responsables={responsables}
+          seleccion={{
+            sociedad: params.sociedad ?? "",
+            responsable: params.responsable ?? "",
+            estado: estado ?? "",
+          }}
+        />
+      </Suspense>
 
       <TableroInterno
         columnas={columnas}
