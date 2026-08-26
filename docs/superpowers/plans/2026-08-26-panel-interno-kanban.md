@@ -20,7 +20,8 @@
 - Estados comerciales válidos, exactos: `Prospecto`, `Propuesta enviada`, `En curso`, `Pausado`, `Cerrado`, `Perdido`.
 - Columnas Kanban sembradas, en orden: `Sin tomar` (inicial), `Iniciado`, `En proceso`, `En revisión`, `Bloqueado`, `Entregado` (final).
 - Fuente de importación: Google Sheet `1JgPC6aknBmxLP82I-0F-Xa3I7kep9xxfHT5zh1KYq_Y`, hojas `gid=1785829694` (Configuración) y `gid=1898545934` (Portafolio).
-- Antes de dar por cerrada cualquier tarea: `npx tsc --noEmit` y `npm run lint` deben pasar.
+- Antes de dar por cerrada cualquier tarea: `npx tsc --noEmit` debe pasar sin errores, y `npx eslint <archivos que tocaste>` debe dar cero **errores**.
+- **No corras `npm run lint` a secas ni intentes dejarlo verde.** El repo arrastra 416 errores previos en assets vendorizados (`public/assets`, `davies/assets`, `documentation/js`), `components/portal`, `components/davies` y `middleware.ts`. Son anteriores a este trabajo y arreglarlos está fuera de alcance. Lintear solo lo propio.
 - `KanbanBoard.onMoveItem` solo mueve entre columnas. Reordenar tarjetas dentro de una misma columna está fuera de alcance.
 
 ---

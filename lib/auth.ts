@@ -4,7 +4,13 @@ import {
   createSupabaseServiceRole,
 } from "@/lib/supabase/server";
 
-export type Role = "founder" | "manager" | "coordinator" | "sales" | "creative";
+export type Role =
+  | "founder"
+  | "manager"
+  | "coordinator"
+  | "sales"
+  | "creative"
+  | "tester";
 
 export interface AdminUser {
   id: string;
