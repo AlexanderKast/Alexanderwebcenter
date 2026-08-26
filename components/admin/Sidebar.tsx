@@ -22,8 +22,11 @@ import {
   Sparkles,
   UserCheck,
   ClipboardList,
+  KanbanSquare,
+  Handshake,
 } from "lucide-react";
 import type { AdminUser } from "@/lib/auth";
+import { puedeGestionarConfiguracion } from "@/lib/proyectos/permisos";
 import { cn } from "@/lib/utils";
 
 type NavItem = { label: string; href: string; icon: typeof LayoutDashboard };
@@ -39,6 +42,13 @@ const sections: Section[] = [
       { label: "Consultorías", href: "/admin/consultorias", icon: CalendarCheck },
       { label: "Mensajes", href: "/admin/mensajes", icon: MessageSquare },
       { label: "Briefs de marca", href: "/panel", icon: ClipboardList },
+    ],
+  },
+  {
+    label: "Interno",
+    items: [
+      { label: "Proyectos", href: "/admin/proyectos", icon: KanbanSquare },
+      { label: "Sociedades", href: "/admin/sociedades", icon: Handshake },
     ],
   },
   {
@@ -78,6 +88,19 @@ const sections: Section[] = [
 export function AdminSidebar({ user }: { user: AdminUser }) {
   const pathname = usePathname();
 
+  // /admin/sociedades redirige si el rol no alcanza, asi que mostrarle el
+  // link a todo el mundo seria dejar un link muerto.
+  const visibles = sections
+    .map((seccion) => ({
+      ...seccion,
+      items: seccion.items.filter((item) =>
+        item.href === "/admin/sociedades"
+          ? puedeGestionarConfiguracion(user.role)
+          : true,
+      ),
+    }))
+    .filter((seccion) => seccion.items.length > 0);
+
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-[color:var(--line)] bg-[color:var(--background)] md:flex">
       <div className="flex items-center gap-3 border-b border-[color:var(--line)] px-6 py-5">
@@ -96,7 +119,7 @@ export function AdminSidebar({ user }: { user: AdminUser }) {
       </div>
 
       <nav className="flex-1 space-y-6 overflow-y-auto px-3 py-4" aria-label="Menú admin">
-        {sections.map((sec) => (
+        {visibles.map((sec) => (
           <div key={sec.label}>
             <p className="mb-2 px-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/30">
               {sec.label}

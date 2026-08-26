@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { getCurrentUser } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/Sidebar";
 import { AdminHeader } from "@/components/admin/Header";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Admin · Alexander Cast",
@@ -25,6 +26,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       ) : (
         <main className="min-h-screen">{children}</main>
       )}
+      {/* Sin esto los toast.error/success del panel no se ven: sonner
+          necesita su Toaster montado en el arbol. */}
+      <Toaster position="bottom-right" richColors />
     </div>
   );
 }
