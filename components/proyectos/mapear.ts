@@ -2,6 +2,7 @@ import type {
   KanbanColumn,
   KanbanItem,
 } from "@/components/portal/KanbanBoard";
+import { formatearCOP } from "@/lib/proyectos/movimientos-utils";
 import type {
   ColumnaKanban,
   EstadoComercial,
@@ -33,6 +34,11 @@ export function proyectoAItem(proyecto: Proyecto): KanbanItem {
   meta.push(proyecto.responsableNombre ?? "Sin tomar");
   if (proyecto.cliente) meta.push(proyecto.cliente);
   if (proyecto.fechaCierreEst) meta.push(`Cierra ${proyecto.fechaCierreEst}`);
+
+  // Lo que ya se gasto, para no tener que abrir la tarjeta para saberlo.
+  if (proyecto.finanzas && proyecto.finanzas.movimientos > 0) {
+    meta.push(`Gasto ${formatearCOP(proyecto.finanzas.egresos)}`);
+  }
 
   return {
     id: proyecto.id,

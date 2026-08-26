@@ -3,8 +3,10 @@ import { Suspense } from "react";
 import { Plus, Settings2 } from "lucide-react";
 import { Estadisticas } from "@/components/proyectos/Estadisticas";
 import { Filtros } from "@/components/proyectos/Filtros";
+import { SincronizarGastos } from "@/components/proyectos/SincronizarGastos";
 import { TableroInterno } from "@/components/proyectos/TableroInterno";
 import { requireAuth } from "@/lib/auth";
+import { listarFinanzas } from "@/lib/proyectos/finanzas";
 import {
   puedeEditarProyectos,
   puedeGestionarConfiguracion,
@@ -36,7 +38,7 @@ export default async function ProyectosPage({ searchParams }: Props) {
     ? (params.estado as EstadoComercial)
     : undefined;
 
-  const [columnas, proyectos, sociedades, responsables] = await Promise.all([
+  const [columnas, proyectosBase, sociedades, responsables, finanzas] = await Promise.all([
     listarColumnas(),
     listarProyectos({
       sociedadId: params.sociedad || undefined,
@@ -45,7 +47,15 @@ export default async function ProyectosPage({ searchParams }: Props) {
     }),
     listarSociedades(),
     listarResponsables(),
+    listarFinanzas(),
   ]);
+
+  // Cada tarjeta muestra lo que lleva gastado; la plata sale de los
+  // movimientos del Sheet, no del proyecto en si.
+  const proyectos = proyectosBase.map((proyecto) => ({
+    ...proyecto,
+    finanzas: finanzas.get(proyecto.id),
+  }));
 
   const estadisticas = await calcularEstadisticas(proyectos, columnas);
 
@@ -62,6 +72,8 @@ export default async function ProyectosPage({ searchParams }: Props) {
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
+          {puedeEditarProyectos(usuario.role) && <SincronizarGastos />}
+
           {puedeGestionarConfiguracion(usuario.role) && (
             <Link
               href="/admin/proyectos/columnas"

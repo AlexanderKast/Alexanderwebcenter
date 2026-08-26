@@ -56,6 +56,40 @@ export interface ColumnaKanban {
   esFinal: boolean;
 }
 
+export interface FinanzasProyecto {
+  proyectoId: string;
+  ingresos: number;
+  egresos: number;
+  utilidad: number;
+  movimientos: number;
+  ultimoMovimiento: string | null;
+}
+
+export interface Movimiento {
+  id: string;
+  proyectoId: string | null;
+  sociedadNombre: string;
+  proyectoNombre: string;
+  fecha: string | null;
+  tipo: "Ingreso" | "Egreso";
+  categoria: string;
+  descripcion: string;
+  moneda: string;
+  monto: number | null;
+  montoCop: number;
+  pagadoPor: string;
+  medioPago: string;
+  estado: string;
+}
+
+/** Lo que lleva gastado y cobrado una sociedad, con los compartidos ya repartidos. */
+export interface ResumenSociedad {
+  sociedad: string;
+  ingresos: number;
+  egresos: number;
+  utilidad: number;
+}
+
 export interface Proyecto {
   id: string;
   nombre: string;
@@ -73,6 +107,7 @@ export interface Proyecto {
   pptoGastos: number | null;
   notas: string | null;
   archivado: boolean;
+  finanzas?: FinanzasProyecto;
 }
 
 export interface ProyectoLink {

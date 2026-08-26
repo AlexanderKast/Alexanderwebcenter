@@ -2,9 +2,11 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { DetalleProyecto } from "@/components/proyectos/DetalleProyecto";
+import { Finanzas } from "@/components/proyectos/Finanzas";
 import { FormularioProyecto } from "@/components/proyectos/FormularioProyecto";
 import { colorEstado } from "@/components/proyectos/mapear";
 import { requireAuth } from "@/lib/auth";
+import { finanzasDe, movimientosDe } from "@/lib/proyectos/finanzas";
 import { puedeEditarProyectos } from "@/lib/proyectos/permisos";
 import {
   listarColumnas,
@@ -27,7 +29,7 @@ export default async function ProyectoPage({ params }: Props) {
   const proyecto = await obtenerProyecto(id);
   if (!proyecto) notFound();
 
-  const [links, tareas, notas, responsables, sociedades, columnas] =
+  const [links, tareas, notas, responsables, sociedades, columnas, finanzas, movimientos] =
     await Promise.all([
       listarLinks(id),
       listarTareas(id),
@@ -35,6 +37,8 @@ export default async function ProyectoPage({ params }: Props) {
       listarResponsables(),
       listarSociedades(),
       listarColumnas(),
+      finanzasDe(id),
+      movimientosDe(id),
     ]);
 
   return (
@@ -82,6 +86,8 @@ export default async function ProyectoPage({ params }: Props) {
           </div>
         </details>
       )}
+
+      <Finanzas proyecto={proyecto} finanzas={finanzas} movimientos={movimientos} />
 
       <DetalleProyecto
         proyectoId={proyecto.id}
