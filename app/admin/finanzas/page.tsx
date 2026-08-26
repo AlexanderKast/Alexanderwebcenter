@@ -1,10 +1,18 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { Paperclip, Plus } from "lucide-react";
 import { SincronizarGastos } from "@/components/proyectos/SincronizarGastos";
 import { requireAuth } from "@/lib/auth";
-import { listarMovimientos, resumenPorSociedad } from "@/lib/proyectos/finanzas";
+import {
+  conteoAdjuntos,
+  listarMovimientos,
+  resumenPorSociedad,
+} from "@/lib/proyectos/finanzas";
 import { formatearCOP } from "@/lib/proyectos/movimientos-utils";
-import { puedeGestionarConfiguracion } from "@/lib/proyectos/permisos";
+import {
+  puedeEditarProyectos,
+  puedeGestionarConfiguracion,
+} from "@/lib/proyectos/permisos";
 import { listarProyectos } from "@/lib/proyectos/queries";
 
 export const metadata = { title: "Finanzas · Admin" };
@@ -21,10 +29,11 @@ export default async function FinanzasPage() {
   const usuario = await requireAuth();
   if (!puedeGestionarConfiguracion(usuario.role)) redirect("/admin/proyectos");
 
-  const [sociedades, movimientos, proyectos] = await Promise.all([
+  const [sociedades, movimientos, proyectos, adjuntos] = await Promise.all([
     resumenPorSociedad(),
     listarMovimientos(),
     listarProyectos(),
+    conteoAdjuntos(),
   ]);
 
   const porId = new Map(proyectos.map((p) => [p.id, p]));
@@ -38,12 +47,24 @@ export default async function FinanzasPage() {
         <div>
           <h1 className="text-2xl font-semibold text-white">Finanzas</h1>
           <p className="max-w-2xl text-sm text-white/50">
-            Los gastos y cobros del Google Sheet, traídos acá para verlos junto a
-            los proyectos. El Sheet sigue siendo donde se anota: esto es una copia
-            que se vuelve a bajar cuando lo pedís.
+            Todo lo que entra y sale, junto a los proyectos. Podés registrar un
+            gasto o un cobro acá con su factura, y lo que ya está anotado en el
+            Google Sheet se trae con Sincronizar. Lo cargado acá el importador no
+            lo toca.
           </p>
         </div>
-        <SincronizarGastos />
+        <div className="flex flex-wrap items-center gap-2">
+          {puedeEditarProyectos(usuario.role) && (
+            <Link
+              href="/admin/finanzas/nuevo"
+              className="inline-flex items-center gap-2 rounded-lg bg-[#D4AF37] px-3 py-2 text-sm text-black transition-opacity hover:opacity-90"
+            >
+              <Plus className="h-4 w-4" />
+              Registrar movimiento
+            </Link>
+          )}
+          <SincronizarGastos />
+        </div>
       </header>
 
       <div className="grid gap-4 sm:grid-cols-3">
@@ -145,8 +166,29 @@ export default async function FinanzasPage() {
                         {fecha(m.fecha)}
                       </td>
                       <td className="px-4 py-3 text-white/85">
-                        {m.descripcion || "—"}
-                        <div className="text-xs text-white/35">{m.categoria || "—"}</div>
+                        <Link
+                          href={`/admin/finanzas/${m.id}`}
+                          className="underline-offset-4 hover:underline"
+                        >
+                          {m.descripcion || "—"}
+                        </Link>
+                        <div className="flex items-center gap-2 text-xs text-white/35">
+                          <span>{m.categoria || "—"}</span>
+                          {(adjuntos.get(m.id) ?? 0) > 0 && (
+                            <span
+                              className="inline-flex items-center gap-1 text-white/45"
+                              title="Tiene facturas"
+                            >
+                              <Paperclip className="h-3 w-3" />
+                              {adjuntos.get(m.id)}
+                            </span>
+                          )}
+                          {m.origen === "panel" && (
+                            <span className="rounded-full bg-white/10 px-1.5 py-0.5 text-[10px] text-white/50">
+                              panel
+                            </span>
+                          )}
+                        </div>
                       </td>
                       <td className="px-4 py-3 text-xs">
                         {proyecto ? (

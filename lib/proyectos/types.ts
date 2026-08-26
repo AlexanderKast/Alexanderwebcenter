@@ -80,6 +80,8 @@ export interface Movimiento {
   pagadoPor: string;
   medioPago: string;
   estado: string;
+  /** sheet = lo trajo el importador; panel = lo cargo alguien aca. */
+  origen: "sheet" | "panel";
 }
 
 /** Lo que lleva gastado y cobrado una sociedad, con los compartidos ya repartidos. */

@@ -91,10 +91,11 @@ interface FilaMovimiento {
   pagado_por: string;
   medio_pago: string;
   estado: string;
+  origen: "sheet" | "panel";
 }
 
 const CAMPOS_MOVIMIENTO =
-  "id, proyecto_id, sociedad_nombre, proyecto_nombre, fecha, tipo, categoria, descripcion, moneda, monto, monto_cop, asignado_ecomnoticias, asignado_ia_master, asignado_nuskin, pagado_por, medio_pago, estado";
+  "id, proyecto_id, sociedad_nombre, proyecto_nombre, fecha, tipo, categoria, descripcion, moneda, monto, monto_cop, asignado_ecomnoticias, asignado_ia_master, asignado_nuskin, pagado_por, medio_pago, estado, origen";
 
 function mapearMovimiento(m: FilaMovimiento): Movimiento {
   return {
@@ -112,6 +113,7 @@ function mapearMovimiento(m: FilaMovimiento): Movimiento {
     pagadoPor: m.pagado_por,
     medioPago: m.medio_pago,
     estado: m.estado,
+    origen: m.origen,
   };
 }
 
@@ -208,4 +210,123 @@ export async function resumenPorSociedad(): Promise<ResumenSociedad[]> {
       utilidad: v.ingresos - v.egresos,
     }))
     .sort((a, b) => a.sociedad.localeCompare(b.sociedad, "es"));
+}
+
+/* ────────────────────────────────────────────────────────────
+   Un movimiento y sus facturas
+   ──────────────────────────────────────────────────────────── */
+
+export interface MovimientoDetalle extends Movimiento {
+  sociedadId: string | null;
+  fechaTexto: string;
+  trm: number | null;
+  nota: string;
+}
+
+export interface AdjuntoMovimiento {
+  id: string;
+  nombre: string;
+  ruta: string;
+  tipoMime: string;
+  tamano: number;
+  createdAt: string;
+  /** Enlace firmado, valido una hora: el bucket es privado. */
+  url: string | null;
+}
+
+export async function obtenerMovimiento(id: string): Promise<MovimientoDetalle | null> {
+  const supabase = createSupabaseServiceRole();
+  const { data, error } = await supabase
+    .from("int_movimientos")
+    .select(`${CAMPOS_MOVIMIENTO}, sociedad_id, trm, nota`)
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error || !data) {
+    if (error) console.error("[finanzas] obtenerMovimiento:", error.message);
+    return null;
+  }
+
+  const fila = data as FilaMovimiento & {
+    sociedad_id: string | null;
+    trm: number | null;
+    nota: string;
+    origen: "sheet" | "panel";
+  };
+
+  return {
+    ...mapearMovimiento(fila),
+    sociedadId: fila.sociedad_id,
+    fechaTexto: fila.fecha ?? "",
+    trm: fila.trm === null ? null : Number(fila.trm),
+    nota: fila.nota ?? "",
+  };
+}
+
+/**
+ * Las facturas de un movimiento, con enlace firmado.
+ *
+ * El bucket es privado a proposito: una factura trae datos de terceros y
+ * montos. Cada enlace vive una hora y se vuelve a pedir al recargar.
+ */
+export async function adjuntosDe(movimientoId: string): Promise<AdjuntoMovimiento[]> {
+  const supabase = createSupabaseServiceRole();
+  const { data, error } = await supabase
+    .from("int_movimiento_adjuntos")
+    .select("id, nombre, ruta, tipo_mime, tamano, created_at")
+    .eq("movimiento_id", movimientoId)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.error("[finanzas] adjuntosDe:", error.message);
+    return [];
+  }
+
+  const filas = (data ?? []) as {
+    id: string;
+    nombre: string;
+    ruta: string;
+    tipo_mime: string;
+    tamano: number;
+    created_at: string;
+  }[];
+
+  if (filas.length === 0) return [];
+
+  const { data: firmados } = await supabase.storage
+    .from("facturas")
+    .createSignedUrls(filas.map((f) => f.ruta), 3600);
+
+  const porRuta = new Map(
+    (firmados ?? []).map((f) => [f.path ?? "", f.signedUrl ?? null]),
+  );
+
+  return filas.map((f) => ({
+    id: f.id,
+    nombre: f.nombre,
+    ruta: f.ruta,
+    tipoMime: f.tipo_mime,
+    tamano: f.tamano,
+    createdAt: f.created_at,
+    url: porRuta.get(f.ruta) ?? null,
+  }));
+}
+
+/** Cuantas facturas tiene cada movimiento, para marcarlo en el listado. */
+export async function conteoAdjuntos(): Promise<Map<string, number>> {
+  const supabase = createSupabaseServiceRole();
+  const { data, error } = await supabase
+    .from("int_movimiento_adjuntos")
+    .select("movimiento_id");
+
+  if (error) {
+    console.error("[finanzas] conteoAdjuntos:", error.message);
+    return new Map();
+  }
+
+  const cuenta = new Map<string, number>();
+  for (const fila of (data ?? []) as { movimiento_id: string }[]) {
+    cuenta.set(fila.movimiento_id, (cuenta.get(fila.movimiento_id) ?? 0) + 1);
+  }
+  return cuenta;
 }
