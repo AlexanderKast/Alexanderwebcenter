@@ -1,12 +1,16 @@
 import Link from "next/link";
 import { requireAuth } from "@/lib/auth";
-import { empresas } from "@/content/empresas";
+import { empresas, type Empresa } from "@/content/empresas";
 import { ExternalLink } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 
 export default async function EmpresasPage() {
   await requireAuth();
+
+  const propias = empresas.filter((e) => e.tipo !== "cliente");
+  const deClientes = empresas.filter((e) => e.tipo === "cliente");
+
   return (
     <div className="space-y-10">
       <header>
@@ -15,12 +19,51 @@ export default async function EmpresasPage() {
           Mis empresas
         </h1>
         <p className="mt-2 text-sm text-white/55">
-          Los 4 proyectos que nutren la marca personal y que la marca personal nutre.
+          Tus empresas y, aparte, las cuentas que asesorás.
         </p>
       </header>
 
+      {/* Las de trayectoria y las actuales son tuyas. Las de tipo cliente
+          son de otra gente: mezclarlas hacia parecer que Rima Global o
+          Pancake eran del ecosistema. */}
+      <Bloque
+        titulo="Del ecosistema"
+        ayuda="Las empresas que son tuyas o en las que tenés parte."
+        lista={propias}
+      />
+
+      {deClientes.length > 0 && (
+        <Bloque
+          titulo="Clientes de consultoría"
+          ayuda="No son tuyas: son cuentas que asesorás. Aparecen acá para tenerlas a mano."
+          lista={deClientes}
+        />
+      )}
+    </div>
+  );
+}
+
+function Bloque({
+  titulo,
+  ayuda,
+  lista,
+}: {
+  titulo: string;
+  ayuda: string;
+  lista: Empresa[];
+}) {
+  return (
+    <section className="space-y-4">
+      <div>
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-white/60">
+          {titulo}
+        </h2>
+        <p className="text-sm text-white/45">{ayuda}</p>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2">
-        {empresas.map((e) => (
+        {lista.map((e) => (
+
           <article
             key={e.id}
             className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface-1)] p-6"
@@ -67,6 +110,6 @@ export default async function EmpresasPage() {
           </article>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

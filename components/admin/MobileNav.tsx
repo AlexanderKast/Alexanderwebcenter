@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import type { AdminUser } from "@/lib/auth";
-import { seccionesVisibles, esRutaActiva } from "@/components/admin/nav-items";
+import { ICONOS, esRutaActiva } from "@/components/admin/nav-items";
+import type { SeccionMenu } from "@/lib/admin/menu";
 import { cn } from "@/lib/utils";
 
 /**
@@ -22,10 +23,16 @@ import { cn } from "@/lib/utils";
  * esto el admin en telefono quedaba sin ninguna forma de moverse entre
  * secciones: solo se veia la pagina en la que caias.
  */
-export function AdminMobileNav({ user }: { user: AdminUser }) {
+export function AdminMobileNav({
+  user,
+  secciones,
+}: {
+  user: AdminUser;
+  secciones: SeccionMenu[];
+}) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const visibles = seccionesVisibles(user);
+  const visibles = secciones;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -66,7 +73,7 @@ export function AdminMobileNav({ user }: { user: AdminUser }) {
               <div className="space-y-0.5">
                 {sec.items.map((item) => {
                   const active = esRutaActiva(item.href, pathname);
-                  const Icon = item.icon;
+                  const Icon = ICONOS[item.icono] ?? ICONOS.Link2;
                   return (
                     <Link
                       key={item.href}

@@ -5,13 +5,21 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Settings } from "lucide-react";
 import type { AdminUser } from "@/lib/auth";
-import { seccionesVisibles, esRutaActiva } from "@/components/admin/nav-items";
+import { ICONOS, esRutaActiva } from "@/components/admin/nav-items";
+import type { SeccionMenu } from "@/lib/admin/menu";
 import { cn } from "@/lib/utils";
 
-export function AdminSidebar({ user }: { user: AdminUser }) {
+export function AdminSidebar({
+  user,
+  secciones,
+}: {
+  user: AdminUser;
+  /** Ya viene resuelto del servidor: catalogo + lo que se configuro. */
+  secciones: SeccionMenu[];
+}) {
   const pathname = usePathname();
 
-  const visibles = seccionesVisibles(user);
+  const visibles = secciones;
 
   return (
     <aside className="sticky top-0 hidden h-screen w-64 shrink-0 flex-col border-r border-[color:var(--line)] bg-[color:var(--background)] md:flex">
@@ -39,7 +47,7 @@ export function AdminSidebar({ user }: { user: AdminUser }) {
             <div className="space-y-0.5">
               {sec.items.map((item) => {
                 const active = esRutaActiva(item.href, pathname);
-                const Icon = item.icon;
+                const Icon = ICONOS[item.icono] ?? ICONOS.Link2;
                 return (
                   <Link
                     key={item.href}

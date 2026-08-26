@@ -5,9 +5,16 @@ import { LogOut, ExternalLink } from "lucide-react";
 import { createClient } from "@supabase/supabase-js";
 import { useRouter } from "next/navigation";
 import type { AdminUser } from "@/lib/auth";
+import type { SeccionMenu } from "@/lib/admin/menu";
 import { AdminMobileNav } from "@/components/admin/MobileNav";
 
-export function AdminHeader({ user }: { user: AdminUser }) {
+export function AdminHeader({
+  user,
+  secciones,
+}: {
+  user: AdminUser;
+  secciones: SeccionMenu[];
+}) {
   const router = useRouter();
 
   async function handleLogout() {
@@ -23,7 +30,7 @@ export function AdminHeader({ user }: { user: AdminUser }) {
   return (
     <header className="sticky top-0 z-40 flex h-14 items-center justify-between gap-4 border-b border-[color:var(--line)] bg-[color:var(--background)]/80 px-4 backdrop-blur md:px-8">
       <div className="flex min-w-0 items-center gap-2">
-        <AdminMobileNav user={user} />
+        <AdminMobileNav user={user} secciones={secciones} />
         <p className="truncate text-xs uppercase tracking-[0.22em] text-white/65">
           Hola, <span className="text-[color:var(--gold-mid)]">{user.fullName?.split(" ")[0] ?? "admin"}</span>
         </p>

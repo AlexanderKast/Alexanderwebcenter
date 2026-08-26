@@ -21,13 +21,70 @@ import {
   KanbanSquare,
   Handshake,
 } from "lucide-react";
-import type { AdminUser } from "@/lib/auth";
-import { puedeGestionarConfiguracion } from "@/lib/proyectos/permisos";
+import {
+  Link2,
+  Star,
+  Wrench,
+  ExternalLink,
+  Folder,
+} from "lucide-react";
+
+/**
+ * Iconos que puede usar una entrada del menu. Se guardan por nombre porque
+ * el menu se arma en el servidor y un componente de React no se puede pasar
+ * como dato a un componente cliente.
+ */
+export const ICONOS = {
+  LayoutDashboard,
+  Users,
+  Wallet,
+  Mail,
+  CalendarCheck,
+  MessageSquare,
+  FileText,
+  Activity,
+  UserCog,
+  Palette,
+  Target,
+  CalendarDays,
+  Video,
+  Share2,
+  Building2,
+  Briefcase,
+  Sparkles,
+  UserCheck,
+  ClipboardList,
+  KanbanSquare,
+  Handshake,
+  Link2,
+  Star,
+  Wrench,
+  ExternalLink,
+  Folder,
+} as const;
+
+export type NombreIcono = keyof typeof ICONOS;
+
+/** Los que tiene sentido ofrecer al agregar un acceso propio. */
+export const ICONOS_PARA_ELEGIR: NombreIcono[] = [
+  "Link2",
+  "Star",
+  "Wrench",
+  "ExternalLink",
+  "Folder",
+  "Sparkles",
+  "FileText",
+  "Users",
+  "Building2",
+  "Activity",
+];
 
 export type AdminNavItem = {
   label: string;
   href: string;
-  icon: typeof LayoutDashboard;
+  icono: NombreIcono;
+  /** Solo en las entradas agregadas a mano: se pueden borrar. */
+  personalizado?: boolean;
 };
 
 export type AdminNavSection = {
@@ -44,74 +101,57 @@ export const adminNavSections: AdminNavSection[] = [
   {
     label: "Operación",
     items: [
-      { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
-      { label: "Leads", href: "/admin/leads", icon: Users },
-      { label: "Suscriptores", href: "/admin/suscriptores", icon: Mail },
-      { label: "Consultorías", href: "/admin/consultorias", icon: CalendarCheck },
-      { label: "Mensajes", href: "/admin/mensajes", icon: MessageSquare },
-      { label: "Briefs de marca", href: "/admin/briefs", icon: ClipboardList },
+      { label: "Dashboard", href: "/admin", icono: "LayoutDashboard" },
+      { label: "Leads", href: "/admin/leads", icono: "Users" },
+      { label: "Suscriptores", href: "/admin/suscriptores", icono: "Mail" },
+      { label: "Consultorías", href: "/admin/consultorias", icono: "CalendarCheck" },
+      { label: "Mensajes", href: "/admin/mensajes", icono: "MessageSquare" },
+      { label: "Briefs de marca", href: "/admin/briefs", icono: "ClipboardList" },
     ],
   },
   {
     label: "Interno",
     items: [
-      { label: "Proyectos", href: "/admin/proyectos", icon: KanbanSquare },
-      { label: "Finanzas", href: "/admin/finanzas", icon: Wallet },
-      { label: "Sociedades", href: "/admin/sociedades", icon: Handshake },
+      { label: "Proyectos", href: "/admin/proyectos", icono: "KanbanSquare" },
+      { label: "Finanzas", href: "/admin/finanzas", icono: "Wallet" },
+      { label: "Sociedades", href: "/admin/sociedades", icono: "Handshake" },
     ],
   },
   {
     label: "Marca personal",
     items: [
-      { label: "Manual de marca", href: "/admin/marca", icon: Palette },
-      { label: "Estrategia", href: "/admin/estrategia", icon: Target },
-      { label: "Plan de contenido", href: "/admin/contenido-plan", icon: CalendarDays },
-      { label: "Guiones", href: "/admin/guiones", icon: Video },
-      { label: "Plataformas", href: "/admin/plataformas", icon: Share2 },
+      { label: "Manual de marca", href: "/admin/marca", icono: "Palette" },
+      { label: "Estrategia", href: "/admin/estrategia", icono: "Target" },
+      { label: "Plan de contenido", href: "/admin/contenido-plan", icono: "CalendarDays" },
+      { label: "Guiones", href: "/admin/guiones", icono: "Video" },
+      { label: "Plataformas", href: "/admin/plataformas", icono: "Share2" },
       // Antes usaba el mismo icono Building2 que "Clientes" y las dos
       // entradas se confundian entre si en el sidebar.
-      { label: "Empresas", href: "/admin/empresas", icon: Briefcase },
-      { label: "Blog", href: "/admin/contenido", icon: FileText },
+      { label: "Empresas", href: "/admin/empresas", icono: "Briefcase" },
+      { label: "Blog", href: "/admin/contenido", icono: "FileText" },
     ],
   },
   {
     label: "Portal de clientes",
     items: [
-      { label: "Clientes", href: "/admin/clientes", icon: Building2 },
-      { label: "Onboarding Clientes", href: "/clientes", icon: UserCheck },
+      { label: "Clientes", href: "/admin/clientes", icono: "Building2" },
+      { label: "Onboarding Clientes", href: "/clientes", icono: "UserCheck" },
     ],
   },
   {
     label: "Herramientas",
     items: [
-      { label: "Content Forge", href: "/admin/content-forge", icon: Sparkles },
+      { label: "Content Forge", href: "/admin/content-forge", icono: "Sparkles" },
     ],
   },
   {
     label: "Sistema",
     items: [
-      { label: "Actividad", href: "/admin/actividad", icon: Activity },
-      { label: "Equipo", href: "/admin/equipo", icon: UserCog },
+      { label: "Actividad", href: "/admin/actividad", icono: "Activity" },
+      { label: "Equipo", href: "/admin/equipo", icono: "UserCog" },
     ],
   },
 ];
-
-/**
- * /admin/sociedades redirige si el rol no alcanza, asi que mostrarle el link
- * a todo el mundo seria dejar un link muerto.
- */
-export function seccionesVisibles(user: AdminUser): AdminNavSection[] {
-  return adminNavSections
-    .map((seccion) => ({
-      ...seccion,
-      items: seccion.items.filter((item) =>
-        item.href === "/admin/sociedades"
-          ? puedeGestionarConfiguracion(user.role)
-          : true,
-      ),
-    }))
-    .filter((seccion) => seccion.items.length > 0);
-}
 
 /** Marca activo solo el match exacto o un descendiente real de la ruta. */
 export function esRutaActiva(href: string, pathname: string): boolean {

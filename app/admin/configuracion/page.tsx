@@ -1,4 +1,8 @@
+import Link from "next/link";
+import { SlidersHorizontal } from "lucide-react";
 import { requireAuth } from "@/lib/auth";
+import { puedeGestionarConfiguracion } from "@/lib/proyectos/permisos";
+import { hostDeLaBase } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
@@ -28,7 +32,7 @@ export default async function ConfiguracionPage() {
           <ul className="mt-4 space-y-3 text-sm">
             <li className="flex items-center justify-between">
               <span className="text-white/75">Supabase</span>
-              <code className="text-xs text-[color:var(--gold-mid)]">domxgsrajwyuaffiqbtr</code>
+              <code className="text-xs text-[color:var(--gold-mid)]">{hostDeLaBase()}</code>
             </li>
             <li className="flex items-center justify-between">
               <span className="text-white/75">Resend</span>
@@ -45,6 +49,27 @@ export default async function ConfiguracionPage() {
           </ul>
         </section>
       </div>
+
+      {puedeGestionarConfiguracion(user.role) && (
+        <section className="rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface-1)] p-6">
+          <p className="eyebrow">Panel</p>
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-sm text-white/85">Menú lateral</p>
+              <p className="text-sm text-white/50">
+                Apagá lo que no uses, renombrá, reordená y agregá tus propios accesos.
+              </p>
+            </div>
+            <Link
+              href="/admin/configuracion/menu"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2.5 text-sm text-white/75 transition-colors hover:border-white/20 hover:text-white"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              Configurar menú
+            </Link>
+          </div>
+        </section>
+      )}
     </div>
   );
 }
