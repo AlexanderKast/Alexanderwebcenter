@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import { supabasePublicoBrief } from '@/lib/brief/cliente-publico';
+import { supabaseBrief } from '@/lib/brief/cliente-publico';
 import { formLimiter } from '@/lib/rate-limit';
 
 export const runtime = 'nodejs';
@@ -85,7 +85,7 @@ export async function POST(req: NextRequest) {
   const ruta = `${new Date().toISOString().slice(0, 7)}/${nombre}`;
 
   try {
-    const supabase = supabasePublicoBrief();
+    const supabase = supabaseBrief();
     const { error } = await supabase.storage
       .from('brief')
       .upload(ruta, await archivo.arrayBuffer(), {

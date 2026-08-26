@@ -81,49 +81,18 @@ export function urlValida(valor: string | undefined): string | null {
   }
 }
 
-/**
- * URL del proyecto del brief. Primero la llave: el ref del JWT es la
- * unica fuente que no se puede escribir mal. La variable queda de respaldo.
- */
-export function urlDelBrief(): string | null {
-  return (
-    urlDesdeLlave(process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY) ??
-    urlValida(process.env.BRIEF_SUPABASE_URL) ??
-    urlValida(process.env.NEXT_PUBLIC_SUPABASE_URL) ??
-    urlValida(process.env.SUPABASE_URL)
-  );
-}
-
 /** Solo el host, para poder registrarlo en los logs sin filtrar la llave. */
-export function hostDelBrief(): string {
-  const url = urlDelBrief();
+export function hostDeLaBase(): string {
+  const url =
+    urlValida(process.env.NEXT_PUBLIC_SUPABASE_URL) ??
+    urlValida(process.env.SUPABASE_URL) ??
+    urlDesdeLlave(process.env.SUPABASE_SERVICE_ROLE_KEY);
   if (!url) return "(sin url)";
   try {
     return new URL(url).host;
   } catch {
     return "(url invalida)";
   }
-}
-
-export function createSupabaseBrief(): SupabaseClient {
-  const key = (
-    process.env.BRIEF_SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY
-  )?.trim();
-  if (!key) {
-    throw new Error("Falta BRIEF_SUPABASE_SERVICE_ROLE_KEY");
-  }
-
-  const url = urlDelBrief();
-  if (!url) {
-    throw new Error("No pude resolver la URL de la base del brief");
-  }
-  return createClient(url, key, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false,
-      detectSessionInUrl: false,
-    },
-  });
 }
 
 /** Alias legado (server actions existentes). */

@@ -2,8 +2,8 @@ import { createHmac } from 'node:crypto';
 import { NextResponse, type NextRequest } from 'next/server';
 import { z } from 'zod';
 import { formLimiter } from '@/lib/rate-limit';
-import { hostDelBrief } from '@/lib/supabase/server';
-import { supabasePublicoBrief } from '@/lib/brief/cliente-publico';
+import { hostDeLaBase } from '@/lib/supabase/server';
+import { supabaseBrief } from '@/lib/brief/cliente-publico';
 import { resolverCliente, validarRespuestas } from '@/lib/brief/schema';
 
 /**
@@ -121,9 +121,9 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const supabase = supabasePublicoBrief();
-    // El id lo pone el servidor: anon puede insertar pero no leer, asi
-    // que no se puede pedir el id de vuelta con .select().
+    const supabase = supabaseBrief();
+    // El id lo pone el servidor: la respuesta al visitante no necesita
+    // volver a leer la fila recien insertada.
     const idEnvio = crypto.randomUUID();
 
     const { error: errorCabecera } = await supabase
@@ -167,7 +167,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     const detalle = error instanceof Error ? error.message : 'desconocido';
     // El host ayuda a distinguir 'la base no responde' de 'apunta a otro lado'.
-    console.error('[brief] submit:', detalle, '| base:', hostDelBrief());
+    console.error('[brief] submit:', detalle, '| base:', hostDeLaBase());
     return NextResponse.json(
       { ok: false, error: 'No pudimos guardar el envio. Intentalo de nuevo en un momento.' },
       { status: 500 },

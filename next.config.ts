@@ -35,6 +35,18 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
   },
+  /**
+   * El panel del brief vivia en /panel, con su propio login contra otra
+   * base. Ahora las respuestas se ven en /admin/briefs con la misma sesion
+   * del panel. Los enlaces viejos siguen llevando al lugar correcto.
+   */
+  async redirects() {
+    return [
+      { source: "/panel", destination: "/admin/briefs", permanent: false },
+      { source: "/panel/login", destination: "/admin/login", permanent: false },
+      { source: "/panel/:id", destination: "/admin/briefs/:id", permanent: false },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: cabecerasSeguridad }];
   },
