@@ -90,7 +90,7 @@ export function HomeContacto() {
         <div style={{ marginBottom: "clamp(48px,6vw,72px)" }}>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 16,
             opacity: secVisible ? 1 : 0,
             transform: secVisible ? "translateY(0)" : "translateY(14px)",
@@ -208,7 +208,7 @@ export function HomeContacto() {
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
               <div style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 11, letterSpacing: "2px",
+                fontSize: 12, letterSpacing: "1.8px",
                 color: "var(--muted2)",
               }}>
                 TAMBIÉN PUEDES ESCRIBIRME A:
@@ -253,7 +253,7 @@ export function HomeContacto() {
             <div style={{
               marginTop: 32,
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--muted2)",
             }}>
               📍 MEDELLÍN, COLOMBIA — ATIENDO TODA LATAM
@@ -313,7 +313,7 @@ export function HomeContacto() {
                     <div>
                       <label style={{
                         fontFamily: "var(--font-dm)",
-                        fontSize: 10, letterSpacing: "2px",
+                        fontSize: 12, letterSpacing: "1.8px",
                         color: "var(--muted2)", display: "block", marginBottom: 6,
                       }}>
                         NOMBRE *
@@ -332,7 +332,7 @@ export function HomeContacto() {
                     <div>
                       <label style={{
                         fontFamily: "var(--font-dm)",
-                        fontSize: 10, letterSpacing: "2px",
+                        fontSize: 12, letterSpacing: "1.8px",
                         color: "var(--muted2)", display: "block", marginBottom: 6,
                       }}>
                         EMAIL *
@@ -353,7 +353,7 @@ export function HomeContacto() {
                   <div>
                     <label style={{
                       fontFamily: "var(--font-dm)",
-                      fontSize: 10, letterSpacing: "2px",
+                      fontSize: 12, letterSpacing: "1.8px",
                       color: "var(--muted2)", display: "block", marginBottom: 6,
                     }}>
                       ¿EN QUÉ TE PUEDO AYUDAR?
@@ -382,7 +382,7 @@ export function HomeContacto() {
                   <div>
                     <label style={{
                       fontFamily: "var(--font-dm)",
-                      fontSize: 10, letterSpacing: "2px",
+                      fontSize: 12, letterSpacing: "1.8px",
                       color: "var(--muted2)", display: "block", marginBottom: 6,
                     }}>
                       MENSAJE
@@ -427,7 +427,7 @@ export function HomeContacto() {
 
                   <p style={{
                     fontFamily: "var(--font-dm)",
-                    fontSize: 11, color: "var(--muted2)",
+                    fontSize: 12, color: "var(--muted2)",
                     textAlign: "center",
                   }}>
                     Respondo en menos de 24 horas · Sin spam

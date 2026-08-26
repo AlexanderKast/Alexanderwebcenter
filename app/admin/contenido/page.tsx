@@ -21,8 +21,8 @@ export default async function ContenidoPage() {
         </p>
       </header>
 
-      <div className="overflow-hidden rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface-1)]">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-2xl border border-[color:var(--line)] bg-[color:var(--surface-1)]">
+        <table className="w-full min-w-[42rem] text-sm">
           <thead className="border-b border-[color:var(--line)] bg-[color:var(--surface-2)] text-[11px] uppercase tracking-[0.18em] text-white/50">
             <tr>
               <th className="px-4 py-3 text-left">Título</th>

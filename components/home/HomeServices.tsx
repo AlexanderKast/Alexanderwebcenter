@@ -80,7 +80,7 @@ function ServiceRow({
             {/* Label */}
             <span style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: hovered === i ? "var(--gold)" : "var(--muted2)",
               flexShrink: 0, transition: "color .3s",
             }}>
@@ -195,7 +195,7 @@ export function HomeServices() {
         <div>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 16,
             opacity: headerVisible ? 1 : 0,
             transform: headerVisible ? "translateY(0)" : "translateY(16px)",

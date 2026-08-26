@@ -68,7 +68,7 @@ export function HomeTestimonios() {
         <div style={{ marginBottom: "clamp(40px,5vw,64px)" }}>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 16,
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(14px)",
@@ -160,7 +160,7 @@ export function HomeTestimonios() {
               <div style={{
                 marginLeft: "auto",
                 fontFamily: "var(--font-dm)",
-                fontSize: 10, letterSpacing: "2px",
+                fontSize: 12, letterSpacing: "1.8px",
                 color: "var(--gold)",
                 border: "1px solid var(--gold-dim)",
                 padding: "4px 10px",

@@ -56,7 +56,7 @@ export function HomeFooter() {
             <div style={{
               marginTop: 24,
               fontFamily: "var(--font-dm)",
-              fontSize: 10, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--muted2)",
             }}>
               MEDELLÍN, COLOMBIA — PARA TODA LATAM
@@ -67,7 +67,7 @@ export function HomeFooter() {
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             <div style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 10, letterSpacing: "3px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--gold)", marginBottom: 4,
             }}>
               NAVEGACIÓN
@@ -92,7 +92,7 @@ export function HomeFooter() {
             <div>
               <div style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 10, letterSpacing: "3px",
+                fontSize: 12, letterSpacing: "1.8px",
                 color: "var(--gold)", marginBottom: 12,
               }}>
                 REDES
@@ -110,7 +110,7 @@ export function HomeFooter() {
                     onMouseEnter={e => (e.currentTarget.style.color = "var(--gold)")}
                     onMouseLeave={e => (e.currentTarget.style.color = "var(--muted)")}
                   >
-                    <span style={{ color: "var(--gold)", fontSize: 10 }}>↗</span>
+                    <span style={{ color: "var(--gold)", fontSize: 12 }}>↗</span>
                     {label}
                   </a>
                 ))}
@@ -157,7 +157,7 @@ export function HomeFooter() {
         }}>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "1px",
+            fontSize: 12, letterSpacing: "1px",
             color: "var(--muted2)",
           }}>
             © 2025 EMPRENDE CON ALEXANDER ·{" "}
@@ -167,7 +167,7 @@ export function HomeFooter() {
 
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 10, letterSpacing: "1.5px",
+            fontSize: 12, letterSpacing: "1.5px",
             color: "var(--muted2)",
           }}>
             DISEÑO & DESARROLLO — AI-FIRST LATAM

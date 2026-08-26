@@ -133,8 +133,8 @@ export default async function MarcaPage() {
             </p>
           </div>
         </div>
-        <div className="mt-6 overflow-hidden rounded-xl border border-[color:var(--line)]">
-          <table className="w-full text-sm">
+        <div className="mt-6 overflow-x-auto rounded-xl border border-[color:var(--line)]">
+          <table className="w-full min-w-[36rem] text-sm">
             <thead className="bg-[color:var(--surface-2)] text-left text-[11px] uppercase tracking-[0.15em] text-white/50">
               <tr>
                 <th className="px-4 py-2">Clase</th>

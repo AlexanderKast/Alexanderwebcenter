@@ -65,7 +65,7 @@ export function HomeRecursos() {
           <div>
             <div style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "3px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--gold)", marginBottom: 16,
               opacity: secVisible ? 1 : 0,
               transform: secVisible ? "translateY(0)" : "translateY(14px)",
@@ -138,7 +138,7 @@ export function HomeRecursos() {
 
               <div style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 10, letterSpacing: "2px",
+                fontSize: 12, letterSpacing: "1.8px",
                 color: "var(--gold)",
               }}>
                 {r.type}

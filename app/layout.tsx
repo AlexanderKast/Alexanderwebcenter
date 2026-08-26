@@ -1,19 +1,36 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { DM_Sans, Fraunces, Bebas_Neue } from "next/font/google";
 import { site } from "@/content/site";
 import "./globals.css";
 
-const inter = Inter({
+/*
+ * Las tres familias se sirven desde next/font (self-hosted y subsetadas).
+ * Antes convivian dos sistemas: el root cargaba Inter + Playfair y el chrome
+ * publico inyectaba un <link> bloqueante a Google Fonts con DM Sans + Bebas.
+ * Resultado: fuentes de mas, render bloqueado y un flash de texto sin estilo.
+ */
+
+const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
   display: "swap",
+  style: ["normal", "italic"],
 });
 
-const playfair = Playfair_Display({
+/* Reemplaza a Playfair: variable, con mas caracter y legible tanto a 12px en
+   las tablas del panel como a 96px en los titulares del sitio. */
+const fraunces = Fraunces({
   subsets: ["latin"],
   variable: "--font-display",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+});
+
+/* Solo para los titulares condensados del chrome publico. */
+const bebas = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+  weight: ["400"],
 });
 
 export const viewport: Viewport = {
@@ -66,7 +83,10 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="es" className={`${inter.variable} ${playfair.variable} dark`}>
+    <html
+      lang="es"
+      className={`${dmSans.variable} ${fraunces.variable} ${bebas.variable} dark`}
+    >
       <body className="min-h-screen antialiased">
         {children}
       </body>

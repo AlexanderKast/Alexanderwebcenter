@@ -8,12 +8,6 @@
 export function HomeChromeEstilos() {
   return (
     <>
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap"
-      />
       <style>{`
         /* En capa base: si va sin capa le gana a las utilidades de
            Tailwind (que viven en @layer utilities) y borra todos los
@@ -24,19 +18,26 @@ export function HomeChromeEstilos() {
           body {
             background: #000;
             color: #fff;
-            font-family: 'DM Sans', system-ui, sans-serif;
+            font-family: var(--font-sans), system-ui, sans-serif;
             -webkit-font-smoothing: antialiased;
           }
+          /*
+           * Alias sobre los tokens de globals.css. Antes este bloque redefinia
+           * --gold con OTRO valor (#C9A84C contra #c9a227) y declaraba sus
+           * propias familias: dos fuentes de verdad con los mismos nombres.
+           * Ahora todo apunta al mismo lado y aca solo viven los alias que
+           * usan los componentes del chrome.
+           */
           :root {
-            --gold: #C9A84C;
-            --gold-dim: rgba(201,168,76,0.15);
-            --gold-dim2: rgba(201,168,76,0.08);
-            --surface: #0A0A0A;
-            --surface2: #111;
-            --muted: rgba(255,255,255,0.55);
-            --muted2: rgba(255,255,255,0.35);
-            --font-bebas: 'Bebas Neue', sans-serif;
-            --font-dm: 'DM Sans', sans-serif;
+            --gold-dim:  color-mix(in srgb, var(--gold-mid) 15%, transparent);
+            --gold-dim2: color-mix(in srgb, var(--gold-mid) 8%, transparent);
+            --surface:  var(--surface-1);
+            --surface2: var(--surface-2);
+            /* Subidos desde 0.55/0.35: sobre el video de fondo esos valores
+               no llegaban a contraste AA y el texto secundario no se leia. */
+            --muted:  rgba(255,255,255,0.74);
+            --muted2: rgba(255,255,255,0.56);
+            --font-dm: var(--font-sans);
           }
           a { text-decoration: none; color: inherit; }
           img, video { display: block; max-width: 100%; }
@@ -55,7 +56,36 @@ export function HomeChromeEstilos() {
             background-repeat: repeat;
             background-size: 200px 200px;
           }
-      }
+
+          /* El reset de arriba borra el outline por defecto y no habia nada
+             que lo reemplazara: navegar con teclado era a ciegas. */
+          :focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+            border-radius: 2px;
+          }
+
+          /* Area tactil minima en movil: varios enlaces del chrome quedaban
+             por debajo de 44px y eran dificiles de acertar. */
+          @media (pointer: coarse) {
+            nav a, header a, footer a, button {
+              min-height: 44px;
+              display: inline-flex;
+              align-items: center;
+            }
+          }
+        }
+
+        /* No existia ningun respeto por reduced-motion en el sitio publico. */
+        @media (prefers-reduced-motion: reduce) {
+          html { scroll-behavior: auto; }
+          *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+          }
+        }
       `}</style>
     </>
   );

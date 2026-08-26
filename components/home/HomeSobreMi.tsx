@@ -54,7 +54,7 @@ export function HomeSobreMi() {
         <div style={{ marginBottom: "clamp(48px,6vw,80px)" }}>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 16,
             opacity: secVisible ? 1 : 0,
             transform: secVisible ? "translateY(0)" : "translateY(14px)",
@@ -219,8 +219,7 @@ export function HomeSobreMi() {
                     <span style={{ fontFamily: "var(--font-bebas)", fontSize: 32, color: "var(--gold)", letterSpacing: 2 }}>AC</span>
                   </div>
                   <div style={{
-                    fontFamily: "var(--font-dm)", fontSize: 11,
-                    letterSpacing: "2px", color: "var(--muted2)",
+                    fontFamily: "var(--font-dm)", fontSize: 12, letterSpacing: "1.8px", color: "var(--muted2)",
                   }}>
                     ALEXANDER CAST
                   </div>
@@ -239,7 +238,7 @@ export function HomeSobreMi() {
               {["Diseñador Gráfico", "Tecnólogo en Sistemas", "Co-host Casa Host"].map(c => (
                 <span key={c} style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 11, letterSpacing: "1px",
+                  fontSize: 12, letterSpacing: "1px",
                   border: "1px solid rgba(255,255,255,0.08)",
                   color: "var(--muted2)",
                   padding: "6px 12px",
@@ -257,7 +256,7 @@ export function HomeSobreMi() {
           {/* Bloque 1: mis negocios */}
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 20,
             opacity: venVisible ? 1 : 0,
             transform: venVisible ? "translateY(0)" : "translateY(12px)",
@@ -291,7 +290,7 @@ export function HomeSobreMi() {
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 10, letterSpacing: "1.5px",
+                  fontSize: 12, letterSpacing: "1.5px",
                   color: "var(--gold)", marginBottom: 8,
                 }}>
                   {v.role}
@@ -309,7 +308,7 @@ export function HomeSobreMi() {
           {/* Bloque 2: clientes y alianzas */}
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--muted2)", marginBottom: 20,
             opacity: venVisible ? 1 : 0,
             transform: venVisible ? "translateY(0)" : "translateY(12px)",
@@ -341,7 +340,7 @@ export function HomeSobreMi() {
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 10, letterSpacing: "1.5px",
+                  fontSize: 12, letterSpacing: "1.5px",
                   color: "var(--muted2)",
                 }}>
                   {v.role}

@@ -19,7 +19,7 @@ export function HomeHero() {
   return (
     <section id="inicio" style={{
       position: "relative",
-      minHeight: "100vh",
+      minHeight: "100svh",
       display: "flex",
       alignItems: "center",
       overflow: "hidden",
@@ -30,7 +30,9 @@ export function HomeHero() {
       <div style={{
         position: "absolute", inset: 0, zIndex: 1,
         background:
-          "linear-gradient(135deg,rgba(0,0,0,0.82) 0%,rgba(0,0,0,0.42) 50%,rgba(0,0,0,0.68) 100%)",
+          // Mas suave que antes: el scrim global de HomeVideoBackground ya
+          // aporta el grueso del oscurecimiento. Aca solo queda la direccion.
+          "linear-gradient(135deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.12) 50%,rgba(0,0,0,0.45) 100%)",
       }} />
 
       {/* Línea dorada inferior */}
@@ -62,7 +64,7 @@ export function HomeHero() {
                 key={tag}
                 style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 11, letterSpacing: "2.5px",
+                  fontSize: 12, letterSpacing: "1.8px",
                   color: "var(--muted)",
                   display: "flex", alignItems: "center", gap: 10,
                   animation: `hero-slide-left 0.7s cubic-bezier(0.16,1,0.3,1) ${80 + i * 80}ms both`,
@@ -81,10 +83,13 @@ export function HomeHero() {
           {/* Título — curtain reveal por línea */}
           <h1 style={{
             fontFamily: "var(--font-bebas)",
-            fontSize: "clamp(72px,10vw,130px)",
-            lineHeight: 0.92,
-            letterSpacing: "-2px",
+            fontSize: "clamp(64px,9.5vw,130px)",
+            lineHeight: 0.9,
+            // En em y no en px: asi el tracking escala con el titulo en vez de
+            // apretarse en pantallas chicas.
+            letterSpacing: "-0.015em",
             marginBottom: 40,
+            textWrap: "balance",
           }}>
             {TITLE_LINES.map(({ text, gold, delay }) => (
               <div key={text} style={{ overflow: "hidden", display: "block" }}>
@@ -126,16 +131,9 @@ export function HomeHero() {
                 fontSize: 16, letterSpacing: "2.5px",
                 color: "#000", background: "var(--gold)",
                 padding: "18px 36px",
-                transition: "all .25s ease",
+                transition: "background .25s ease, transform .25s ease, box-shadow .25s ease",
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = "#fff";
-                e.currentTarget.style.color = "#000";
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = "var(--gold)";
-                e.currentTarget.style.color = "#000";
-              }}
+              className="hero-cta"
             >
               AGENDA UNA SESIÓN ESTRATÉGICA
               <span style={{ fontSize: 20 }}>→</span>
@@ -163,7 +161,7 @@ export function HomeHero() {
               display: "flex", alignItems: "center", gap: 8,
               marginBottom: 32,
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--muted)",
             }}>
               <span style={{
@@ -189,14 +187,14 @@ export function HomeHero() {
               }}>
                 <span style={{
                   fontFamily: "var(--font-bebas)",
-                  fontSize: 42, letterSpacing: "-1px",
+                  fontSize: 44, letterSpacing: "-0.02em",
                   color: "var(--gold)",
                 }}>
                   {num}
                 </span>
                 <span style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 12, color: "var(--muted)",
+                  fontSize: 13, color: "var(--muted)",
                   textAlign: "right", maxWidth: 180, letterSpacing: "0.5px",
                 }}>
                   {label}
@@ -218,7 +216,7 @@ export function HomeHero() {
       }}>
         <div style={{
           fontFamily: "var(--font-dm)",
-          fontSize: 9, letterSpacing: "3px",
+          fontSize: 12, letterSpacing: "1.8px",
           color: "var(--muted2)",
         }}>
           SCROLL
@@ -261,8 +259,20 @@ export function HomeHero() {
           0%, 100% { opacity: 0.3; transform: scaleY(1); }
           50%       { opacity: 1;   transform: scaleY(1.15); }
         }
-        @media (max-width: 768px) {
+        /* El CTA en CSS y no con handlers de mouse: asi tambien responde
+           al foco de teclado, que antes quedaba sin ningun estado visible. */
+        .hero-cta:hover, .hero-cta:focus-visible {
+          background: var(--gold-hi);
+          transform: translateY(-2px);
+          box-shadow: 0 14px 34px -14px var(--gold);
+        }
+        .hero-cta:active { transform: translateY(0); }
+
+        /* Subido de 768: entre 768 y 1000px el titular de 130px y la tarjeta
+           de 380px se apretaban uno contra otro. */
+        @media (max-width: 1000px) {
           .hero-grid { grid-template-columns: 1fr !important; }
+          .hero-grid > div:last-child { justify-content: flex-start !important; }
         }
       `}</style>
     </section>

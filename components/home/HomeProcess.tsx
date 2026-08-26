@@ -41,7 +41,7 @@ export function HomeProcess() {
         <div style={{ marginBottom: "clamp(48px,6vw,80px)" }}>
           <div style={{
             fontFamily: "var(--font-dm)",
-            fontSize: 11, letterSpacing: "3px",
+            fontSize: 12, letterSpacing: "1.8px",
             color: "var(--gold)", marginBottom: 16,
             opacity: secVisible ? 1 : 0,
             transform: secVisible ? "translateY(0)" : "translateY(14px)",
@@ -113,7 +113,7 @@ export function HomeProcess() {
               {/* Step label */}
               <div style={{
                 fontFamily: "var(--font-dm)",
-                fontSize: 11, letterSpacing: "3px",
+                fontSize: 12, letterSpacing: "1.8px",
                 color: "var(--gold)", marginBottom: 16,
               }}>
                 PASO {s.n}

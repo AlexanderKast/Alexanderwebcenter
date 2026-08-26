@@ -83,7 +83,7 @@ export function HomeStats() {
             {/* Label */}
             <div style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--muted)",
               whiteSpace: "pre-line",
               lineHeight: 1.6,

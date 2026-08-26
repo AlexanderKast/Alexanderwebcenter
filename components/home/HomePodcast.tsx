@@ -75,7 +75,7 @@ export function HomePodcast() {
           <div>
             <div style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 11, letterSpacing: "3px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--gold)", marginBottom: 16,
               opacity: secVisible ? 1 : 0,
               transform: secVisible ? "translateY(0)" : "translateY(14px)",
@@ -118,7 +118,7 @@ export function HomePodcast() {
           }}>
             <div style={{
               fontFamily: "var(--font-dm)",
-              fontSize: 10, letterSpacing: "2px",
+              fontSize: 12, letterSpacing: "1.8px",
               color: "var(--muted2)", marginBottom: 4,
             }}>
               ESCUCHAR EN
@@ -174,7 +174,7 @@ export function HomePodcast() {
               onMouseLeave={e => {
                 const el = e.currentTarget as HTMLElement;
                 el.querySelectorAll(".ep-title").forEach(t => {
-                  (t as HTMLElement).style.color = "#fff";
+                  (t as HTMLElement).style.color = "var(--gold-hi)";
                 });
               }}
             >
@@ -222,14 +222,14 @@ export function HomePodcast() {
               }}>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 11, letterSpacing: "1.5px",
+                  fontSize: 12, letterSpacing: "1.5px",
                   color: "var(--muted2)",
                 }}>
                   {ep.duracion}
                 </div>
                 <div style={{
                   fontFamily: "var(--font-dm)",
-                  fontSize: 11, letterSpacing: "1px",
+                  fontSize: 12, letterSpacing: "1px",
                   color: "var(--muted2)",
                 }}>
                   {ep.fecha}
