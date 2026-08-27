@@ -20,6 +20,8 @@ import {
   ClipboardList,
   KanbanSquare,
   Handshake,
+  Lightbulb,
+  Plug,
 } from "lucide-react";
 import {
   Link2,
@@ -56,6 +58,8 @@ export const ICONOS = {
   ClipboardList,
   KanbanSquare,
   Handshake,
+  Lightbulb,
+  Plug,
   Link2,
   Star,
   Wrench,
@@ -112,6 +116,7 @@ export const adminNavSections: AdminNavSection[] = [
   {
     label: "Interno",
     items: [
+      { label: "Ideas", href: "/admin/ideas", icono: "Lightbulb" },
       { label: "Proyectos", href: "/admin/proyectos", icono: "KanbanSquare" },
       { label: "Finanzas", href: "/admin/finanzas", icono: "Wallet" },
       { label: "Sociedades", href: "/admin/sociedades", icono: "Handshake" },
@@ -149,6 +154,7 @@ export const adminNavSections: AdminNavSection[] = [
     items: [
       { label: "Actividad", href: "/admin/actividad", icono: "Activity" },
       { label: "Equipo", href: "/admin/equipo", icono: "UserCog" },
+      { label: "Conectar por MCP", href: "/admin/mcp", icono: "Plug" },
     ],
   },
 ];
