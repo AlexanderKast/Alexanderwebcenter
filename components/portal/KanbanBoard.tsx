@@ -34,16 +34,29 @@ export interface KanbanColumn {
   items: KanbanItem[];
 }
 
+/** Lo que se esta haciendo sobre una tarjeta, para pintarlo encima. */
+export interface MarcaEnVivo {
+  texto: string;
+  estado: "trabajando" | "listo" | "error";
+}
+
 interface KanbanBoardProps {
   columns: KanbanColumn[];
   onMoveItem: (itemId: string, newColumnId: string) => Promise<void>;
   canEdit: boolean;
   onCardClick?: (id: string) => void;
+  /**
+   * Quien mas esta tocando esta tarjeta ahora mismo. Se pinta sobre la
+   * tarjeta y no en una esquina: "algo se movio" no sirve si hay que buscar
+   * cual.
+   */
+  marcaDe?: (itemId: string) => MarcaEnVivo | null;
 }
 
 // ── Draggable Card ─────────────────────────────────────────────────────────────
-function KanbanCard({ item, canEdit, isMoving, onCardClick }: {
+function KanbanCard({ item, canEdit, isMoving, onCardClick, marca }: {
   item: KanbanItem; canEdit: boolean; isMoving: boolean; onCardClick?: (id: string) => void;
+  marca?: MarcaEnVivo | null;
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: item.id,
@@ -60,12 +73,30 @@ function KanbanCard({ item, canEdit, isMoving, onCardClick }: {
       style={style}
       {...(canEdit ? { ...attributes, ...listeners } : {})}
       onClick={() => !isDragging && onCardClick?.(item.id)}
-      className={`rounded-xl border bg-white/5 p-3 transition-all select-none
+      className={`relative rounded-xl border bg-white/5 p-3 transition-all select-none
         ${canEdit ? 'cursor-grab active:cursor-grabbing' : onCardClick ? 'cursor-pointer' : ''}
         ${isDragging ? 'opacity-30 scale-95' : 'hover:border-[#D4AF37]/30 hover:bg-white/8'}
         ${isMoving ? 'opacity-50' : ''}
-        border-white/10`}
+        ${marca
+          ? 'border-[#D4AF37]/70 bg-[#D4AF37]/[0.06] ring-1 ring-[#D4AF37]/40'
+          : 'border-white/10'}`}
     >
+      {marca && (
+        <div className="mb-2 flex items-center gap-1.5 rounded-md bg-[#D4AF37]/15 px-2 py-1">
+          <span
+            className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+              marca.estado === 'error'
+                ? 'bg-red-400'
+                : marca.estado === 'listo'
+                  ? 'bg-emerald-400'
+                  : 'bg-[#D4AF37] motion-safe:animate-pulse'
+            }`}
+          />
+          <span className="truncate text-[10px] font-medium uppercase tracking-wide text-[#D4AF37]">
+            {marca.texto}
+          </span>
+        </div>
+      )}
       <div className="space-y-2">
         {/* Título + badge */}
         <div className="flex items-start justify-between gap-2">
@@ -117,9 +148,10 @@ function KanbanCard({ item, canEdit, isMoving, onCardClick }: {
 }
 
 // ── Droppable Column ───────────────────────────────────────────────────────────
-function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick }: {
+function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick, marcaDe }: {
   col: KanbanColumn; isOver: boolean; moving: string | null; canEdit: boolean;
   onCardClick?: (id: string) => void;
+  marcaDe?: (itemId: string) => MarcaEnVivo | null;
 }) {
   const { setNodeRef } = useDroppable({ id: col.id });
 
@@ -144,6 +176,7 @@ function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick }: {
             canEdit={canEdit}
             isMoving={moving === item.id}
             onCardClick={onCardClick}
+            marca={marcaDe?.(item.id) ?? null}
           />
         ))}
         {col.items.length === 0 && (
@@ -160,7 +193,7 @@ function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick }: {
 }
 
 // ── Board ──────────────────────────────────────────────────────────────────────
-export function KanbanBoard({ columns, onMoveItem, canEdit, onCardClick }: KanbanBoardProps) {
+export function KanbanBoard({ columns, onMoveItem, canEdit, onCardClick, marcaDe }: KanbanBoardProps) {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overColumnId, setOverColumnId] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
@@ -219,6 +252,7 @@ export function KanbanBoard({ columns, onMoveItem, canEdit, onCardClick }: Kanba
             moving={moving}
             canEdit={canEdit}
             onCardClick={onCardClick}
+            marcaDe={marcaDe}
           />
         ))}
       </div>

@@ -11,6 +11,7 @@ import {
   type MensajeTelegram,
   type UpdateTelegram,
 } from "@/lib/telegram/api";
+import { urlDelSitio } from "@/lib/sitio";
 import { createSupabaseServiceRole } from "@/lib/supabase/server";
 
 /**
@@ -211,7 +212,7 @@ async function guardarAudio(msg: MensajeTelegram, quien: Remitente): Promise<voi
     .update({ ultima_idea_at: new Date().toISOString() })
     .eq("chat_id", chatId);
 
-  const sitio = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const sitio = urlDelSitio();
   const link = sitio ? `\n\n${sitio}/admin/ideas/${data.id}` : "";
   const tags = idea.tags.length ? `\n🏷 ${escapar(idea.tags.join(", "))}` : "";
 
@@ -271,7 +272,7 @@ async function guardarTexto(quien: Remitente, texto: string): Promise<void> {
     .update({ ultima_idea_at: new Date().toISOString() })
     .eq("chat_id", quien.chatId);
 
-  const sitio = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const sitio = urlDelSitio();
   const link = sitio ? `\n\n${sitio}/admin/ideas/${data.id}` : "";
   const tags = idea.tags.length ? `\n🏷 ${escapar(idea.tags.join(", "))}` : "";
   const resumen = idea.resumen ? `\n\n${escapar(idea.resumen)}` : "";

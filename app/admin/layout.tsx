@@ -4,7 +4,7 @@ import { menuDelPanel } from "@/lib/admin/menu";
 import { getCurrentUser } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/Sidebar";
 import { AdminHeader } from "@/components/admin/Header";
-import { PulsoMcp } from "@/components/mcp/PulsoMcp";
+import { PulsoProvider } from "@/components/mcp/pulso";
 import { Toaster } from "@/components/ui/sonner";
 
 /**
@@ -22,7 +22,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
   const user = await getCurrentUser();
   const secciones = user ? await menuDelPanel(user) : [];
 
-  return (
+  const panel = (
     <div className="min-h-screen bg-[color:var(--background)]">
       {user ? (
         <div className="flex min-h-screen">
@@ -41,9 +41,10 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       {/* Sin esto los toast.error/success del panel no se ven: sonner
           necesita su Toaster montado en el arbol. */}
       <Toaster position="bottom-right" richColors />
-      {/* Solo para el que ya entro: es el panel el que tiene que avisar que
-          algo se esta moviendo solo. */}
-      {user ? <PulsoMcp /> : null}
     </div>
   );
+
+  // El pulso envuelve todo el panel: cualquier pantalla puede preguntar si
+  // el MCP le esta tocando una fila, y hay un solo poll para todas.
+  return user ? <PulsoProvider>{panel}</PulsoProvider> : panel;
 }

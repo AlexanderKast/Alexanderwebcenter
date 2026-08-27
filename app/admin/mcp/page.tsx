@@ -1,5 +1,6 @@
 import { LlavesMcp, type LlaveMcp } from "@/components/mcp/LlavesMcp";
 import { requireAuth } from "@/lib/auth";
+import { urlDelSitio } from "@/lib/sitio";
 import { createSupabaseServiceRole } from "@/lib/supabase/server";
 
 export const metadata = { title: "Conectar por MCP · Admin" };
@@ -32,7 +33,7 @@ export default async function McpPage() {
     createdAt: f.created_at as string,
   }));
 
-  const base = process.env.NEXT_PUBLIC_SITE_URL ?? "";
+  const base = urlDelSitio();
   const urlMcp = `${base}/api/mcp`;
 
   return (

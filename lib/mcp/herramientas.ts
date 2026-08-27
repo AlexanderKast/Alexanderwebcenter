@@ -653,6 +653,23 @@ function descripcionDe(nombre: string, args: Args): string {
   }
 }
 
+/**
+ * Sobre que fila del panel va a caer esto, si se puede saber de antemano.
+ *
+ * Los nombres llegan hablando ("moveme Orgullosamente Paisa"), asi que hay
+ * que resolverlos contra el tablero. Cuesta una consulta; el precio de no
+ * hacerlo es que la tarjeta se ilumina tarde.
+ */
+async function recursoDe(
+  nombre: string,
+  args: Args,
+): Promise<{ tipo: string; id: string } | undefined> {
+  if (nombre !== "mover_proyecto" && nombre !== "crear_nota_proyecto") return;
+
+  const { proyecto } = await buscarProyecto(cadena(args.proyecto));
+  return proyecto ? { tipo: "proyecto", id: proyecto.id } : undefined;
+}
+
 /** Las que dejan huella en el panel. Las demas solo miran. */
 const ESCRIBEN = new Set([
   "crear_idea",
@@ -699,10 +716,16 @@ export async function ejecutar(
   const bloqueo = motivoDelBloqueo(await sesionActiva(usuario.tokenId));
   if (bloqueo) return bloqueo;
 
+  // Se resuelve el proyecto antes de empezar y no al terminar: si la
+  // tarjeta se ilumina recien cuando ya se movio, el que estaba mirando ve
+  // el salto y despues el aviso, que es el orden al reves.
+  const recurso = await recursoDe(nombre, args);
+
   const actividad = await registrarActividad(
     usuario,
     nombre,
     descripcionDe(nombre, args),
+    recurso,
   );
 
   try {

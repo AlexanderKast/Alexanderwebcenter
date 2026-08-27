@@ -204,7 +204,7 @@ export interface ActividadViva {
  * Lo que ya termino se muestra unos segundos para que se alcance a leer y
  * despues se va solo.
  */
-export async function actividadViva(segundos = 45): Promise<ActividadViva[]> {
+export async function actividadViva(segundos = 20): Promise<ActividadViva[]> {
   const supabase = createSupabaseServiceRole();
   const desde = new Date(Date.now() - segundos * 1000).toISOString();
 
