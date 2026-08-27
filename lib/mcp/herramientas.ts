@@ -13,6 +13,7 @@ import { nombreDe, type UsuarioMcp } from "./auth";
 import {
   abrirSesion,
   cerrarActividad,
+  descartarActividad,
   motivoDelBloqueo,
   registrarActividad,
   sesionActiva,
@@ -242,11 +243,28 @@ const numero = (v: unknown, porDefecto: number): number =>
  * Devuelve texto y no JSON crudo a proposito: lo que sale de aca se lee en
  * una conversacion, y un volcado de uuids no le sirve a nadie.
  */
+/**
+ * Lo que devuelve una herramienta que si llego a cambiar algo.
+ *
+ * Hace falta distinguirlo: pedir mover a una columna que no existe tambien
+ * "termina bien" desde el punto de vista del programa, pero no cambio nada,
+ * y no tiene por que aparecerle en la pantalla al resto del equipo.
+ */
+interface Cambio {
+  texto: string;
+  recurso?: { tipo: string; id: string };
+}
+
+const cambio = (texto: string, recurso?: Cambio["recurso"]): Cambio => ({
+  texto,
+  recurso,
+});
+
 async function correr(
   nombre: string,
   args: Args,
   usuario: UsuarioMcp,
-): Promise<string> {
+): Promise<string | Cambio> {
   const puedeEscribir = puedeEditarProyectos(usuario.role);
   const supabase = createSupabaseServiceRole();
 
@@ -299,7 +317,10 @@ async function correr(
         return "No pude guardar la idea.";
       }
 
-      return `Idea guardada: "${titulo}" (id ${data.id}).`;
+      return cambio(`Idea guardada: "${titulo}" (id ${data.id}).`, {
+        tipo: "idea",
+        id: data.id as string,
+      });
     }
 
     case "responder_idea": {
@@ -327,7 +348,10 @@ async function correr(
 
       const titulo = idea.titulo as string;
       if (!mensaje) {
-        return `Idea "${titulo}" marcada como ${estado}. Sin mensaje al autor.`;
+        return cambio(`Idea "${titulo}" marcada como ${estado}. Sin mensaje al autor.`, {
+          tipo: "idea",
+          id,
+        });
       }
 
       const chatId = idea.telegram_chat_id as number | null;
@@ -363,11 +387,17 @@ async function correr(
       });
 
       if (!chatId) {
-        return `Idea "${titulo}" marcada como ${estado}. Se escribió en el panel, así que no hay Telegram al que avisarle; el mensaje quedó registrado.`;
+        return cambio(
+          `Idea "${titulo}" marcada como ${estado}. Se escribió en el panel, así que no hay Telegram al que avisarle; el mensaje quedó registrado.`,
+          { tipo: "idea", id },
+        );
       }
-      return entregado
-        ? `Idea "${titulo}" marcada como ${estado} y avisada por Telegram.`
-        : `Idea "${titulo}" marcada como ${estado}, pero Telegram no aceptó el mensaje.`;
+      return cambio(
+        entregado
+          ? `Idea "${titulo}" marcada como ${estado} y avisada por Telegram.`
+          : `Idea "${titulo}" marcada como ${estado}, pero Telegram no aceptó el mensaje.`,
+        { tipo: "idea", id },
+      );
     }
 
     case "listar_proyectos": {
@@ -430,7 +460,10 @@ async function correr(
         texto: `Movido a "${columna.nombre}".`,
       });
 
-      return `"${proyecto.nombre}" quedó en ${columna.nombre}.`;
+      return cambio(`"${proyecto.nombre}" quedó en ${columna.nombre}.`, {
+        tipo: "proyecto",
+        id: proyecto.id,
+      });
     }
 
     case "crear_nota_proyecto": {
@@ -460,7 +493,10 @@ async function correr(
         return "No pude guardar la nota.";
       }
 
-      return `Nota guardada en "${proyecto.nombre}", firmada por ${nombreDe(usuario)}.`;
+      return cambio(
+        `Nota guardada en "${proyecto.nombre}", firmada por ${nombreDe(usuario)}.`,
+        { tipo: "proyecto", id: proyecto.id },
+      );
     }
 
     case "listar_movimientos": {
@@ -586,7 +622,10 @@ async function correr(
         return "No pude guardar el guión.";
       }
 
-      return `Guión creado: "${titulo}" (id ${data.id}).`;
+      return cambio(`Guión creado: "${titulo}" (id ${data.id}).`, {
+        tipo: "guion",
+        id: data.id as string,
+      });
     }
 
     default:
@@ -653,7 +692,8 @@ export async function ejecutar(
   }
 
   if (!ESCRIBEN.has(nombre)) {
-    return correr(nombre, args, usuario);
+    const salida = await correr(nombre, args, usuario);
+    return typeof salida === "string" ? salida : salida.texto;
   }
 
   const bloqueo = motivoDelBloqueo(await sesionActiva(usuario.tokenId));
@@ -666,9 +706,18 @@ export async function ejecutar(
   );
 
   try {
-    const texto = await correr(nombre, args, usuario);
-    await cerrarActividad(actividad, "listo", texto.split("\n")[0]);
-    return texto;
+    const salida = await correr(nombre, args, usuario);
+
+    // Un string es una herramienta que contesto sin tocar nada: faltaba un
+    // dato, el nombre era ambiguo, no habia permiso. Eso se habla con quien
+    // pregunto, no se le muestra al equipo entero en la pantalla.
+    if (typeof salida === "string") {
+      await descartarActividad(actividad);
+      return salida;
+    }
+
+    await cerrarActividad(actividad, "listo", salida.texto, salida.recurso);
+    return salida.texto;
   } catch (e) {
     await cerrarActividad(actividad, "error");
     throw e;

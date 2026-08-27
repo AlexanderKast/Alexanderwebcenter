@@ -146,6 +146,7 @@ export async function cerrarActividad(
   id: string | null,
   estado: "listo" | "error",
   descripcion?: string,
+  recurso?: { tipo: string; id: string },
 ): Promise<void> {
   if (!id) return;
   const supabase = createSupabaseServiceRole();
@@ -155,6 +156,12 @@ export async function cerrarActividad(
     updated_at: new Date().toISOString(),
   };
   if (descripcion) cambios.descripcion = descripcion.slice(0, 300);
+  // Recien al terminar se sabe a que fila del panel le pego: los nombres
+  // que llegan hablando ("moveme Kreoon") se resuelven adentro.
+  if (recurso) {
+    cambios.recurso_tipo = recurso.tipo;
+    cambios.recurso_id = recurso.id;
+  }
 
   const { error } = await supabase
     .from("int_mcp_actividad")
@@ -162,6 +169,21 @@ export async function cerrarActividad(
     .eq("id", id);
 
   if (error) console.error("[mcp] cerrar actividad:", error.message);
+}
+
+/**
+ * Borra el aviso.
+ *
+ * Se usa cuando la herramienta no llego a cambiar nada: pidieron mover a
+ * una columna que no existe, el nombre del proyecto era ambiguo, faltaba un
+ * dato. Eso es una conversacion entre el modelo y quien le habla, no algo
+ * que el resto del equipo tenga que ver aparecer en su pantalla.
+ */
+export async function descartarActividad(id: string | null): Promise<void> {
+  if (!id) return;
+  const supabase = createSupabaseServiceRole();
+  const { error } = await supabase.from("int_mcp_actividad").delete().eq("id", id);
+  if (error) console.error("[mcp] descartar actividad:", error.message);
 }
 
 export interface ActividadViva {
