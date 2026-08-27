@@ -37,12 +37,22 @@ const Pulso = createContext<ActividadMcp[]>([]);
 
 const CADA = 3000;
 
+/**
+ * Cuanto se muestra el "lo esta moviendo" antes de mover la tarjeta.
+ *
+ * Escribir tarda cuatro decimas y el poll pregunta cada tres segundos, asi
+ * que en la practica la tarjeta ya esta movida cuando llega la noticia:
+ * nunca se veria el aviso. Se anuncia primero, se mueve despues.
+ */
+const ANUNCIO = 1800;
+
 export function PulsoProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const [actividad, setActividad] = useState<ActividadMcp[]>([]);
-  // Lo que ya se refresco. Sin esto cada vuelta del poll vuelve a pedir los
-  // datos al servidor mientras el aviso siga vivo.
-  const refrescadas = useRef(new Set<string>());
+  // Lo que ya se anuncio. Sin esto cada vuelta del poll vuelve a anunciar lo
+  // mismo y a pedirle los datos al servidor mientras el aviso siga vivo.
+  const vistas = useRef(new Set<string>());
+  const [anunciando, setAnunciando] = useState<string[]>([]);
 
   useEffect(() => {
     let vivo = true;
@@ -61,13 +71,17 @@ export function PulsoProvider({ children }: { children: ReactNode }) {
             const lista = datos.actividad ?? [];
             setActividad(lista);
 
-            const nuevas = lista.filter(
-              (a) => a.estado !== "trabajando" && !refrescadas.current.has(a.id),
-            );
-            if (nuevas.length > 0) {
-              nuevas.forEach((a) => refrescadas.current.add(a.id));
-              router.refresh();
-            }
+            lista
+              .filter((a) => !vistas.current.has(a.id))
+              .forEach((a) => {
+                vistas.current.add(a.id);
+                setAnunciando((actuales) => [...actuales, a.id]);
+
+                window.setTimeout(() => {
+                  setAnunciando((actuales) => actuales.filter((x) => x !== a.id));
+                  router.refresh();
+                }, ANUNCIO);
+              });
           }
         } catch {
           // Un corte de red lo arregla el proximo intento.
@@ -84,7 +98,14 @@ export function PulsoProvider({ children }: { children: ReactNode }) {
     };
   }, [router]);
 
-  return <Pulso.Provider value={actividad}>{children}</Pulso.Provider>;
+  // Mientras dura el anuncio la fila se muestra como "trabajando" aunque el
+  // servidor ya la haya dado por terminada: lo que se esta contando es que
+  // esta por moverse.
+  const conAnuncio = actividad.map((a) =>
+    anunciando.includes(a.id) ? { ...a, estado: "trabajando" as const } : a,
+  );
+
+  return <Pulso.Provider value={conAnuncio}>{children}</Pulso.Provider>;
 }
 
 /** Todo lo que el MCP esta tocando ahora mismo. */

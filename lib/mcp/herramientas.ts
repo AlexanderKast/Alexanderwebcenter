@@ -739,7 +739,10 @@ export async function ejecutar(
       return salida;
     }
 
-    await cerrarActividad(actividad, "listo", salida.texto, salida.recurso);
+    // Se cierra sin cambiarle el texto: el aviso dice "Moviendo «X» a
+    // Iniciado" y asi se queda. Reemplazarlo por el resultado hace que la
+    // tarjeta diga "quedo en Iniciado" mientras todavia se esta moviendo.
+    await cerrarActividad(actividad, "listo", undefined, salida.recurso);
     return salida.texto;
   } catch (e) {
     await cerrarActividad(actividad, "error");

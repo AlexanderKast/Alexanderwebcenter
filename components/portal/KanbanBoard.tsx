@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { Lock } from 'lucide-react';
 import {
   DndContext,
   DragEndEvent,
@@ -54,14 +55,30 @@ interface KanbanBoardProps {
 }
 
 // ── Draggable Card ─────────────────────────────────────────────────────────────
-function KanbanCard({ item, canEdit, isMoving, onCardClick, marca }: {
+function KanbanCard({ item, canEdit, isMoving, onCardClick, marca, registrar }: {
   item: KanbanItem; canEdit: boolean; isMoving: boolean; onCardClick?: (id: string) => void;
   marca?: MarcaEnVivo | null;
+  registrar?: (id: string, el: HTMLElement | null) => void;
 }) {
+  // Mientras otro la esta moviendo, esta tarjeta no se arrastra. Dos manos
+  // sobre la misma tarjeta terminan en que una de las dos pierde su cambio
+  // sin enterarse.
+  const bloqueada = marca?.estado === 'trabajando';
+
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: item.id,
-    disabled: !canEdit,
+    disabled: !canEdit || bloqueada,
   });
+
+  // El mismo nodo lo necesitan dos: dnd-kit para arrastrar y el tablero para
+  // medir donde estaba la tarjeta antes de que la movieran.
+  const ref = useCallback(
+    (el: HTMLElement | null) => {
+      setNodeRef(el);
+      registrar?.(item.id, el);
+    },
+    [setNodeRef, registrar, item.id],
+  );
 
   const style = transform
     ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
@@ -69,12 +86,12 @@ function KanbanCard({ item, canEdit, isMoving, onCardClick, marca }: {
 
   return (
     <div
-      ref={setNodeRef}
+      ref={ref}
       style={style}
-      {...(canEdit ? { ...attributes, ...listeners } : {})}
-      onClick={() => !isDragging && onCardClick?.(item.id)}
+      {...(canEdit && !bloqueada ? { ...attributes, ...listeners } : {})}
+      onClick={() => !isDragging && !bloqueada && onCardClick?.(item.id)}
       className={`relative rounded-xl border bg-white/5 p-3 transition-all select-none
-        ${canEdit ? 'cursor-grab active:cursor-grabbing' : onCardClick ? 'cursor-pointer' : ''}
+        ${bloqueada ? 'cursor-not-allowed' : canEdit ? 'cursor-grab active:cursor-grabbing' : onCardClick ? 'cursor-pointer' : ''}
         ${isDragging ? 'opacity-30 scale-95' : 'hover:border-[#D4AF37]/30 hover:bg-white/8'}
         ${isMoving ? 'opacity-50' : ''}
         ${marca
@@ -83,15 +100,15 @@ function KanbanCard({ item, canEdit, isMoving, onCardClick, marca }: {
     >
       {marca && (
         <div className="mb-2 flex items-center gap-1.5 rounded-md bg-[#D4AF37]/15 px-2 py-1">
-          <span
-            className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-              marca.estado === 'error'
-                ? 'bg-red-400'
-                : marca.estado === 'listo'
-                  ? 'bg-emerald-400'
-                  : 'bg-[#D4AF37] motion-safe:animate-pulse'
-            }`}
-          />
+          {bloqueada ? (
+            <Lock className="h-3 w-3 shrink-0 text-[#D4AF37]" />
+          ) : (
+            <span
+              className={`h-1.5 w-1.5 shrink-0 rounded-full ${
+                marca.estado === 'error' ? 'bg-red-400' : 'bg-emerald-400'
+              }`}
+            />
+          )}
           <span className="truncate text-[10px] font-medium uppercase tracking-wide text-[#D4AF37]">
             {marca.texto}
           </span>
@@ -148,10 +165,11 @@ function KanbanCard({ item, canEdit, isMoving, onCardClick, marca }: {
 }
 
 // ── Droppable Column ───────────────────────────────────────────────────────────
-function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick, marcaDe }: {
+function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick, marcaDe, registrar }: {
   col: KanbanColumn; isOver: boolean; moving: string | null; canEdit: boolean;
   onCardClick?: (id: string) => void;
   marcaDe?: (itemId: string) => MarcaEnVivo | null;
+  registrar?: (id: string, el: HTMLElement | null) => void;
 }) {
   const { setNodeRef } = useDroppable({ id: col.id });
 
@@ -177,6 +195,7 @@ function KanbanColumnComponent({ col, isOver, moving, canEdit, onCardClick, marc
             isMoving={moving === item.id}
             onCardClick={onCardClick}
             marca={marcaDe?.(item.id) ?? null}
+            registrar={registrar}
           />
         ))}
         {col.items.length === 0 && (
@@ -197,6 +216,51 @@ export function KanbanBoard({ columns, onMoveItem, canEdit, onCardClick, marcaDe
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overColumnId, setOverColumnId] = useState<string | null>(null);
   const [moving, setMoving] = useState<string | null>(null);
+
+  /**
+   * La tarjeta tiene que verse viajar de una columna a la otra.
+   *
+   * Cuando el tablero se vuelve a dibujar con la tarjeta en su columna
+   * nueva, el navegador la pone ahi de una: para el que estaba mirando eso
+   * es un salto, y un salto no se lee como "alguien la movio", se lee como
+   * que la pantalla se rompio.
+   *
+   * Se mide donde estaba antes y donde quedo, se la devuelve a la posicion
+   * vieja con un transform y se la suelta. Es la tecnica FLIP: la unica que
+   * anima un cambio de lugar en el arbol sin que haya que mover nada a mano.
+   */
+  const posiciones = useRef(new Map<string, DOMRect>());
+  const nodos = useRef(new Map<string, HTMLElement>());
+
+  const registrar = useCallback((id: string, el: HTMLElement | null) => {
+    if (el) nodos.current.set(id, el);
+    else nodos.current.delete(id);
+  }, []);
+
+  useLayoutEffect(() => {
+    const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    nodos.current.forEach((el, id) => {
+      const ahora = el.getBoundingClientRect();
+      const antes = posiciones.current.get(id);
+      posiciones.current.set(id, ahora);
+
+      if (!antes || quieto) return;
+
+      const dx = antes.left - ahora.left;
+      const dy = antes.top - ahora.top;
+      // Un pixel de diferencia es el navegador redondeando, no un movimiento.
+      if (Math.abs(dx) < 2 && Math.abs(dy) < 2) return;
+
+      el.animate(
+        [
+          { transform: `translate(${dx}px, ${dy}px)` },
+          { transform: 'translate(0, 0)' },
+        ],
+        { duration: 420, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+      );
+    });
+  });
 
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }));
 
@@ -253,6 +317,7 @@ export function KanbanBoard({ columns, onMoveItem, canEdit, onCardClick, marcaDe
             canEdit={canEdit}
             onCardClick={onCardClick}
             marcaDe={marcaDe}
+            registrar={registrar}
           />
         ))}
       </div>
