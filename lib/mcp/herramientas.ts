@@ -10,6 +10,13 @@ import { listarColumnas, listarProyectos } from "@/lib/proyectos/queries";
 import { createSupabaseServiceRole } from "@/lib/supabase/server";
 import { enviarMensaje, escapar } from "@/lib/telegram/api";
 import { nombreDe, type UsuarioMcp } from "./auth";
+import {
+  abrirSesion,
+  cerrarActividad,
+  motivoDelBloqueo,
+  registrarActividad,
+  sesionActiva,
+} from "./sesion";
 
 /**
  * Lo que se puede hacer con el panel desde un chat.
@@ -59,6 +66,25 @@ function pesos(valor: number): string {
 }
 
 export const HERRAMIENTAS: Herramienta[] = [
+  {
+    name: "abrir_sesion",
+    description:
+      "OBLIGATORIA ANTES DE ESCRIBIR NADA. Al empezar a trabajar, preguntale al usuario si el proyecto que tenés abierto es un proyecto de trabajo (de los que van al panel de la empresa) o algo personal o interno, y guardá la respuesta acá. Si es_de_trabajo es false, no vuelvas a ofrecer publicar nada en la plataforma. Para leer no hace falta.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        workspace: {
+          type: "string",
+          description: "El nombre de la carpeta o del repo que está abierto.",
+        },
+        es_de_trabajo: {
+          type: "boolean",
+          description: "Lo que contestó el usuario. Sin inventar: hay que preguntarlo.",
+        },
+      },
+      required: ["workspace", "es_de_trabajo"],
+    },
+  },
   {
     name: "listar_ideas",
     description:
@@ -216,7 +242,7 @@ const numero = (v: unknown, porDefecto: number): number =>
  * Devuelve texto y no JSON crudo a proposito: lo que sale de aca se lee en
  * una conversacion, y un volcado de uuids no le sirve a nadie.
  */
-export async function ejecutar(
+async function correr(
   nombre: string,
   args: Args,
   usuario: UsuarioMcp,
@@ -565,5 +591,86 @@ export async function ejecutar(
 
     default:
       return `No conozco la herramienta "${nombre}".`;
+  }
+}
+
+/** Como se cuenta en el panel lo que esta pasando, mientras pasa. */
+function descripcionDe(nombre: string, args: Args): string {
+  const a = (k: string) => cadena(args[k]);
+
+  switch (nombre) {
+    case "crear_idea":
+      return `Guardando la idea «${a("titulo")}»`;
+    case "responder_idea":
+      return `Respondiendo una idea (${a("estado")})`;
+    case "mover_proyecto":
+      return `Moviendo «${a("proyecto")}» a ${a("columna")}`;
+    case "crear_nota_proyecto":
+      return `Escribiendo una nota en «${a("proyecto")}»`;
+    case "crear_guion":
+      return `Creando el guión «${a("titulo")}»`;
+    default:
+      return nombre;
+  }
+}
+
+/** Las que dejan huella en el panel. Las demas solo miran. */
+const ESCRIBEN = new Set([
+  "crear_idea",
+  "responder_idea",
+  "mover_proyecto",
+  "crear_nota_proyecto",
+  "crear_guion",
+]);
+
+/**
+ * La puerta.
+ *
+ * Todo lo que escribe pasa por dos cosas antes de tocar la base: que alguien
+ * haya dicho que este proyecto es de trabajo, y que quede anotado en vivo
+ * que se esta haciendo. Lo que solo lee entra derecho.
+ */
+export async function ejecutar(
+  nombre: string,
+  args: Args,
+  usuario: UsuarioMcp,
+): Promise<string> {
+  if (nombre === "abrir_sesion") {
+    const workspace = cadena(args.workspace);
+    const esTrabajo = args.es_de_trabajo === true;
+
+    if (typeof args.es_de_trabajo !== "boolean") {
+      return "Falta es_de_trabajo. Preguntale al usuario si este proyecto es de trabajo antes de contestar por él.";
+    }
+
+    const sesion = await abrirSesion(usuario, workspace, esTrabajo);
+    if (!sesion) return "No pude guardar la respuesta. Probá de nuevo.";
+
+    const nombreWs = workspace || "este proyecto";
+    return esTrabajo
+      ? `Listo: «${nombreWs}» es de trabajo, así que puedo escribir en el panel durante las próximas 8 horas. Todo lo que haga queda firmado por ${nombreDe(usuario)}.`
+      : `Anotado: «${nombreWs}» no es de trabajo. No voy a publicar nada en la plataforma. Puedo seguir leyendo el panel si hace falta consultar algo.`;
+  }
+
+  if (!ESCRIBEN.has(nombre)) {
+    return correr(nombre, args, usuario);
+  }
+
+  const bloqueo = motivoDelBloqueo(await sesionActiva(usuario.tokenId));
+  if (bloqueo) return bloqueo;
+
+  const actividad = await registrarActividad(
+    usuario,
+    nombre,
+    descripcionDe(nombre, args),
+  );
+
+  try {
+    const texto = await correr(nombre, args, usuario);
+    await cerrarActividad(actividad, "listo", texto.split("\n")[0]);
+    return texto;
+  } catch (e) {
+    await cerrarActividad(actividad, "error");
+    throw e;
   }
 }

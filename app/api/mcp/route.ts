@@ -21,6 +21,30 @@ export const maxDuration = 60;
 
 const VERSION_PROTOCOLO = "2024-11-05";
 
+/**
+ * Lo primero que lee el modelo al conectarse.
+ *
+ * El servidor ya bloquea la escritura hasta que alguien confirme que el
+ * proyecto es de trabajo, pero un bloqueo a secas hace que el modelo
+ * descubra la regla chocandose con ella a mitad de una tarea. Esto la pone
+ * adelante: pregunta primero, y si es algo personal ni lo intenta.
+ */
+const INSTRUCCIONES = [
+  "Este servidor es el panel interno de la empresa: proyectos, ideas, guiones y finanzas.",
+  "",
+  "Antes de escribir cualquier cosa en el panel (crear ideas o guiones, mover proyectos,",
+  "dejar notas, responder ideas) preguntale al usuario, en el primer mensaje de la",
+  "conversacion, si el proyecto que tiene abierto es un proyecto de trabajo de los que van",
+  "a la plataforma, o si es personal o interno. Hay muchos que no van.",
+  "",
+  "Con la respuesta llama a `abrir_sesion`. Si contesta que no es de trabajo, no publiques",
+  "nada y no vuelvas a ofrecerlo en esa conversacion: podes seguir leyendo el panel si el",
+  "usuario pide consultar algo.",
+  "",
+  "Todo lo que escribas queda firmado con el nombre del dueño de la llave y se muestra en",
+  "vivo a quien tenga el panel abierto.",
+].join("\n");
+
 interface Peticion {
   jsonrpc?: string;
   id?: string | number | null;
@@ -82,7 +106,8 @@ export async function POST(req: NextRequest) {
     return resultado(id, {
       protocolVersion: VERSION_PROTOCOLO,
       capabilities: { tools: { listChanged: false } },
-      serverInfo: { name: "alexander-panel", version: "1.0.0" },
+      serverInfo: { name: "alexander-panel", version: "1.1.0" },
+      instructions: INSTRUCCIONES,
     });
   }
 

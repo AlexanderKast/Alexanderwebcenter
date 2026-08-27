@@ -4,6 +4,7 @@ import { menuDelPanel } from "@/lib/admin/menu";
 import { getCurrentUser } from "@/lib/auth";
 import { AdminSidebar } from "@/components/admin/Sidebar";
 import { AdminHeader } from "@/components/admin/Header";
+import { PulsoMcp } from "@/components/mcp/PulsoMcp";
 import { Toaster } from "@/components/ui/sonner";
 
 /**
@@ -40,6 +41,9 @@ export default async function AdminLayout({ children }: { children: ReactNode })
       {/* Sin esto los toast.error/success del panel no se ven: sonner
           necesita su Toaster montado en el arbol. */}
       <Toaster position="bottom-right" richColors />
+      {/* Solo para el que ya entro: es el panel el que tiene que avisar que
+          algo se esta moviendo solo. */}
+      {user ? <PulsoMcp /> : null}
     </div>
   );
 }
