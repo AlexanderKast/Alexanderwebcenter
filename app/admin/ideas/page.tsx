@@ -75,9 +75,9 @@ export default async function IdeasPage({ searchParams }: Props) {
         <div>
           <h1 className="text-2xl font-semibold text-white">Ideas</h1>
           <p className="max-w-2xl text-sm text-white/50">
-            La bandeja. Las ideas caen acá por nota de voz desde el bot de
-            Telegram, ya transcritas, o escritas a mano. Después se revisan y
-            se ligan a un proyecto.
+            La bandeja. Las ideas caen acá desde el bot de Telegram —habladas o
+            escritas, las dos con título, resumen y etiquetas— o cargadas a
+            mano. Después se revisan y se ligan a un proyecto.
           </p>
         </div>
 
@@ -118,7 +118,7 @@ export default async function IdeasPage({ searchParams }: Props) {
           activo={params.origen === "telegram"}
           href={conFiltro("origen", "telegram")}
         >
-          Por voz
+          Del bot
         </Filtro>
       </div>
 
@@ -128,7 +128,7 @@ export default async function IdeasPage({ searchParams }: Props) {
           <p className="mt-3 text-sm text-white/60">
             {params.estado || params.origen
               ? "No hay ideas con ese filtro."
-              : "Todavía no hay ideas. Mandale una nota de voz al bot y aparece acá."}
+              : "Todavía no hay ideas. Mandale una al bot —hablada o escrita— y aparece acá."}
           </p>
         </div>
       ) : (

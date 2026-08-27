@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
-import { transcribirIdea } from "@/lib/ideas/gemini";
+import { resumirTexto, transcribirIdea } from "@/lib/ideas/gemini";
 import { normalizarCodigo } from "@/lib/ideas/tipos";
 import {
   audioDe,
@@ -16,8 +16,8 @@ import { createSupabaseServiceRole } from "@/lib/supabase/server";
 /**
  * El bot de ideas.
  *
- * Alguien manda una nota de voz y la idea queda escrita en la bandeja del
- * panel. Nada mas: ni menus, ni conversacion, ni preguntarle a que proyecto
+ * Alguien manda su idea — hablada o escrita — y queda ordenada en la bandeja
+ * del panel. Nada mas: ni menus, ni conversacion, ni preguntarle a que proyecto
  * va. Cualquier paso extra es la friccion que hace que la idea se pierda.
  *
  * El bot es una puerta abierta a internet, asi que hay dos cerrojos:
@@ -31,9 +31,9 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
 const AYUDA = [
-  "Mandame una <b>nota de voz</b> con tu idea y la guardo en la bandeja del panel.",
+  "Mandame tu idea y la guardo en la bandeja del panel, con título, resumen y etiquetas.",
   "",
-  "También podés escribirla como texto.",
+  "Da igual cómo: <b>nota de voz</b> o <b>escrita</b>. Las dos quedan igual de ordenadas.",
 ].join("\n");
 
 /**
@@ -221,25 +221,37 @@ async function guardarAudio(msg: MensajeTelegram, quien: Remitente): Promise<voi
   );
 }
 
-/** Idea escrita a mano. Misma bandeja, sin transcripcion de por medio. */
-async function guardarTexto(
-  msg: MensajeTelegram,
-  quien: Remitente,
-  texto: string,
-): Promise<void> {
+/**
+ * Idea escrita. Pasa por lo mismo que un audio: titulo, resumen y tags.
+ *
+ * Antes el texto se guardaba crudo, con la primera linea de titulo. Eso hacia
+ * que escribir en vez de hablar dejara una idea peor ordenada — un castigo
+ * por estar en el bus, en una reunion, o donde no se puede mandar un audio.
+ */
+async function guardarTexto(quien: Remitente, texto: string): Promise<void> {
   const supabase = createSupabaseServiceRole();
+  const resultado = await resumirTexto(texto);
 
-  // Sin IA: el titulo es la primera linea y el cuerpo entero queda como
-  // transcripcion. Quien escribio ya dijo lo que queria decir.
+  // Si la IA no contesta, la idea se guarda igual con lo que se puede sacar
+  // sin ella. Perder la idea porque fallo un resumen seria lo peor posible.
   const primeraLinea = texto.split("\n")[0]!.trim();
-  const titulo =
-    primeraLinea.length > 60 ? `${primeraLinea.slice(0, 57)}…` : primeraLinea;
+  const idea = resultado.ok
+    ? resultado.idea
+    : {
+        titulo:
+          primeraLinea.length > 60 ? `${primeraLinea.slice(0, 57)}…` : primeraLinea,
+        resumen: "",
+        transcripcion: texto.slice(0, 50000),
+        tags: [] as string[],
+      };
 
   const { data, error } = await supabase
     .from("int_ideas")
     .insert({
-      titulo,
-      transcripcion: texto.slice(0, 50000),
+      titulo: idea.titulo,
+      resumen: idea.resumen,
+      transcripcion: idea.transcripcion,
+      tags: idea.tags,
       origen: "telegram",
       autor_id: quien.adminUserId,
       autor_nombre: quien.nombre,
@@ -254,9 +266,20 @@ async function guardarTexto(
     return;
   }
 
+  await supabase
+    .from("int_telegram_usuarios")
+    .update({ ultima_idea_at: new Date().toISOString() })
+    .eq("chat_id", quien.chatId);
+
   const sitio = process.env.NEXT_PUBLIC_SITE_URL ?? "";
-  const link = sitio ? `\n${sitio}/admin/ideas/${data.id}` : "";
-  await responder(quien.chatId, `✅ Guardada: <b>${escapar(titulo)}</b>${link}`);
+  const link = sitio ? `\n\n${sitio}/admin/ideas/${data.id}` : "";
+  const tags = idea.tags.length ? `\n🏷 ${escapar(idea.tags.join(", "))}` : "";
+  const resumen = idea.resumen ? `\n\n${escapar(idea.resumen)}` : "";
+
+  await responder(
+    quien.chatId,
+    `✅ <b>${escapar(idea.titulo)}</b>${resumen}${tags}${link}`,
+  );
 }
 
 async function procesar(msg: MensajeTelegram): Promise<void> {
@@ -300,7 +323,7 @@ async function procesar(msg: MensajeTelegram): Promise<void> {
   }
 
   if (texto && !texto.startsWith("/")) {
-    await guardarTexto(msg, quien, texto);
+    await guardarTexto(quien, texto);
     return;
   }
 
